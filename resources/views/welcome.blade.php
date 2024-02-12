@@ -37,8 +37,11 @@
             </div>
 
             <div  class="flex justify-center items-center">
-                <a href="{{ url('/login') }}" style="display: inline-flex; align-items: center; justify-content: center; padding: 15px; margin-top: 50px; background-color:#2E9600; color: white; font-family: 'Inter', sans-serif; border-radius: 10%; margin-right:20px; width: 90px; height: 25px;">Login</a>
-                <a href="{{ url('/register') }}" style="display: inline-flex; align-items: center; justify-content: center; padding: 15px; margin-top: 50px; background-color:#2E9600; color: white; font-family: 'Inter', sans-serif; border-radius: 10%; margin-right:20px; width: 90px; height: 25px;">Register</a>
+                <div style="display: inline-flex; align-items: center; justify-content: center;">
+                    <a href="{{ url('/login') }}" style="display: inline-flex; align-items: center; justify-content: center; padding: 5px; margin-top: 50px; background-color:#2E9600; color: white; font-family: 'Inter', sans-serif; border-radius: 20%; margin-right:20px; width: 90px; height: 25px;">Login</a>
+                </div>
+
+                <a href="https://sksu.edu.ph/" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; padding: 5px; margin-top: 50px; background-color:#2E9600; color: white; font-family: 'Inter', sans-serif; border-radius: 20%; margin-right:20px; width: 180px; height: 25px;">Visit SKSU website</a>
             </div>
 
 
