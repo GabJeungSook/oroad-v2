@@ -26,6 +26,7 @@ class GoogleAuthController extends Controller
                     'name' => $user->getName(),
                     'email' => $user->getEmail(),
                     'profile_photo_path' => $user->getAvatar(),
+                    'role_id' => 2,
                 ]);
 
                 Auth::login($new_user);
