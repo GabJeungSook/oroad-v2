@@ -44,13 +44,13 @@
             </div> --}}
             <div class="flex justify-center align-center" style="margin-top: 50px">
                 <div style="display: flex; align-items:center; justify-content:center; margin-left: 60px;">
-                    <a href="{{ url('/login') }}" style="background-color:#2E9600; color: white; padding: 10px 50px 10px 50px; font-family: 'Inter', sans-serif; border-radius: 0%;">
+                    <a href="{{ url('/login') }}" style="background-color:#2E9600; color: white; padding: 10px 50px 10px 50px; font-family: 'Inter', sans-serif; border-radius: 0%;  box-shadow: 4px 4px #b5bdc9;">
 
                         Login</a>
                     {{-- <a href="{{ url('/login') }}" style="padding: 0px 50px 0px 50px; margin-top: 50px; background-color:#2E9600; color: white; font-family: 'Inter', sans-serif; border-radius: 20%; margin-right:20px; width: 90px; height: 25px; display: inline-flex; align-items: center; justify-content: center;">Login</a> --}}
                 </div>
                 <div style="display: flex; align-items:center; justify-content:center; padding: 0px 50px 0px 50px;">
-                    <a href="https://sksu.edu.ph/" target="_blank" style="background-color:#2E9600; color: white; padding: 10px 50px 10px 50px; font-family: 'Inter', sans-serif; border-radius: 0%;">
+                    <a href="https://sksu.edu.ph/" target="_blank" style="background-color:#2E9600; color: white; padding: 10px 50px 10px 50px; font-family: 'Inter', sans-serif; border-radius: 0%; box-shadow: 4px 4px #b5bdc9;">
 
                         Visit SKSU Website</a>
                     {{-- <a href="{{ url('/login') }}" style="padding: 0px 50px 0px 50px; margin-top: 50px; background-color:#2E9600; color: white; font-family: 'Inter', sans-serif; border-radius: 20%; margin-right:20px; width: 90px; height: 25px; display: inline-flex; align-items: center; justify-content: center;">Login</a> --}}

@@ -14,7 +14,6 @@
         <!-- Scripts -->
         @filamentStyles
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-        @filamentScripts
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
@@ -35,6 +34,7 @@
                 {{ $slot }}
             </main>
         </div>
+        @filamentScripts
         @livewireScripts
     </body>
 </html>
