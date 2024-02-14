@@ -32,7 +32,7 @@
             <div class="flex justify-center items-center " style="margin-top: 300px;">
                 <img class="" style="width: auto; height: 200px" src="{{ asset('images/oroad_logo.png') }}" alt="OROAD LOGO">
             </div>
-            <div  class="flex justify-center items-center tracking-widest font-semibold" style="font-family: 'Inter', sans-serif; font-size: 30px; color: #D0D0D0;	letter-spacing: 0.05em;">
+            <div  class="flex justify-center items-center tracking-widest font-semibold sm:justify-center" style="font-family: 'Inter', sans-serif; font-size: 30px; color: #D0D0D0;	letter-spacing: 0.05em;">
                 <h1>SULTAN KUDARAT STATE UNIVERSITY</h1>
             </div>
 
