@@ -3,8 +3,8 @@
       <div class="flex h-16 justify-between">
         <div class="flex">
           <div class="flex flex-shrink-0 items-center space-x-2">
-            <img class="h-10 w-auto " src="{{asset('images/sksu_logo.png')}}" alt="Your Company">
-            <img class="h-10 w-auto " src="{{asset('images/oroad_logo.png')}}" alt="Your Company">
+            <img class="h-12 w-auto " src="{{asset('images/sksu_logo.png')}}" alt="Your Company">
+            <img class="h-12 w-auto " src="{{asset('images/oroad_logo.png')}}" alt="Your Company">
           </div>
           @php
               $user = App\Models\User::where('id', auth()->user()->id)->first();

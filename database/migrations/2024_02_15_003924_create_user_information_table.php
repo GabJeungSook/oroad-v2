@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
-            $table->string('contact_number');
+            $table->string('contact_number')->nullable();
             $table->string('gender');
             $table->date('birthday');
             $table->text('valid_id_path');
