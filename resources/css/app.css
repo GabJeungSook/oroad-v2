@@ -29,3 +29,8 @@
 .columns-table {
   @apply !w-[100rem];
 }
+
+.fi-btn {
+  @apply !bg-green-600;
+  @apply !text-white;
+}
