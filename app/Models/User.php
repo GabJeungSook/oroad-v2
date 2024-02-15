@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->roles()->whereIn('name', $roles)->exists();
     }
+
+    public function user_information()
+    {
+        return $this->hasOne(UserInformation::class);
+    }
 }

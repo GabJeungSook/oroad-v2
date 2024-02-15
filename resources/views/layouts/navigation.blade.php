@@ -6,6 +6,10 @@
             <img class="h-10 w-auto " src="{{asset('images/sksu_logo.png')}}" alt="Your Company">
             <img class="h-10 w-auto " src="{{asset('images/oroad_logo.png')}}" alt="Your Company">
           </div>
+          @php
+              $user = App\Models\User::where('id', auth()->user()->id)->first();
+          @endphp
+          @if ($user->user_information)
           <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
             <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
             <a href="#" class="inline-flex items-center border-b-4 rounded-sm border-green-600 px-1 pt-1 text-md font-semibold text-gray-900">Request History</a>
@@ -13,6 +17,8 @@
             <a href="#" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700">Update Information</a>
             <a href="#" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700">Helpdesk</a>
           </div>
+          @endif
+
         </div>
         <div class="hidden sm:ml-6 sm:flex sm:items-center">
           {{-- <button type="button" class="relative rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -80,6 +86,7 @@
 
     <!-- Mobile menu, show/hide based on menu state. -->
     <div x-cloak x-show.transition.origin.top.right.duration.200="OpenMobile" class="sm:hidden" id="mobile-menu">
+        @if ($user->user_information)
       <div class="space-y-1 pb-3 pt-2">
         <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
         <a href="#" class="block border-l-4 border-indigo-500 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-indigo-700">Request History</a>
@@ -87,6 +94,7 @@
         <a href="#" class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700">Update Information</a>
         <a href="#" class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700">Helpdesk</a>
       </div>
+      @endif
       <div class="border-t border-gray-200 pb-3 pt-4">
         <div class="flex items-center px-4">
           <div class="flex-shrink-0">
