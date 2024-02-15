@@ -1,3 +1,4 @@
+const colors = require('tailwindcss/colors')
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 import preset from './vendor/filament/support/tailwind.config.preset'
@@ -16,9 +17,14 @@ export default {
 
     theme: {
         extend: {
+            colors: {
+                danger: colors.rose,
+                primary: colors.blue,
+                success: colors.green,
+                warning: colors.yellow,
+              },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
-                custom: ['Rubik', ...defaultTheme.fontFamily.sans],
             },
         },
     },

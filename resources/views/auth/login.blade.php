@@ -52,7 +52,7 @@
             <div class="mx-4 text-gray-500 font-normal">or</div>
             <div class="flex-1 border-t border-gray-300"></div>
         </div>
-        <a class="inline-flex items-center w-full py-2 mt-2 text-xs font-semibold tracking-widest uppercase transition border rounded-md border-primary-600 bg-primary-600 from-primary-bg-alt to-secondary-bg hover:bg-primary-500 hover:text-primary-text active:bg-green-300 focus:outline-none focus:border-green-300 focus:ring-1 focus:ring-green-300 disabled:opacity-25"
+        <a class="inline-flex items-center w-full py-2 mt-2 text-xs font-semibold tracking-widest uppercase transition border rounded-md border-gray-400 bg-white from-primary-bg-alt to-secondary-bg hover:bg-gray-100 hover:text-primary-text active:bg-green-300 focus:outline-none focus:border-green-300 focus:ring-1 focus:ring-green-300 disabled:opacity-25"
         href="{{route('google-auth')}}">
          <span class="inline-flex m-auto text-center"><img class="inline h-6 mx-0 px-auto" src="https://img.icons8.com/color/48/000000/google-logo.png" /> <span
                    class="pl-2 my-auto font-light text-gray-600 text-md">Login with Google</span>

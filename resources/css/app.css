@@ -9,6 +9,43 @@
     /* Add additional src for different font formats if needed */
   }
 
+  .rubik-100 {
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+  }
+
+  .rubik-200 {
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 200;
+    font-style: normal;
+  }
+
+
+  .rubik-300 {
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+  }
+
+  .rubik-400 {
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .rubik-500 {
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+  }
+
+
 /* Filament Tables Customization */
 
 .filament-tables-header-cell button {
@@ -16,9 +53,10 @@
   @apply !border-gray-100;
 }
 
-.fi-ta-header-cell {
-  @apply !bg-green-600;
-}
+.fi-ta-table th {
+    @apply !bg-green-600;
+  }
+
 
 .fi-ta-header-cell-label
 {
@@ -30,7 +68,7 @@
   @apply !w-[100rem];
 }
 
-.fi-btn {
+/* .fi-btn {
   @apply !bg-green-600;
   @apply !text-white;
-}
+} */

@@ -38,6 +38,18 @@ Route::get('/admin/campuses', function () {
     return view('admin.campus');
 })->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.campus');
 
+Route::get('/admin/courses', function () {
+    return view('admin.course');
+})->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.course');
+
+Route::get('/admin/user-types', function () {
+    return view('admin.user-type');
+})->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.user-type');
+
+Route::get('/admin/documents', function () {
+    return view('admin.document');
+})->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.document');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

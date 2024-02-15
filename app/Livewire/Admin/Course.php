@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Course as CourseModel;
 use App\Models\Campus as CampusModel;
 use Livewire\Component;
 use Filament\Tables;
@@ -15,9 +16,10 @@ use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
 
-class Campus extends Component implements HasForms, HasTable
+
+class Course extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -25,29 +27,30 @@ class Campus extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(CampusModel::query())
+            ->query(CourseModel::query())
             ->columns([
+                TextColumn::make('campus.name')->searchable(),
                 TextColumn::make('name')->searchable(),
-                TextColumn::make('address')->searchable(),
             ])->headerActions([
                 CreateAction::make()
-                ->model(CampusModel::class)
+                ->model(CourseModel::class)
                 ->form([
+                    Select::make('campus_id')
+                        ->options(CampusModel::all()->pluck('name', 'id'))
+                        ->required(),
                     TextInput::make('name')
-                        ->required()
-                        ->maxLength(255),
-                    TextArea::make('address')
                         ->required()
                         ->maxLength(255),
                 ])->extraAttributes(['style' => 'background-color: #4F46E5; color: white; border-color: #4F46E5;'])
-            ])->actions([
+            ]) ->actions([
                 EditAction::make('edit')
-                ->model(CampusModel::class)
+                ->model(CourseModel::class)
+
                 ->form([
+                    Select::make('campus_id')
+                    ->options(CampusModel::all()->pluck('name', 'id'))
+                    ->required(),
                     TextInput::make('name')
-                        ->required()
-                        ->maxLength(255),
-                    TextArea::make('address')
                         ->required()
                         ->maxLength(255),
                 ])
@@ -56,6 +59,6 @@ class Campus extends Component implements HasForms, HasTable
 
     public function render()
     {
-        return view('livewire.admin.campus');
+        return view('livewire.admin.course');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Admin;
 
-use App\Models\Campus as CampusModel;
+use App\Models\UserType as UserTypeModel;
 use Livewire\Component;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -15,9 +15,9 @@ use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
 
-class Campus extends Component implements HasForms, HasTable
+class UserType extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -25,37 +25,31 @@ class Campus extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(CampusModel::query())
+            ->query(UserTypeModel::query())
             ->columns([
                 TextColumn::make('name')->searchable(),
-                TextColumn::make('address')->searchable(),
             ])->headerActions([
                 CreateAction::make()
-                ->model(CampusModel::class)
+                ->model(UserTypeModel::class)
                 ->form([
                     TextInput::make('name')
-                        ->required()
-                        ->maxLength(255),
-                    TextArea::make('address')
                         ->required()
                         ->maxLength(255),
                 ])->extraAttributes(['style' => 'background-color: #4F46E5; color: white; border-color: #4F46E5;'])
             ])->actions([
                 EditAction::make('edit')
-                ->model(CampusModel::class)
+                ->model(UserTypeModel::class)
                 ->form([
                     TextInput::make('name')
-                        ->required()
-                        ->maxLength(255),
-                    TextArea::make('address')
                         ->required()
                         ->maxLength(255),
                 ])
             ]);
     }
 
+
     public function render()
     {
-        return view('livewire.admin.campus');
+        return view('livewire.admin.user-type');
     }
 }
