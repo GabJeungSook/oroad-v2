@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             RoleSeeder::class,
             PhilippinePlacesSeeder::class,
+            UserTypeSeeder::class,
         ]);
     }
 }

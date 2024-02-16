@@ -12,6 +12,7 @@ use App\Models\PhilippineProvince;
 use App\Models\Campus;
 use App\Models\Course;
 use App\Models\UserType;
+use App\Models\UserInformation;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Section;
@@ -19,6 +20,9 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
+use Filament\Notifications\Notification;
 use Filament\Forms\Concerns\InteractsWithForms;
 
 class AddUserInformation extends Component implements HasForms
@@ -38,6 +42,7 @@ class AddUserInformation extends Component implements HasForms
             ->schema([
                 Section::make()
                 ->schema([
+                    Hidden::make('user_id'),
                     TextInput::make('first_name')
                     ->required(),
                     TextInput::make('middle_name'),
@@ -52,7 +57,6 @@ class AddUserInformation extends Component implements HasForms
                     ->native(false)
                     ->required(),
                     TextInput::make('contact_number')
-                    ->numeric()
                     ->prefix('09')
                     ->length(11)
                     ->mask('99 999 9999')
@@ -83,11 +87,9 @@ class AddUserInformation extends Component implements HasForms
                     ->length(4)
                     ->mask('9999')
                     ->required(),
-
-
                     Grid::make(1)
                     ->schema([
-                        TextInput::make('other_details')
+                        TextInput::make('other_address_details')
                         ->label('Other Details (Barangay, Street, etc.)')
                     ])
                 ])->columns(4),
@@ -103,20 +105,34 @@ class AddUserInformation extends Component implements HasForms
                     ->label('Course')
                     ->options(fn(Get $get) => Course::where('campus_id', $this->data['campus_id'])->pluck('name', 'id'))
                     ->required(),
-                    Select::make('user_type')
+                    Select::make('user_type_id')
                     ->label('Requestor Type')
                     ->options(UserType::all()->pluck('name', 'id'))
                     ->required()
                 ])->columns(3),
-
+                    FileUpload::make('valid_id_path')
+                    ->preserveFileNames()
+                    ->disk('public')
+                    ->directory('valid-ids')
+                    ->label('Upload a valid ID')
                 // ...
             ])
             ->statePath('data');
     }
 
-    public function create(): void
+    public function create()
     {
-        dd($this->form->getState());
+        $this->data['user_id'] = auth()->user()->id;
+
+        UserInformation::create($this->form->getState());
+
+        Notification::make()
+        ->title('Saved Successfully')
+        ->body('You can now request a document.')
+        ->success()
+        ->send();
+
+        return redirect()->route('dashboard');
     }
 
     public function render()

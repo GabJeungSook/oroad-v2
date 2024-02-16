@@ -98,7 +98,7 @@
       <div class="border-t border-gray-200 pb-3 pt-4">
         <div class="flex items-center px-4">
           <div class="flex-shrink-0">
-            <img class="h-10 w-10 rounded-full" src="{{asset('images/oroad_logo.png')}}" alt="">
+            <img class="h-10 w-10 rounded-full" src="{{auth()->user()->profile_photo_path}}" alt="">
           </div>
           <div class="ml-3">
             <div class="text-base font-medium text-gray-800">{{auth()->user()->name}}</div>

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('campus_id')->constrained();
+            $table->foreignId('course_id')->constrained();
             $table->foreignId('user_type_id')->constrained();
             $table->foreignId('region_code');
             $table->foreignId('province_code');

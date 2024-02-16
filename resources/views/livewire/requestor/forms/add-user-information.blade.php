@@ -7,7 +7,7 @@
         {{$this->form}}
     </div>
     <div class="mt-5 flex justify-end">
-        <x-filament::button wire:click="addBilling" type="button" class="">Submit</x-filament::button>
+        <x-filament::button wire:click="create" type="button" class="">Submit</x-filament::button>
     </div>
 
 </div>

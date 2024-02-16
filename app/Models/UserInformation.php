@@ -20,6 +20,11 @@ class UserInformation extends Model
         return $this->belongsTo(Campus::class);
     }
 
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
     public function userType()
     {
         return $this->belongsTo(UserType::class);
