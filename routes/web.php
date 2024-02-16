@@ -50,6 +50,16 @@ Route::get('/admin/documents', function () {
     return view('admin.document');
 })->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.document');
 
+//routes for requestor
+
+Route::get('/requestor/request-document', function () {
+    return view('requestor.request-document');
+})->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.request-document');
+
+Route::get('/requestor/update-user-information', function () {
+    return view('requestor.forms.update-user-information');
+})->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.update-user-information');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

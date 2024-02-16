@@ -12,9 +12,9 @@
           @if ($user->user_information)
           <div class="hidden sm:ml-28 sm:flex sm:space-x-8">
             <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
-            <a href="#" class="inline-flex items-center border-b-4 rounded-sm border-green-600 px-1 pt-1 text-md font-semibold text-gray-900 rubik-400">Request History</a>
-            <a href="#" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400">Request Documents</a>
-            <a href="#" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400">Update Information</a>
+            <a href="{{route('dashboard')}}" wire:navigate class="{{ request()->routeIs('dashboard') ? 'inline-flex items-center border-b-4 rounded-sm border-green-600 px-1 pt-1 text-md font-semibold text-gray-900 rubik-400' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400'}} ">Request History</a>
+            <a href="{{route('requestor.request-document')}}" wire:navigate class="{{ request()->routeIs('requestor.request-document') ? 'inline-flex items-center border-b-4 rounded-sm border-green-600 px-1 pt-1 text-md font-semibold text-gray-900 rubik-400' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400'}}">Request Documents</a>
+            <a href="{{route('requestor.update-user-information')}}" wire:navigate class="{{ request()->routeIs('requestor.update-user-information') ? 'inline-flex items-center border-b-4 rounded-sm border-green-600 px-1 pt-1 text-md font-semibold text-gray-900 rubik-400' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400'}}">Update Information</a>
             <a href="#" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400">Helpdesk</a>
           </div>
           @endif
