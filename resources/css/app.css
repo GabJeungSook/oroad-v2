@@ -3,11 +3,6 @@
 @tailwind utilities;
 /* Define custom font */
 /* In resources/css/custom.css */
-@font-face {
-    font-family: 'Rubik';
-    src: url('/fonts/Rubik/Rubik-VariableFont_wght.ttf') format('truetype');
-    /* Add additional src for different font formats if needed */
-  }
 
   .rubik-100 {
     font-family: "Rubik", sans-serif;
