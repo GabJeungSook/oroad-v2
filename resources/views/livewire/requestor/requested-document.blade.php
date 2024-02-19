@@ -18,9 +18,10 @@
                     <div class="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white">
                       <div class="flex-1 truncate px-4 py-4 text-sm">
                         <a href="#" class="font-medium text-gray-900 tex-md rubick-300">{{$item->title}}</a>
+                        <p class="whitespace-nowrap rubik-300 pt-1">Amount: ₱ {{number_format($item->amount, 2)}}</time></p>
                       </div>
                       <div class="flex-shrink-0 pr-2">
-                        <input type="checkbox" class="sm:p-12 lg:p-2 mx-2 appearance-none border-2 rounded-md w-6 h-6 border-gray-400">
+                        <input wire:click="document_selected({{$item->id}})" type="checkbox" class="sm:p-12 lg:p-2 mx-2 appearance-none border-2 rounded-md w-6 h-6 border-gray-400">
                       </div>
                     </div>
                   </li>
@@ -32,39 +33,14 @@
           </div>
           <div class="mt-6 my-3 border-b-2 border-gray-300 w-full" ></div>
           <h1 class="rubik-300 text-xl text-gray-600 mb-4">Document Summary</h1>
+          @if($selectedDocuments)
           <ul role="list" class="divide-y divide-gray-100 px-5 border-2 border-gray-300 rounded-md">
-            <li class="flex items-center justify-between gap-x-6 py-5">
-              <div class="min-w-0">
-                <div class="flex items-start gap-x-3">
-                  <p class="text-sm font-normal leading-6 text-gray-900 rubik-400">TOR (Transcript of Records)</p>
-                  <p class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-green-700 bg-green-50 ring-green-600/20">Available</p>
-                </div>
-              </div>
-              <div class="flex space-x-4">
-                <div class="flex flex-col items-center gap-x-4">
-                    <label for="with_auth" class="block text-sm font-medium leading-6 text-gray-800 rubik-400">Quantity</label>
-                    <select id="with_auth" name="with_auth" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                      <option selected>1</option>
-                      <option >2</option>
-                      <option >3</option>
-                      <option >4</option>
-                      <option >5</option>
-                    </select>
-                  </div>
-                  <div class="flex flex-col items-center gap-x-4">
-                    <label for="with_auth" class="block text-sm font-medium leading-6 text-gray-800 rubik-400">With Authentication</label>
-                    <select id="with_auth" name="with_auth" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                      <option>Yes</option>
-                      <option selected>No</option>
-                    </select>
-                  </div>
-              </div>
-            </li>
+            @foreach ($filteredDocuments as $document)
             <li class="flex items-center justify-between gap-x-6 py-5">
                 <div class="min-w-0">
                   <div class="flex items-start gap-x-3">
-                    <p class="text-sm font-normal leading-6 text-gray-900 rubik-400">TOR (Transcript of Records)</p>
-                    <p class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-green-700 bg-green-50 ring-green-600/20">Available</p>
+                    <p class="text-sm font-normal leading-6 text-gray-900 rubik-400">{{$document->title}}</p>
+                    <p class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-green-700 bg-green-50 ring-green-600/20">₱ {{number_format($document->amount, 2)}}</p>
                   </div>
                 </div>
                 <div class="flex space-x-4">
@@ -87,33 +63,14 @@
                     </div>
                 </div>
               </li>
-              <li class="flex items-center justify-between gap-x-6 py-5">
-                <div class="min-w-0">
-                  <div class="flex items-start gap-x-3">
-                    <p class="text-sm font-normal leading-6 text-gray-900 rubik-400">TOR (Transcript of Records)</p>
-                    <p class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-green-700 bg-green-50 ring-green-600/20">Available</p>
-                  </div>
-                </div>
-                <div class="flex space-x-4">
-                  <div class="flex flex-col items-center gap-x-4">
-                      <label for="with_auth" class="block text-sm font-medium leading-6 text-gray-800 rubik-400">Quantity</label>
-                      <select id="with_auth" name="with_auth" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        <option selected>1</option>
-                        <option >2</option>
-                        <option >3</option>
-                        <option >4</option>
-                        <option >5</option>
-                      </select>
-                    </div>
-                    <div class="flex flex-col items-center gap-x-4">
-                      <label for="with_auth" class="block text-sm font-medium leading-6 text-gray-800 rubik-400">With Authentication</label>
-                      <select id="with_auth" name="with_auth" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        <option>Yes</option>
-                        <option selected>No</option>
-                      </select>
-                    </div>
-                </div>
-              </li>
+            @endforeach
           </ul>
+          <div class="mt-5 divide-y divide-gray-100 px-5 border-2 border-gray-300 rounded-md">
+            <h1 class="rubik-300 text-xl text-gray-600 mb-4 py-4">Request Code : {{$request_number}} </h1>
+          </div>
+          @else
+          <h1 class="rubick-300 text-xl text-center text-gray-500 italic">No document is selected</h1>
+          @endif
+
     </div>
 </div>
