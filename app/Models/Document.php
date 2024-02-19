@@ -9,4 +9,10 @@ class Document extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function requests()
+    {
+        return $this->belongsToMany(Request::class)->withTimestamps()
+        ->withPivot(['quantity', 'amount']);
+    }
 }

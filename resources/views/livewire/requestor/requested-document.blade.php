@@ -35,7 +35,7 @@
           <h1 class="rubik-300 text-xl text-gray-600 mb-4">Document Summary</h1>
           @if($selectedDocuments)
           <ul role="list" class="divide-y divide-gray-100 px-5 border-2 border-gray-300 rounded-md">
-            @foreach ($filteredDocuments as $document)
+            @foreach ($filteredDocuments as $key => $document)
             <li class="flex items-center justify-between gap-x-6 py-5">
                 <div class="min-w-0">
                   <div class="flex items-start gap-x-3">
@@ -45,8 +45,8 @@
                 </div>
                 <div class="flex space-x-4">
                   <div class="flex flex-col items-center gap-x-4">
-                      <label for="with_auth" class="block text-sm font-medium leading-6 text-gray-800 rubik-400">Quantity</label>
-                      <select id="with_auth" name="with_auth" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                      <label for="selectedDocuments.{{$document->id}}.quantity" class="block text-sm font-medium leading-6 text-gray-800 rubik-400">Quantity</label>
+                      <select wire:key="{{$key}}" wire:model="selectedDocuments.{{$document->id}}.quantity" id="selectedDocuments.{{$document->id}}.quantity" name="selectedDocuments.{{$document->id}}.quantity" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
                         <option selected>1</option>
                         <option >2</option>
                         <option >3</option>
@@ -55,10 +55,10 @@
                       </select>
                     </div>
                     <div class="flex flex-col items-center gap-x-4">
-                      <label for="with_auth" class="block text-sm font-medium leading-6 text-gray-800 rubik-400">With Authentication</label>
-                      <select id="with_auth" name="with_auth" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        <option>Yes</option>
-                        <option selected>No</option>
+                      <label for="selectedDocuments.{{$document->id}}.authenticated" class="block text-sm font-medium leading-6 text-gray-800 rubik-400">With Authentication</label>
+                      <select wire:key="{{$key}}" wire:model="selectedDocuments.{{$document->id}}.authenticated" id="selectedDocuments.{{$document->id}}.authenticated" name="selectedDocuments.{{$document->id}}.authenticated" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <option value="1">Yes</option>
+                        <option selected value="0">No</option>
                       </select>
                     </div>
                 </div>
@@ -71,6 +71,6 @@
           @else
           <h1 class="rubick-300 text-xl text-center text-gray-500 italic">No document is selected</h1>
           @endif
-
+          <button wire:click="test">test</button>
     </div>
 </div>

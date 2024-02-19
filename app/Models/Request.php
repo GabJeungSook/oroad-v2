@@ -14,4 +14,9 @@ class Request extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class)->withPivot(['request_code', 'quantity', 'is_authenticated', 'amount'])->withTimestamps();
+    }
 }

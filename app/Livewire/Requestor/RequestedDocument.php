@@ -4,6 +4,7 @@ namespace App\Livewire\Requestor;
 
 use Livewire\Component;
 use App\Models\Document;
+use Illuminate\Support\Str;
 
 class RequestedDocument extends Component
 {
@@ -25,10 +26,15 @@ class RequestedDocument extends Component
         $this->filteredDocuments =  Document::whereIn('id', $this->selectedDocuments)->get();
     }
 
+    public function test()
+    {
+        dd($this->selectedDocuments);
+    }
+
     public function mount()
     {
         $this->documents = Document::all();
-        $this->request_number = 'SKSU-'.now()->format('ymd').'-'.now()->format('hisu');
+        $this->request_number = 'SKSU-' . now()->format('u') . '-' . Str::random(8);
     }
 
     public function render()
