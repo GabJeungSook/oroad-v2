@@ -11,6 +11,7 @@ use App\Models\Request as RequestModel;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -25,7 +26,7 @@ class Request extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(RequestModel::query()->orderBy('created_at', 'desc'))
+            ->query(RequestModel::query()->where('user_id', auth()->user()->id)->orderBy('created_at', 'desc'))
             ->columns([
                 TextColumn::make('request_number')
                 ->label('Request Number')
@@ -48,6 +49,10 @@ class Request extends Component implements HasForms, HasTable
                 ->label('Total Amount')
                 ->formatStateUsing(fn ($state) => '₱' . number_format($state, 2))
                 ->searchable(),
+                TextColumn::make('created_at')
+                ->label('Date Requested')
+                ->formatStateUsing(fn ($state) => $state->format('F d, Y h:i A'))
+                ->searchable(),
                 TextColumn::make('status')->badge()->color('success')->searchable(),
             ])
             ->headerActions([
@@ -62,16 +67,17 @@ class Request extends Component implements HasForms, HasTable
                 //         ->maxLength(255),
                 // ])->extraAttributes(['style' => 'background-color: #4F46E5; color: white; border-color: #4F46E5;'])
             ])->actions([
+                ActionGroup::make([
                 Action::make('edit_request')
                 ->label('Edit')
-                ->button()
                 ->color('warning')
                 ->icon('heroicon-o-pencil')
                 ->visible(fn ($record) => $record->status === 'Pending'),
                 Action::make('view_request')
                 ->label('View Request Details')
-                ->button()
+                ->color('success')
                 ->icon('heroicon-o-eye')
+                ]),
             ])
             ->emptyStateHeading('No request yet')
             ->emptyStateDescription('You can make your first request');;
