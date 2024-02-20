@@ -35,7 +35,7 @@ class UserType extends Component implements HasForms, HasTable
                     TextInput::make('name')
                         ->required()
                         ->maxLength(255),
-                ])->extraAttributes(['style' => 'background-color: #4F46E5; color: white; border-color: #4F46E5;'])
+                ])
             ])->actions([
                 EditAction::make('edit')
                 ->model(UserTypeModel::class)

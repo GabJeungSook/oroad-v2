@@ -98,7 +98,7 @@
                   <dt class="text-lg font-medium text-gray-900 rubik-400">
                     Total
                     </dt>
-                  <dd class="mt-1 text-lg leading-6 text-gray-700 col-span-1 col-start-3 text-right rubik-400"><span wire:model="total_amount">
+                  <dd class="mt-1 text-lg leading-6 text-gray-700 col-span-1 col-start-3 text-right rubik-400"><span wire:model.live="total_amount">
                     @php
                         $total = 0;
                         foreach ($selectedDocuments as $key => $document) {
@@ -106,6 +106,7 @@
                         }
                     @endphp
                     ₱ {{number_format($total, 2)}}
+                    </span>
                 </dd>
                     </div>
                 </div>
@@ -114,7 +115,7 @@
             <div class="col-span-full ">
                 <label for="about" class="block text-md font-medium leading-6 text-gray-900">Purpose of Request <span class="text-red-500 text-lg">*</span></label>
                 <div class="mt-2 mb-4">
-                  <textarea id="about" name="about" rows="3" class="rubik-300 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"></textarea>
+                  <textarea wire:model="purpose" id="about" name="about" rows="3" class="rubik-300 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"></textarea>
                 </div>
               </div>
           </div>

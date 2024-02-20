@@ -2,14 +2,17 @@
 
 namespace App\Livewire\Requestor;
 
+use App\Models\Request;
 use Livewire\Component;
 use App\Models\Document;
 use Illuminate\Support\Str;
-use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Action;
+use Illuminate\Support\Facades\DB;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Notifications\Notification;
 
 class RequestedDocument extends Component implements HasForms, HasActions
 {
@@ -21,6 +24,7 @@ class RequestedDocument extends Component implements HasForms, HasActions
     public $filteredDocuments;
     public $request_number;
     public $total_amount;
+    public $purpose;
 
 
     public function document_selected($id, $amount)
@@ -42,6 +46,7 @@ class RequestedDocument extends Component implements HasForms, HasActions
              // Extracting selected document IDs
             $selectedDocumentIds = array_column($this->selectedDocuments, 'id');
 
+
               // Fetching documents based on selected IDs with custom sort order
         if (!empty($selectedDocumentIds)) {
             $this->filteredDocuments = Document::whereIn('id', $selectedDocumentIds)
@@ -60,7 +65,43 @@ class RequestedDocument extends Component implements HasForms, HasActions
             ->label('Submit Request')
             ->action(function ()
             {
-                dd('test');
+                $total = 0;
+
+                foreach ($this->selectedDocuments as $key => $document) {
+                    $total += $document['amount'] * $document['quantity'];
+                }
+
+                $this->validate([
+                    'purpose' => 'required',
+                ]);
+                DB::beginTransaction();
+                $new_request = Request::create([
+                    'request_number' => $this->request_number,
+                    'user_id' => auth()->user()->id,
+                    'purpose' => $this->purpose,
+                    'total_amount' => $total,
+                    'status' => 'Pending',
+                ]);
+
+                foreach($this->selectedDocuments as $document)
+                {
+                    $new_request->documents()->attach($document['id'], [
+                        'request_id' => $new_request->id,
+                        'request_code' => $this->request_number,
+                        'quantity' => $document['quantity'],
+                        'is_authenticated' => $document['authentication'],
+                        'amount' => $document['amount'] * $document['quantity'],
+                    ]);
+                }
+                DB::commit();
+
+                Notification::make()
+                ->title('Request Submitted Successfully')
+                ->body('Your request has been submitted successfully. Please wait for the approval.')
+                ->success()
+                ->send();
+
+                return redirect()->route('dashboard');
             });
     }
 

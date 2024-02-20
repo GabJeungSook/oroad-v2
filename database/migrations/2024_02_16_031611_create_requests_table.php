@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('request_number');
             $table->foreignId('user_id')->constrained();
             $table->text('purpose');
+            $table->text('total_amount');
             $table->string('status');
             $table->timestamps();
         });
