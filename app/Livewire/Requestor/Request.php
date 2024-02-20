@@ -25,7 +25,7 @@ class Request extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(RequestModel::query())
+            ->query(RequestModel::query()->orderBy('created_at', 'desc'))
             ->columns([
                 TextColumn::make('request_number')
                 ->label('Request Number')
@@ -35,10 +35,6 @@ class Request extends Component implements HasForms, HasTable
                 // ->label('Requested By')
                 // ->formatStateUsing(fn ($state) => $state->first_name. ' ' . $state->middle_name. ' ' . $state->last_name)
                 // ->searchable(),
-                TextColumn::make('total_amount')
-                ->label('Total Amount')
-                ->formatStateUsing(fn ($state) => '₱' . number_format($state, 2))
-                ->searchable(),
                 TextColumn::make('documents')
                 ->label('Requested Documents')
                 ->formatStateUsing(fn ($state) => $state->pivot->quantity . ' ' . $state->title . ' - ₱' . number_format($state->pivot->amount, 2))
@@ -46,6 +42,11 @@ class Request extends Component implements HasForms, HasTable
                 ->bulleted(),
                 TextColumn::make('purpose')
                 ->formatStateUsing(fn ($state) => ucwords($state))
+                ->wrap()
+                ->searchable(),
+                TextColumn::make('total_amount')
+                ->label('Total Amount')
+                ->formatStateUsing(fn ($state) => '₱' . number_format($state, 2))
                 ->searchable(),
                 TextColumn::make('status')->badge()->color('success')->searchable(),
             ])
