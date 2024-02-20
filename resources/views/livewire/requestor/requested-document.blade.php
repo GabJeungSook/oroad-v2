@@ -116,6 +116,7 @@
                 <label for="about" class="block text-md font-medium leading-6 text-gray-900">Purpose of Request <span class="text-red-500 text-lg">*</span></label>
                 <div class="mt-2 mb-4">
                   <textarea wire:model="purpose" id="about" name="about" rows="3" class="rubik-300 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"></textarea>
+                  @error('purpose') <span class="text-red-600">{{ $message }}</span> @enderror
                 </div>
               </div>
           </div>

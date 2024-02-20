@@ -73,6 +73,10 @@ class RequestedDocument extends Component implements HasForms, HasActions
 
                 $this->validate([
                     'purpose' => 'required',
+                ],
+                [
+                    'purpose.required' => 'Fill up your purpose of request.',
+
                 ]);
                 DB::beginTransaction();
                 $new_request = Request::create([

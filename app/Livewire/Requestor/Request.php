@@ -27,12 +27,16 @@ class Request extends Component implements HasForms, HasTable
         return $table
             ->query(RequestModel::query())
             ->columns([
-                TextColumn::make('request_number')->copyable()->searchable(),
+                TextColumn::make('request_number')
+                ->label('Request Number')
+                ->copyable()
+                ->searchable(),
                 // TextColumn::make('user.user_information')
                 // ->label('Requested By')
                 // ->formatStateUsing(fn ($state) => $state->first_name. ' ' . $state->middle_name. ' ' . $state->last_name)
                 // ->searchable(),
                 TextColumn::make('total_amount')
+                ->label('Total Amount')
                 ->formatStateUsing(fn ($state) => '₱' . number_format($state, 2))
                 ->searchable(),
                 TextColumn::make('documents')
@@ -61,7 +65,8 @@ class Request extends Component implements HasForms, HasTable
                 ->label('Edit')
                 ->button()
                 ->color('warning')
-                ->icon('heroicon-o-pencil'),
+                ->icon('heroicon-o-pencil')
+                ->visible(fn ($record) => $record->status === 'Pending'),
                 Action::make('view_request')
                 ->label('View Request Details')
                 ->button()
