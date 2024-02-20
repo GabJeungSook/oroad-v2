@@ -21,7 +21,7 @@
                         <p class="whitespace-nowrap rubik-300 pt-1">Amount: ₱ {{number_format($item->amount, 2)}}</time></p>
                       </div>
                       <div class="flex-shrink-0 pr-2">
-                        <input wire:click="document_selected({{$item->id}})" type="checkbox" class="sm:p-12 lg:p-2 mx-2 appearance-none border-2 rounded-md w-6 h-6 border-gray-400">
+                        <input wire:click="document_selected({{$item->id}}, {{$item->amount}})" type="checkbox" class="sm:p-12 lg:p-2 mx-2 appearance-none border-2 rounded-md w-6 h-6 border-gray-400">
                       </div>
                     </div>
                   </li>
@@ -40,37 +40,91 @@
                 <div class="min-w-0">
                   <div class="flex items-start gap-x-3">
                     <p class="text-sm font-normal leading-6 text-gray-900 rubik-400">{{$document->title}}</p>
-                    <p class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-green-700 bg-green-50 ring-green-600/20">₱ {{number_format($document->amount, 2)}}</p>
+                    {{-- <p class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-green-700 bg-green-50 ring-green-600/20">₱ {{number_format($document->amount, 2)}}</p> --}}
                   </div>
                 </div>
                 <div class="flex space-x-4">
                   <div class="flex flex-col items-center gap-x-4">
-                      <label for="selectedDocuments.{{$document->id}}.quantity" class="block text-sm font-medium leading-6 text-gray-800 rubik-400">Quantity</label>
-                      <select wire:key="{{$key}}" wire:model="selectedDocuments.{{$document->id}}.quantity" id="selectedDocuments.{{$document->id}}.quantity" name="selectedDocuments.{{$document->id}}.quantity" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        <option selected>1</option>
-                        <option >2</option>
-                        <option >3</option>
-                        <option >4</option>
-                        <option >5</option>
+                      <label for="quantity{{$key}}" class="block text-sm font-medium leading-6 text-gray-800 rubik-400">Quantity</label>
+                      <select id="quantity{{$key}}" wire:model.live="selectedDocuments.{{$key}}.quantity" name="quantity{{$key}}" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <option value="1" @if($selectedDocuments[$key]['quantity'] == 1) selected @endif>1</option>
+                        <option value="2" @if($selectedDocuments[$key]['quantity'] == 2) selected @endif>2</option>
+                        <option value="3" @if($selectedDocuments[$key]['quantity'] == 3) selected @endif>3</option>
+                        <option value="4" @if($selectedDocuments[$key]['quantity'] == 4) selected @endif>4</option>
+                        <option value="5" @if($selectedDocuments[$key]['quantity'] == 5) selected @endif>5</option>
                       </select>
                     </div>
                     <div class="flex flex-col items-center gap-x-4">
-                      <label for="selectedDocuments.{{$document->id}}.authenticated" class="block text-sm font-medium leading-6 text-gray-800 rubik-400">With Authentication</label>
-                      <select wire:key="{{$key}}" wire:model="selectedDocuments.{{$document->id}}.authenticated" id="selectedDocuments.{{$document->id}}.authenticated" name="selectedDocuments.{{$document->id}}.authenticated" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                        <option value="1">Yes</option>
-                        <option selected value="0">No</option>
+                      <label for="authenticated{{$key}}" class="block text-sm font-medium leading-6 text-gray-800 rubik-400">With Authentication</label>
+                      <select id="authenticated{{$key}}" wire:model.live="selectedDocuments.{{$key}}.authentication" name="authenticated{{$key}}" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <option value="1" @if($selectedDocuments[$key]['authentication'] == '1') selected @endif>Yes</option>
+                        <option value="0" @if($selectedDocuments[$key]['authentication'] == '0') selected @endif>No</option>
                       </select>
                     </div>
                 </div>
               </li>
             @endforeach
           </ul>
-          <div class="mt-5 divide-y divide-gray-100 px-5 border-2 border-gray-300 rounded-md">
-            <h1 class="rubik-300 text-xl text-gray-600 mb-4 py-4">Request Code : {{$request_number}} </h1>
+          <div class="mt-5 px-5 border-2 border-gray-300 rounded-md">
+            <h1 class="rubik-300 text-xl text-gray-600 pt-3 pb-2">Request Code : <span class="rubik-400">{{$request_number}}</span> </h1>
+            <div class="mb-4 border-b-2 border-gray-300 w-full" ></div>
+            {{-- content --}}
+            <div class="mb-4 overflow-hidden bg-white shadow sm:rounded-lg">
+                <div>
+                  <dl>
+                    @foreach ($filteredDocuments as $key => $document)
+                    <div class="px-4 py-3 grid grid-cols-3 gap-4">
+                      <dt class="text-md font-medium text-gray-900 rubik-300">{{$document->title}}
+                        x <span wire:model.live="selectedDocuments.{{$key}}.quantity">{{$selectedDocuments[$key]['quantity']}}
+                        </span>
+                        @if($selectedDocuments[$key]['authentication'] == '1')
+                        <span class="text-sm">
+                            (with Authentication)
+                        </span>
+                        @endif
+                        </dt>
+                      <dd class="mt-1 text-md leading-6 text-gray-700 col-span-1 col-start-3 text-right rubik-300"><span wire:model.live="selectedDocuments.{{$key}}.amount">
+                        @php
+                           $sub_total =  $selectedDocuments[$key]['amount'] * $selectedDocuments[$key]['quantity']
+                        @endphp
+                        ₱ {{number_format($sub_total, 2)}}
+                        </span>
+                    </dd>
+                    </div>
+                    @endforeach
+
+                  </dl>
+                  <div class="px-4 py-3 grid grid-cols-3 gap-4">
+                  <dt class="text-lg font-medium text-gray-900 rubik-400">
+                    Total
+                    </dt>
+                  <dd class="mt-1 text-lg leading-6 text-gray-700 col-span-1 col-start-3 text-right rubik-400"><span wire:model="total_amount">
+                    @php
+                        $total = 0;
+                        foreach ($selectedDocuments as $key => $document) {
+                            $total += $document['amount'] * $document['quantity'];
+                        }
+                    @endphp
+                    ₱ {{number_format($total, 2)}}
+                </dd>
+                    </div>
+                </div>
+              </div>
+            {{-- content end --}}
+            <div class="col-span-full ">
+                <label for="about" class="block text-md font-medium leading-6 text-gray-900">Purpose of Request <span class="text-red-500 text-lg">*</span></label>
+                <div class="mt-2 mb-4">
+                  <textarea id="about" name="about" rows="3" class="rubik-300 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"></textarea>
+                </div>
+              </div>
+          </div>
+          <div class="flex mt-3 justify-end">
+            {{ $this->saveAction }}
+            <x-filament-actions::modals />
           </div>
           @else
           <h1 class="rubick-300 text-xl text-center text-gray-500 italic">No document is selected</h1>
           @endif
-          <button wire:click="test">test</button>
+          {{-- <button wire:click="test">test</button> --}}
     </div>
 </div>
