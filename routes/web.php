@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GoogleAuthController;
@@ -59,6 +60,13 @@ Route::get('/requestor/request-document', function () {
 Route::get('/requestor/update-user-information', function () {
     return view('requestor.forms.update-user-information');
 })->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.update-user-information');
+
+Route::get('/requestor/edit-request/{request}', function ($request) {
+    $request = Request::findOrFail($request);
+    return view('requestor.forms.edit-request', ['record' => $request]);
+})->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.edit-request');
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

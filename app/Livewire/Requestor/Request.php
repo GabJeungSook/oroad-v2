@@ -72,7 +72,8 @@ class Request extends Component implements HasForms, HasTable
                 ->label('Edit')
                 ->color('warning')
                 ->icon('heroicon-o-pencil')
-                ->visible(fn ($record) => $record->status === 'Pending'),
+                ->visible(fn ($record) => $record->status === 'Pending')
+                ->url(fn ($record) => route('requestor.edit-request', $record)),
                 Action::make('view_request')
                 ->label('View Request Details')
                 ->color('success')
