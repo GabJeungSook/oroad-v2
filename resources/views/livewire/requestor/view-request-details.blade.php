@@ -52,7 +52,7 @@
                     <label class="rubik-400 text-sm">Full Name : {{ucwords($record->user->user_information->first_name.' '.$record->user->user_information->middle_name.' '.$record->user->user_information->last_name)}}</label>
                 </div>
                 <div class="col-span-1 border-x-2 border-b-2 px-3 py-1">
-                    <label class="rubik-400 text-sm">Gender : {{strtoupper($record->user->user_information->gender)}}</label>
+                    <label class="rubik-400 text-sm">Gender : {{ucfirst($record->user->user_information->gender)}}</label>
                 </div>
             </div>
             <div class="grid grid-cols-3 w-full border-x-1 border-gray-300 bg-white">
