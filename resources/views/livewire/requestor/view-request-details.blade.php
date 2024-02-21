@@ -36,7 +36,10 @@
 
                 </div>
                 <div class="header flex justify-center items-center my-2 ">
-                    <h2 class="text-xl rubik-400 tracking-wider ml-12 sm:ml-10">Online Request of Academic Documents</h2>
+                    <h2 class="text-xl rubik-400 tracking-wider ml-12 sm:ml-14">Online Request of Academic Documents</h2>
+                </div>
+                <div class="flex justify-end text-sm rubik-400 mt-5">
+                    Date : {{now()->format('F d, Y')}}
                 </div>
             </div>
             <div class="w-full border-x-1 border-gray-300 bg-green-950 text-white">
