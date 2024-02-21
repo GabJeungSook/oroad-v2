@@ -90,11 +90,11 @@ class EditRequest extends Component implements HasForms, HasActions
                 $this->record->documents()->sync($this->fetchDocumentPivotData());
                 DB::commit();
                 Notification::make()
-                ->title('Request Submitted Successfully')
-                ->body('Your request has been submitted successfully. Please wait for the approval.')
+                ->title('Request Updated')
+                ->body('Your request has been updated successfully. You cannot edit once it is approved.')
                 ->success()
                 ->send();
-                return redirect()->route('dashboard');
+                return redirect()->route('requestor.view-request', $this->record);
             });
     }
 

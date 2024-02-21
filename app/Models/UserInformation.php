@@ -42,7 +42,7 @@ class UserInformation extends Model
 
     public function philippineCity()
     {
-        return $this->belongsTo(PhilippineCity::class, 'city_code, city_code');
+        return $this->belongsTo(PhilippineCity::class, 'city_code', 'city_municipality_code');
     }
 
 }
