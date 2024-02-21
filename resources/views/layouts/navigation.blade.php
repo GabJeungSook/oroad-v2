@@ -89,10 +89,10 @@
         @if ($user->user_information)
       <div class="space-y-1 pb-3 pt-2">
         <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->
-        <a href="#" class="block border-l-4 border-green-500 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-green-700">Request History</a>
-        <a href="#" class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700">Request Documents</a>
-        <a href="#" class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700">Update Information</a>
-        <a href="#" class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700">Helpdesk</a>
+        <a href="{{route('dashboard')}}" wire:navigate class="{{request()->routeIs('dashboard') ? 'block border-l-4 border-green-500 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-green-700' : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700'}}">Request History</a>
+        <a href="{{route('requestor.request-document')}}" wire:navigate class="{{request()->routeIs('requestor.request-document') ? 'block border-l-4 border-green-500 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-green-700' : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700'}}">Request Documents</a>
+        <a href="{{route('requestor.update-user-information')}}" wire:navigate class="{{request()->routeIs('requestor.update-user-information') ? 'block border-l-4 border-green-500 bg-indigo-50 py-2 pl-3 pr-4 text-base font-medium text-green-700' : 'block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700'}}">Update Information</a>
+        <a href="#" wire:navigate class="block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-gray-500 hover:border-gray-300 hover:bg-gray-50 hover:text-gray-700">Helpdesk</a>
       </div>
       @endif
       <div class="border-t border-gray-200 pb-3 pt-4">
