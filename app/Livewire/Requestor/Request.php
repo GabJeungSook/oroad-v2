@@ -38,7 +38,15 @@ class Request extends Component implements HasForms, HasTable
                 // ->searchable(),
                 TextColumn::make('documents')
                 ->label('Requested Documents')
-                ->formatStateUsing(fn ($state) => $state->pivot->quantity . ' ' . $state->title . ' - ₱' . number_format($state->pivot->amount, 2))
+                // ->formatStateUsing(fn ($state) => $state->pivot->quantity . ' ' . $state->title . ' - ₱' . number_format($state->pivot->amount, 2))
+                ->formatStateUsing(function ($state){
+                    if($state->pivot->is_authenticated)
+                    {
+                        return $state->pivot->quantity . ' ' . $state->title . ' (w/ authentication)'.' - ₱' . number_format($state->pivot->amount, 2);
+                    }else{
+                        return $state->pivot->quantity . ' ' . $state->title . ' - ₱' . number_format($state->pivot->amount, 2);
+                    }
+                })
                 ->listWithLineBreaks()
                 ->bulleted(),
                 TextColumn::make('purpose')

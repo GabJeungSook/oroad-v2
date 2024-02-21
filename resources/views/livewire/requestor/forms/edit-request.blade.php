@@ -75,8 +75,7 @@
                     @foreach ($filteredDocuments as $key => $document)
                     <div class="px-4 py-3 grid grid-cols-3 gap-4">
                       <dt class="text-md font-medium text-gray-900 rubik-300">{{$document->title}}
-                        x <span wire:model.live="selectedDocuments.{{$key}}.quantity">{{$selectedDocuments[$key]['quantity']}}
-                        </span>
+                        x <span wire:model.live="selectedDocuments.{{$key}}.quantity">{{$selectedDocuments[$key]['quantity']}}</span>
                         @if($selectedDocuments[$key]['authentication'] == '1')
                         <span class="text-sm">
                             (with Authentication)
@@ -85,7 +84,7 @@
                         </dt>
                       <dd class="mt-1 text-md leading-6 text-gray-700 col-span-1 col-start-3 text-right rubik-300"><span wire:model.live="selectedDocuments.{{$key}}.amount">
                         @php
-                           $sub_total =  $selectedDocuments[$key]['amount'] * $selectedDocuments[$key]['quantity']
+                           $sub_total =  $document->amount * $selectedDocuments[$key]['quantity']
                         @endphp
                         ₱ {{number_format($sub_total, 2)}}
                         </span>
@@ -102,7 +101,8 @@
                     @php
                         $total = 0;
                         foreach ($selectedDocuments as $key => $document) {
-                            $total += $document['amount'] * $document['quantity'];
+                            $amount = App\Models\Document::find($document['id'])->amount;
+                            $total += $amount * $document['quantity'];
                         }
                     @endphp
                     ₱ {{number_format($total, 2)}}

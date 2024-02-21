@@ -32,6 +32,7 @@ class EditRequest extends Component implements HasForms, HasActions
     {
         $newDocument = [
             'id' => $id,
+            'request_code' => $this->record->request_number,
             'quantity' => '1',
             'authentication' => '0',
             'amount' => $amount
@@ -57,6 +58,8 @@ class EditRequest extends Component implements HasForms, HasActions
             // If no documents are selected, set filteredDocuments to an empty array
             $this->filteredDocuments = [];
         }
+        // dd($this->selectedDocuments);
+        $this->total_amount = array_sum(array_column($this->selectedDocuments, 'amount'));
     }
 
     public function editAction(): Action
@@ -69,7 +72,7 @@ class EditRequest extends Component implements HasForms, HasActions
                 $total = 0;
 
                 foreach ($this->selectedDocuments as $key => $document) {
-                    $total += $document['amount'] * $document['quantity'];
+                    $total += $document['amount'];
                 }
 
                 $this->validate([
@@ -80,30 +83,45 @@ class EditRequest extends Component implements HasForms, HasActions
 
                 ]);
                 DB::beginTransaction();
-                //update
                 $this->record->update([
                     'purpose' => $this->purpose,
                     'total_amount' => $total,
                 ]);
-                foreach ($this->selectedDocuments as $key => $document) {
-                    $this->record->documents()->updateExistingPivot($document['id'], [
-                        'quantity' => $document['quantity'],
-                        'is_authenticated' => $document['authentication'],
-                        'amount' => $document['amount'] * $document['quantity']
-                    ]);
-                }
-                // $this->record->documents()->sync($this->selectedDocuments);
+                // dd($this->selectedDocuments);
+                $this->record->documents()->sync($this->fetchDocumentPivotData());
                 DB::commit();
-
                 Notification::make()
                 ->title('Request Submitted Successfully')
                 ->body('Your request has been submitted successfully. Please wait for the approval.')
                 ->success()
                 ->send();
-
                 return redirect()->route('dashboard');
             });
     }
+
+    public function updatedSelectedDocuments()
+    {
+        foreach ($this->selectedDocuments as $key => $document) {
+            $this->selectedDocuments[$key]['amount'] = Document::find($document['id'])->amount * $document['quantity'];
+        }
+    }
+
+    public function fetchDocumentPivotData()
+    {
+        $data = [];
+
+        foreach ($this->selectedDocuments as $document) {
+            $data[$document['id']] = [
+                'request_code' => $this->record->request_number,
+                'quantity' => $document['quantity'],
+                'is_authenticated' => $document['authentication'],
+                'amount' => $document['amount']
+            ];
+        }
+
+        return $data;
+    }
+
 
     public function mount()
     {
@@ -115,6 +133,7 @@ class EditRequest extends Component implements HasForms, HasActions
         {
             $newDocument = [
                 'id' => $selectedDoc['id'],
+                'request_code' => $this->record->request_number,
                 'quantity' => $selectedDoc['pivot']['quantity'],
                 'authentication' => $selectedDoc['pivot']['is_authenticated'],
                 'amount' => $selectedDoc['pivot']['amount']
@@ -129,6 +148,7 @@ class EditRequest extends Component implements HasForms, HasActions
         $this->selected_ids = $selectedDocumentIds;
         $this->request_number = $this->record->request_number;
         $this->purpose = $this->record->purpose;
+        $this->total_amount = $this->record->total_amount;
     }
 
     public function render()
