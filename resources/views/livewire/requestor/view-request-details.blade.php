@@ -147,11 +147,11 @@
                 </div>
                 @endforeach
             </div>
-            <div class="grid grid-cols-4 w-full border-x-1 border-gray-300  bg-white text-center">
-                <div class="col-span-2 col-start-1 border-l-2 border-b-2 px-3 py-1 text-left">
+            <div class="grid grid-cols-4 w-full border-x-1 border-gray-300  bg-white">
+                <div class="col-span-1 col-start-1 col-end-1 border-l-2 border-b-2 px-3 py-1 text-center">
                     <label class="rubik-500 text-sm font-bold text-center uppercase">Total Payable : </label>
                 </div>
-                <div class="col-span-2 col-start-3 border-r-2 border-b-2 px-3 py-1 text-right">
+                <div class="col-span-3 col-start-2 border-x-2 border-b-2 px-3 py-1 text-right">
                     <label class="rubik-500 text-sm font-semibold text-center uppercase">₱ {{number_format($record->total_amount, 2)}}</label>
                 </div>
             </div>
