@@ -58,7 +58,6 @@ class EditRequest extends Component implements HasForms, HasActions
             // If no documents are selected, set filteredDocuments to an empty array
             $this->filteredDocuments = [];
         }
-        // dd($this->selectedDocuments);
         $this->total_amount = array_sum(array_column($this->selectedDocuments, 'amount'));
     }
 

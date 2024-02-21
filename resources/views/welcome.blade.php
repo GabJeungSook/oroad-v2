@@ -22,7 +22,7 @@
         <div class="min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900">
             <div style="position: absolute; width: 120px; height: 170px; background-color: #014F05; left: 50%; top: 5%; transform: translate(-50%, -50%); border-radius: 1%;">
                 <div class="flex justify-center items-center" style="position: relative; width: 120px; height: 120px; background-color: #014F05; border-radius: 100%; margin-top: 110px;">
-                    <img class="" style="position: relative; width: 100px; height: 100px;" src="{{ asset('images/sksu_logo.png') }}" alt="Your Company">
+                    <img class="sm:w-20 h-20" style="position: relative; width: 100px; height: 100px;" src="{{ asset('images/sksu_logo.png') }}" alt="Your Company">
                 </div>
             </div>
 

@@ -66,6 +66,11 @@ Route::get('/requestor/edit-request/{request}', function ($request) {
     return view('requestor.forms.edit-request', ['record' => $request]);
 })->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.edit-request');
 
+Route::get('/requestor/view-request/{request}', function ($request) {
+    $request = Request::findOrFail($request);
+    return view('requestor.view-request', ['record' => $request]);
+})->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.view-request');
+
 
 
 Route::middleware('auth')->group(function () {

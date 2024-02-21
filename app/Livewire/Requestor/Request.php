@@ -38,7 +38,6 @@ class Request extends Component implements HasForms, HasTable
                 // ->searchable(),
                 TextColumn::make('documents')
                 ->label('Requested Documents')
-                // ->formatStateUsing(fn ($state) => $state->pivot->quantity . ' ' . $state->title . ' - ₱' . number_format($state->pivot->amount, 2))
                 ->formatStateUsing(function ($state){
                     if($state->pivot->is_authenticated)
                     {
@@ -64,16 +63,7 @@ class Request extends Component implements HasForms, HasTable
                 TextColumn::make('status')->badge()->color('success')->searchable(),
             ])
             ->headerActions([
-                // CreateAction::make()
-                // ->model(CampusModel::class)
-                // ->form([
-                //     TextInput::make('name')
-                //         ->required()
-                //         ->maxLength(255),
-                //     TextArea::make('address')
-                //         ->required()
-                //         ->maxLength(255),
-                // ])->extraAttributes(['style' => 'background-color: #4F46E5; color: white; border-color: #4F46E5;'])
+                //
             ])->actions([
                 ActionGroup::make([
                 Action::make('edit_request')
@@ -86,6 +76,7 @@ class Request extends Component implements HasForms, HasTable
                 ->label('View Request Details')
                 ->color('success')
                 ->icon('heroicon-o-eye')
+                ->url(fn ($record) => route('requestor.view-request', $record)),
                 ]),
             ])
             ->emptyStateHeading('No request yet')

@@ -1,5 +1,5 @@
 <nav x-data="{ OpenMobile: false }" @click.away="OpenMobile = false" class="bg-white shadow">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 lg:px-6 sm:px-8">
       <div class="flex h-16 justify-between">
         <div class="flex">
           <div class="flex flex-shrink-0 items-center space-x-2">
@@ -10,7 +10,7 @@
               $user = App\Models\User::where('id', auth()->user()->id)->first();
           @endphp
           @if ($user->user_information)
-          <div class="hidden sm:ml-28 sm:flex sm:space-x-8">
+          <div class="hidden lg:ml-28 lg:flex lg:space-x-8">
             <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
             <a href="{{route('dashboard')}}" wire:navigate class="{{ request()->routeIs('dashboard') ? 'inline-flex items-center border-b-4 rounded-sm border-green-600 px-1 pt-1 text-md font-semibold text-gray-900 rubik-400' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400'}} ">Request History</a>
             <a href="{{route('requestor.request-document')}}" wire:navigate class="{{ request()->routeIs('requestor.request-document') ? 'inline-flex items-center border-b-4 rounded-sm border-green-600 px-1 pt-1 text-md font-semibold text-gray-900 rubik-400' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400'}}">Request Documents</a>
@@ -20,7 +20,7 @@
           @endif
 
         </div>
-        <div class="hidden sm:ml-6 sm:flex sm:items-center">
+        <div class="hidden lg:ml-6 lg:flex lg:items-center">
           {{-- <button type="button" class="relative rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
             <span class="absolute -inset-1.5"></span>
             <span class="sr-only">View notifications</span>
@@ -58,7 +58,7 @@
             </div>
           </div>
         </div>
-        <div class="-mr-2 flex items-center sm:hidden">
+        <div class="-mr-2 flex items-center lg:hidden">
           <!-- Mobile menu button -->
           <button @click="OpenMobile = !OpenMobile" type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" aria-controls="mobile-menu" aria-expanded="false">
             <span class="absolute -inset-0.5"></span>
@@ -85,7 +85,7 @@
     </div>
 
     <!-- Mobile menu, show/hide based on menu state. -->
-    <div x-cloak x-show.transition.origin.top.right.duration.200="OpenMobile" class="sm:hidden" id="mobile-menu">
+    <div x-cloak x-show.transition.origin.top.right.duration.200="OpenMobile" class="lg:hidden" id="mobile-menu">
         @if ($user->user_information)
       <div class="space-y-1 pb-3 pt-2">
         <!-- Current: "bg-indigo-50 border-indigo-500 text-indigo-700", Default: "border-transparent text-gray-500 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700" -->

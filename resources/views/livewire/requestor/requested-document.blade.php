@@ -1,6 +1,20 @@
 <div>
     <div class="rubik-300 text-3xl text-gray-600">
-        <h1>Request Form</h1>
+        <div class="flex justify-between">
+            <h1>Request Form</h1>
+            <div>
+                <a wire:navigate href="{{route('dashboard')}}">
+                    <button type="button" class="flex text-sm bg-gray-50 hover:bg-gray-200 p-2 font-semibold rounded-md border-2 border-gray-400 leading-6 rubik-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                      </svg>
+                      <span class="px-2">Return</span></button>
+                    {{-- {{ $this->backAction }} --}}
+                </a>
+
+
+            </div>
+        </div>
         <div class="my-3 border-b-2 border-gray-300 w-full" ></div>
         <h1 class="text-xl">Select Documents</h1>
     </div>
@@ -21,7 +35,7 @@
                         <p class="whitespace-nowrap rubik-300 pt-1">Amount: ₱ {{number_format($item->amount, 2)}}</time></p>
                       </div>
                       <div class="flex-shrink-0 pr-2">
-                        <input wire:click="document_selected({{$item->id}}, {{$item->amount}})" type="checkbox" class="sm:p-12 lg:p-2 mx-2 appearance-none border-2 rounded-md w-6 h-6 border-gray-400">
+                        <input wire:click="document_selected({{$item->id}}, {{$item->amount}})" type="checkbox" class="lg:p-3 sm:p-4 mx-2 appearance-none border-2 rounded-md w-6 h-6 border-gray-400">
                       </div>
                     </div>
                   </li>
@@ -46,7 +60,7 @@
                 <div class="flex space-x-4">
                   <div class="flex flex-col items-center gap-x-4">
                       <label for="quantity{{$key}}" class="block text-sm font-medium leading-6 text-gray-800 rubik-400">Quantity</label>
-                      <select id="quantity{{$key}}" wire:model.live="selectedDocuments.{{$key}}.quantity" name="quantity{{$key}}" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                      <select id="quantity{{$key}}" wire:model.live="selectedDocuments.{{$key}}.quantity" name="quantity{{$key}}" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 lg:text-md lg:leading-6 sm:text-sm">
                         <option value="1" @if($selectedDocuments[$key]['quantity'] == 1) selected @endif>1</option>
                         <option value="2" @if($selectedDocuments[$key]['quantity'] == 2) selected @endif>2</option>
                         <option value="3" @if($selectedDocuments[$key]['quantity'] == 3) selected @endif>3</option>
@@ -56,7 +70,7 @@
                     </div>
                     <div class="flex flex-col items-center gap-x-4">
                       <label for="authenticated{{$key}}" class="block text-sm font-medium leading-6 text-gray-800 rubik-400">With Authentication</label>
-                      <select id="authenticated{{$key}}" wire:model.live="selectedDocuments.{{$key}}.authentication" name="authenticated{{$key}}" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                      <select id="authenticated{{$key}}" wire:model.live="selectedDocuments.{{$key}}.authentication" name="authenticated{{$key}}" class="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 lg:text-md lg:leading-6 sm:text-sm">
                         <option value="1" @if($selectedDocuments[$key]['authentication'] == '1') selected @endif>Yes</option>
                         <option value="0" @if($selectedDocuments[$key]['authentication'] == '0') selected @endif>No</option>
                       </select>
@@ -69,7 +83,7 @@
             <h1 class="rubik-300 text-xl text-gray-600 pt-3 pb-2">Request Code : <span class="rubik-400">{{$request_number}}</span> </h1>
             <div class="mb-4 border-b-2 border-gray-300 w-full" ></div>
             {{-- content --}}
-            <div class="mb-4 overflow-hidden bg-white shadow sm:rounded-lg">
+            <div class="mb-4 overflow-hidden bg-white shadow lg:rounded-lg">
                 <div>
                   <dl>
                     @foreach ($filteredDocuments as $key => $document)
@@ -115,7 +129,7 @@
             <div class="col-span-full ">
                 <label for="about" class="block text-md font-medium leading-6 text-gray-900">Purpose of Request <span class="text-red-500 text-lg">*</span></label>
                 <div class="mt-2 mb-4">
-                  <textarea wire:model="purpose" id="about" name="about" rows="3" class="rubik-300 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"></textarea>
+                  <textarea wire:model="purpose" id="about" name="about" rows="3" class="rubik-300 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 lg:text-md lg:leading-6 sm:text-sm"></textarea>
                   @error('purpose') <span class="text-red-600">{{ $message }}</span> @enderror
                 </div>
               </div>
