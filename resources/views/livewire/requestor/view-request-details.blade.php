@@ -143,7 +143,7 @@
                     <label class="rubik-400 text-sm">{{$document->pivot->quantity}}</label>
                 </div>
                 <div class="col-span-1 border-l-2 border-b-2 px-3 py-1">
-                    <input type="checkbox" class="p-2" {{$document->pivot->is_authenticated ? 'checked' : ''}}>
+                    <input type="checkbox" class="p-2 rounded-md checked:text-green-600" disabled {{$document->pivot->is_authenticated ? 'checked' : ''}}>
                 </div>
                 <div class="col-span-1 border-x-2 border-b-2 px-3 py-1 text-right">
                     <label class="rubik-400 text-sm">₱ {{number_format($document->amount, 2)}}</label>
