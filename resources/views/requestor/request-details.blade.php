@@ -1,7 +1,7 @@
 <div id="printarea" class="my-3 mx-auto bg-white">
     <div class="border-x-2 border-t-2 border-gray-300 px-4 pt-4 pb-2">
         <div class="header flex justify-center items-center">
-            <img src="{{asset('images/sksu_logo.png')}}" alt="Logo" class="mr-4 h-12 w-12">
+            <img src="{{asset('images/sksu_logo.png')}}" alt="Logo" class="mr-4 h-16 w-16">
             <h2 class="lg:text-3xl sm:text-lg sm:text-center rubik-400 tracking-wider">SULTAN KUDARAT STATE UNIVERSITY<p class="text-sm text-center sm:text-center">EJC Montilla, 9800, Province of Sultan Kudarat, Philippines</p></h2>
 
         </div>
