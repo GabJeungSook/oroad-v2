@@ -1,5 +1,5 @@
 <div id="printarea" class="my-3 mx-auto bg-white">
-    <div class="border-x-2 border-t-2 border-gray-300 p-4">
+    <div class="border-x-2 border-t-2 border-gray-300 px-4 pt-4 pb-2">
         <div class="header flex justify-center items-center">
             <img src="{{asset('images/sksu_logo.png')}}" alt="Logo" class="mr-4 h-12 w-12">
             <h2 class="lg:text-3xl sm:text-lg sm:text-center rubik-400 tracking-wider">SULTAN KUDARAT STATE UNIVERSITY<p class="text-sm text-center sm:text-center">EJC Montilla, 9800, Province of Sultan Kudarat, Philippines</p></h2>
@@ -9,7 +9,7 @@
             <h2 class="text-xl rubik-400 tracking-wider ml-12 sm:ml-14">Online Request of Academic Documents</h2>
         </div>
         <div class="flex justify-end text-sm rubik-400 mt-5">
-            Date : {{now()->format('F d, Y')}}
+             {{now()->format('F d, Y')}}
         </div>
     </div>
     <div class="w-full border-x-1 border-gray-300 bg-green-950 text-white">
@@ -80,6 +80,9 @@
     <div class="grid grid-cols-1 w-full border-x-1 border-gray-300 bg-white">
         <div class="col-span-1 border-x-2 border-b-2 px-3 py-1">
             <label class="rubik-400 text-sm">Request Code : {{$record->request_number}}</label>
+        </div>
+        <div class="col-span-1 border-x-2 border-b-2 px-3 py-1">
+            <label class="rubik-400 text-sm">Request Date : {{Carbon\Carbon::parse($record->created_at)->format('F d, Y - h:i:s A')}}</label>
         </div>
         <div class="col-span-1 border-x-2 border-b-2 px-3 py-1">
             <label class="rubik-400 text-sm">Purpose : {{$record->purpose}}</label>
