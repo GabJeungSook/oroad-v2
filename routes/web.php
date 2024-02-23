@@ -4,6 +4,7 @@ use App\Models\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GoogleAuthController;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,7 +77,12 @@ Route::get('/requestor/view-request/{request}', function ($request) {
     return view('requestor.view-request', ['record' => $request]);
 })->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.view-request');
 
+Route::get('/requestor/generate-pdf/{record}', function ($record) {
+    $data = Request::findOrFail($record);
+    $pdf = Pdf::loadView('requestor.request-details-pdf', ['record' => $data]);
+    return $pdf->download('request-form.pdf');
 
+})->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.generate-pdf');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

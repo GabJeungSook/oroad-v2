@@ -1,9 +1,16 @@
 <div id="printarea"  style="margin-top: 0.75rem; margin-bottom: 0.75rem; margin-left: auto; margin-right: auto; background-color: #fff;">
     <div  style="border-width: 0.125rem 0.25rem; border-style: solid; border-color: #d1d5db #d1d5db #fff #d1d5db; padding-left: 1rem; padding-right: 1rem; padding-top: 1rem; padding-bottom: 0.5rem;">
-        <div  style="display: flex; justify-content: center; align-items: center;">
+        {{-- <div  style="display: flex; justify-content: center; align-items: center;">
             <img src="{{asset('images/sksu_logo.png')}}" alt="Logo"  style="margin-right: 1rem; height: 4rem; width: 4rem;">
             <h2  style="font-family: 'Rubik', sans-serif; font-weight: 400; letter-spacing: 0.025em; font-size: 1.875rem; text-align: center;">SULTAN KUDARAT STATE UNIVERSITY<p class="text-sm text-center sm:text-center" style="font-size: 0.875rem; text-align: center;">EJC Montilla, 9800, Province of Sultan Kudarat, Philippines</p></h2>
+        </div> --}}
+
+
+         <div  style="display: flex; justify-content: center; align-items: center;">
+            <img src="{{ public_path('images/sksu_logo.png') }}" alt="Logo"  style="margin-right: 1rem; height: 4rem; width: 4rem;">
+            <h2  style="font-family: 'Rubik', sans-serif; font-weight: 400; letter-spacing: 0.025em; font-size: 1.875rem; text-align: center;">SULTAN KUDARAT STATE UNIVERSITY<p class="text-sm text-center sm:text-center" style="font-size: 0.875rem; text-align: center;">EJC Montilla, 9800, Province of Sultan Kudarat, Philippines</p></h2>
         </div>
+
         <div  style="display: flex; justify-content: center; align-items: center; margin-top: 0.5rem;">
             <h2  style="font-family: 'Rubik', sans-serif; font-weight: 400; letter-spacing: 0.025em; font-size: 1.25rem; margin-left: 3rem;">Online Request of Academic Documents</h2>
         </div>
