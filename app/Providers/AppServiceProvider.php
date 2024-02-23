@@ -22,7 +22,8 @@ class AppServiceProvider extends ServiceProvider
     {
         FilamentColor::register([
             'primary' => '#15803D',
-            'warning' => '#f59804'
+            'warning' => '#f59804',
+            'secondary' => '#667cae'
         ]);
     }
 }

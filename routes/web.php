@@ -51,6 +51,11 @@ Route::get('/admin/documents', function () {
     return view('admin.document');
 })->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.document');
 
+Route::get('/admin/pending-requests', function () {
+    return view('admin.pending-request');
+})->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.pending-request');
+
+
 //routes for requestor
 
 Route::get('/requestor/request-document', function () {
