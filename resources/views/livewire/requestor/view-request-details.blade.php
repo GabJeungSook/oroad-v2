@@ -29,6 +29,7 @@
             </div>
         </div>
             @include('requestor.request-details')
+
         </div>
     </div>
     <script>
