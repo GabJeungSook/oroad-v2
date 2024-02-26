@@ -56,6 +56,10 @@ Route::get('/admin/pending-requests', function () {
     return view('admin.pending-request');
 })->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.pending-request');
 
+Route::get('/admin/approved-requests', function () {
+    return view('admin.approve-request');
+})->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.approved-request');
+
 Route::get('/admin/review-pending-request/{record}', function ($request) {
     $request = Request::findOrFail($request);
     return view('admin.review-pending-request', ['record' => $request]);
