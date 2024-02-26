@@ -45,4 +45,9 @@ class UserInformation extends Model
         return $this->belongsTo(PhilippineCity::class, 'city_code', 'city_municipality_code');
     }
 
+    public function requests()
+    {
+        return $this->hasMany(Request::class);
+    }
+
 }

@@ -56,6 +56,11 @@ Route::get('/admin/pending-requests', function () {
     return view('admin.pending-request');
 })->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.pending-request');
 
+Route::get('/admin/review-pending-request/{record}', function ($request) {
+    $request = Request::findOrFail($request);
+    return view('admin.review-pending-request', ['record' => $request]);
+})->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.review-pending-request');
+
 
 //routes for requestor
 
@@ -68,7 +73,7 @@ Route::get('/requestor/update-user-information', function () {
 })->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.update-user-information');
 
 Route::get('/requestor/edit-request/{request}', function ($request) {
-    $request = Request::findOrFail($request);
+   $request = Request::findOrFail($request);
     return view('requestor.forms.edit-request', ['record' => $request]);
 })->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.edit-request');
 

@@ -15,6 +15,16 @@ class Request extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function user_information()
+    {
+        return $this->belongsTo(UserInformation::class);
+    }
+
+    public function approvedBy()
+    {
+        return $this->belongsTo(User::class, 'approved_by');
+    }
+
     public function documents()
     {
         return $this->belongsToMany(Document::class)->withPivot(['request_code', 'quantity', 'is_authenticated', 'amount'])->withTimestamps();

@@ -31,34 +31,31 @@ class PendingRequest extends Component implements HasForms, HasTable
             ->query(RequestModel::query()->where('status', 'Pending')->orderBy('created_at', 'desc'))
             ->columns([
                 TextColumn::make('request_number')
-                ->label('Request Number')
+                ->label('Request Code')
                 ->copyable()
                 ->searchable(),
-                TextColumn::make('user.user_information')
-                ->label('Requested By')
+                TextColumn::make('user_information')
+                ->label('Name')
                 ->formatStateUsing(fn ($state) => $state->first_name. ' ' . $state->middle_name. ' ' . $state->last_name)
                 ->searchable(query: function (Builder $query, string $search): Builder {
-                    return $query->whereHas('user.user_information', function($query) use ($search){
+                    return $query->whereHas('user_information', function($query) use ($search){
                         $query->where('first_name', 'like', "%{$search}%")
                          ->orWhere('last_name', 'like', "%{$search}%");
                     });
                 }),
-                TextColumn::make('documents')
-                ->label('Requested Documents')
-                ->formatStateUsing(function ($state){
-                    if($state->pivot->is_authenticated)
-                    {
-                        return $state->pivot->quantity . ' ' . $state->title . ' (w/ authentication)'.' - ₱' . number_format($state->pivot->amount, 2);
-                    }else{
-                        return $state->pivot->quantity . ' ' . $state->title . ' - ₱' . number_format($state->pivot->amount, 2);
-                    }
-                })
-                ->listWithLineBreaks()
-                ->bulleted(),
-                TextColumn::make('purpose')
-                ->formatStateUsing(fn ($state) => ucwords($state))
-                ->wrap()
-                ->searchable(),
+                // TextColumn::make('documents')
+                // ->label('Requested Documents')
+                // ->formatStateUsing(function ($state){
+                //     if($state->pivot->is_authenticated)
+                //     {
+                //         return $state->pivot->quantity . ' ' . $state->title . ' (w/ authentication)'.' - ₱' . number_format($state->pivot->amount, 2);
+                //     }else{
+                //         return $state->pivot->quantity . ' ' . $state->title . ' - ₱' . number_format($state->pivot->amount, 2);
+                //     }
+                // })
+                // ->listWithLineBreaks()
+                // ->bulleted(),
+
                 // TextColumn::make('total_amount')
                 // ->label('Total Amount')
                 // ->formatStateUsing(fn ($state) => '₱' . number_format($state, 2))
@@ -66,6 +63,10 @@ class PendingRequest extends Component implements HasForms, HasTable
                 TextColumn::make('created_at')
                 ->label('Date Requested')
                 ->formatStateUsing(fn ($state) => $state->format('F d, Y h:i A'))
+                ->searchable(),
+                TextColumn::make('purpose')
+                ->formatStateUsing(fn ($state) => ucwords($state))
+                ->wrap()
                 ->searchable(),
             ])
             ->headerActions([
@@ -75,7 +76,8 @@ class PendingRequest extends Component implements HasForms, HasTable
                     Action::make('review_request')
                     ->label('Review Request')
                     ->color('warning')
-                    ->icon('heroicon-o-eye'),
+                    ->icon('heroicon-o-eye')
+                    ->url(fn ($record) => route('admin.review-pending-request', $record)),
                     ViewAction::make('view_request_form')
                     ->label('Request Form')
                     ->color('secondary')

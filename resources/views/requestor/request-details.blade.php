@@ -19,57 +19,57 @@
     </div>
     <div class="grid grid-cols-2 w-full border-x-1 border-gray-300 bg-white">
         <div class="col-span-1 border-l-2 border-b-2 px-3 py-1">
-            <label class="rubik-400 text-sm">Full Name : {{ucwords($record->user->user_information->first_name.' '.$record->user->user_information->middle_name.' '.$record->user->user_information->last_name)}}</label>
+            <label class="rubik-400 text-sm">Full Name : {{ucwords($record->user_information->first_name.' '.$record->user_information->middle_name.' '.$record->user_information->last_name)}}</label>
         </div>
         <div class="col-span-1 border-x-2 border-b-2 px-3 py-1">
-            <label class="rubik-400 text-sm">Gender : {{ucfirst($record->user->user_information->gender)}}</label>
+            <label class="rubik-400 text-sm">Gender : {{ucfirst($record->user_information->gender)}}</label>
         </div>
     </div>
     <div class="grid grid-cols-3 w-full border-x-1 border-gray-300 bg-white">
         <div class="col-span-1 border-l-2 border-b-2 px-3 py-1">
-            <label class="rubik-400 text-sm">Birthday : {{Carbon\Carbon::parse($record->user->user_information->birthday)->format('F d, Y')}}</label>
+            <label class="rubik-400 text-sm">Birthday : {{Carbon\Carbon::parse($record->user_information->birthday)->format('F d, Y')}}</label>
         </div>
         <div class="col-span-1 border-l-2 border-b-2 px-3 py-1">
             @php
-                $birthday = \Carbon\Carbon::parse($record->user->user_information->birthday);
+                $birthday = \Carbon\Carbon::parse($record->user_information->birthday);
                 $age = $birthday->diffInYears(\Carbon\Carbon::now());
             @endphp
             <label class="rubik-400 text-sm">Age : {{$age}}</label>
         </div>
 
         <div class="col-span-1 border-x-2 border-b-2 px-3 py-1">
-            <label class="rubik-400 text-sm">Contact Number : {{str_replace(' ', '', $record->user->user_information->contact_number)}}</label>
+            <label class="rubik-400 text-sm">Contact Number : {{str_replace(' ', '', $record->user_information->contact_number)}}</label>
         </div>
     </div>
     <div class="grid grid-cols-3 w-full border-x-1 border-gray-300 bg-white">
         <div class="col-span-1 border-l-2 border-b-2 px-3 py-1">
-            <label class="rubik-400 text-sm">Campus : {{$record->user->user_information->campus->name}}</label>
+            <label class="rubik-400 text-sm">Campus : {{$record->user_information->campus->name}}</label>
         </div>
         <div class="col-span-1 border-l-2 border-b-2 px-3 py-1">
-            <label class="rubik-400 text-sm">Course : {{$record->user->user_information->campus->courses->first()->name}}</label>
+            <label class="rubik-400 text-sm">Course : {{$record->user_information->campus->courses->first()->name}}</label>
         </div>
         <div class="col-span-1 border-x-2 border-b-2 px-3 py-1">
-            <label class="rubik-400 text-sm">Type : {{$record->user->user_information->userType->name}}</label>
+            <label class="rubik-400 text-sm">Type : {{$record->user_information->userType->name}}</label>
         </div>
     </div>
     <div class="grid grid-cols-1 w-full border-x-1 border-gray-300 bg-white">
         <div class="col-span-1 border-x-2 border-b-2 px-3 py-1">
-            <label class="rubik-400 text-sm">Region : {{$record->user->user_information->philippineRegion->region_description}}</label>
+            <label class="rubik-400 text-sm">Region : {{$record->user_information->philippineRegion->region_description}}</label>
         </div>
         <div class="col-span-1 border-x-2 border-b-2 px-3 py-1">
-            <label class="rubik-400 text-sm">Province : {{$record->user->user_information->philippineProvince->province_description}}</label>
+            <label class="rubik-400 text-sm">Province : {{$record->user_information->philippineProvince->province_description}}</label>
         </div>
         <div class="col-span-1 border-x-2 border-b-2 px-3 py-1">
-            <label class="rubik-400 text-sm">City/Municipality : {{$record->user->user_information->philippineCity->city_municipality_description}}</label>
+            <label class="rubik-400 text-sm">City/Municipality : {{$record->user_information->philippineCity->city_municipality_description}}</label>
         </div>
 
     </div>
     <div class="grid grid-cols-2 w-full border-x-1 border-gray-300 bg-white">
         <div class="col-span-1 border-l-2 border-b-2 px-3 py-1">
-            <label class="rubik-400 text-sm">Other Details : {{$record->user->user_information->other_address_details}}</label>
+            <label class="rubik-400 text-sm">Other Details : {{$record->user_information->other_address_details}}</label>
         </div>
         <div class="col-span-1 border-x-2 border-b-2 px-3 py-1">
-            <label class="rubik-400 text-sm">Postal Code : {{$record->user->user_information->postal_code}}</label>
+            <label class="rubik-400 text-sm">Postal Code : {{$record->user_information->postal_code}}</label>
         </div>
     </div>
     <div class="w-full border-x-1 border-gray-300 bg-green-950 text-white">

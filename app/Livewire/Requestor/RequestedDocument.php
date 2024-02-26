@@ -81,7 +81,7 @@ class RequestedDocument extends Component implements HasForms, HasActions
                 DB::beginTransaction();
                 $new_request = Request::create([
                     'request_number' => $this->request_number,
-                    'user_id' => auth()->user()->id,
+                    'user_information_id' => auth()->user()->user_information->id,
                     'purpose' => $this->purpose,
                     'total_amount' => $total,
                     'status' => 'Pending',

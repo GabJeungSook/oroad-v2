@@ -1,0 +1,97 @@
+<div>
+    <div class="flex justify-between">
+        <div>
+            <a wire:navigate href="{{route('admin.pending-request')}}">
+                <button type="button" class="flex text-sm bg-gray-50 hover:bg-gray-200 p-2 font-semibold rounded-md border-2 border-gray-400 leading-6 rubik-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                  </svg>
+                  <span class="px-2">Return</span></button>
+            </a>
+        </div>
+    </div>
+    <div class="bg-white w-full mt-5 rounded-md shadow-md p-3">
+        <div class="rubik-300 text-lg space-y-2">
+            <span>Request Code: {{$record->request_number}}</span>
+            <div class="flex justify-between">
+                <div>
+                    <p class="text-sm">Status:
+                        <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+                            {{$record->status}}
+                        </span>
+                    </p>
+                </div>
+                <div class="flex items-center justify-end gap-x-1">
+                    {{ $this->approveAction }}
+                    {{ $this->denyAction }}
+                    <x-filament-actions::modals />
+                    {{-- <button type="submit" class="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline
+                    focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:green-indigo-600">Approve</button> --}}
+                    {{-- <button type="submit" class="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline
+                    focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Deny</button> --}}
+                </div>
+
+            </div>
+
+        </div>
+        <div class="overflow-hidden bg-white shadow sm:rounded-lg mt-5">
+            <div class="border-t border-gray-100">
+              <dl class="divide-y divide-gray-100">
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt class="text-sm font-medium text-gray-900">Full name</dt>
+                  <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ucwords($full_name)}}</dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt class="text-sm font-medium text-gray-900">Date Requested</dt>
+                  <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{Carbon\Carbon::parse($record->created_at)->format('F d, Y h:i A')}}</dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt class="text-sm font-medium text-gray-900">Purpose</dt>
+                  <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ucwords($record->purpose)}}</dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                  <dt class="text-sm font-medium leading-6 text-gray-900">Requested Documents</dt>
+                  <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                    <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
+                        @foreach ($record->documents()->get() as $document)
+                        <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                            <div class="flex w-0 flex-1 items-center">
+                              <svg class="h-5 w-5 flex-shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z" clip-rule="evenodd" />
+                              </svg>
+                              <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                                <span class="truncate font-medium">{{$document->title}}</span>
+                                <span class="flex-shrink-0 text-gray-400">{{$document->pivot->quantity > 1 ? $document->pivot->quantity.' copies' : $document->pivot->quantity.' copy'}}</span>
+                                @if ($document->pivot->is_authenticated)
+                                <span class="flex-shrink-0 text-gray-400">with authentication</span>
+                                @endif
+                                </div>
+                            </div>
+                            <div class="ml-4 flex-shrink-0">
+                              <span href="#" class="font-medium text-gray-400 ">₱ {{$document->pivot->amount}}</span>
+                            </div>
+                          </li>
+                        @endforeach
+                        <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                            <div class="flex w-0 flex-1 items-center">
+                                  <svg class="h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z" />
+                                  </svg>
+                              <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                                <span class="truncate font-medium ">Total: </span>
+                                </div>
+                            </div>
+                            <div class="ml-4 flex-shrink-0">
+                              <span href="#" class="font-medium text-green-600 ">₱ {{$record->total_amount}}</span>
+                            </div>
+                          </li>
+                    </ul>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+
+    </div>
+</div>

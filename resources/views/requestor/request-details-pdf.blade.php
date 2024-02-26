@@ -25,55 +25,55 @@
     </div>
     <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; border-width: 0.0625rem; border-style: solid; border-color: #d1d5db; background-color: #fff;">
         <div  style="grid-column: span 1; border-left-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
-            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Full Name : {{ucwords($record->user->user_information->first_name.' '.$record->user->user_information->middle_name.' '.$record->user->user_information->last_name)}}</label>
+            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Full Name : {{ucwords($record->user_information->first_name.' '.$record->user_information->middle_name.' '.$record->user_information->last_name)}}</label>
         </div>
         <div  style="grid-column: span 1; border-right-width: 0.125rem; border-left-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
-            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Gender : {{ucfirst($record->user->user_information->gender)}}</label>
+            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Gender : {{ucfirst($record->user_information->gender)}}</label>
         </div>
     </div>
     <div  style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; border-width: 0.0625rem; border-style: solid; border-color: #d1d5db; background-color: #fff;">
         <div  style="grid-column: span 1; border-left-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
-            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Birthday : {{Carbon\Carbon::parse($record->user->user_information->birthday)->format('F d, Y')}}</label>
+            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Birthday : {{Carbon\Carbon::parse($record->user_information->birthday)->format('F d, Y')}}</label>
         </div>
         <div  style="grid-column: span 1; border-left-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
             @php
-                $birthday = \Carbon\Carbon::parse($record->user->user_information->birthday);
+                $birthday = \Carbon\Carbon::parse($record->user_information->birthday);
                 $age = $birthday->diffInYears(\Carbon\Carbon::now());
             @endphp
             <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Age : {{$age}}</label>
         </div>
         <div class="col-span-1 border-x-2 border-b-2 px-3 py-1" style="grid-column: span 1; border-right-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
-            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Contact Number : {{str_replace(' ', '', $record->user->user_information->contact_number)}}</label>
+            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Contact Number : {{str_replace(' ', '', $record->user_information->contact_number)}}</label>
         </div>
     </div>
     <div  style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; border-width: 0.0625rem; border-style: solid; border-color: #d1d5db; background-color: #fff;">
         <div  style="grid-column: span 1; border-left-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
-            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Campus : {{$record->user->user_information->campus->name}}</label>
+            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Campus : {{$record->user_information->campus->name}}</label>
         </div>
         <div  style="grid-column: span 1; border-left-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
-            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Course : {{$record->user->user_information->campus->courses->first()->name}}</label>
+            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Course : {{$record->user_information->campus->courses->first()->name}}</label>
         </div>
         <div  style="grid-column: span 1; border-right-width: 0.125rem; border-left-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
-            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Type : {{$record->user->user_information->userType->name}}</label>
+            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Type : {{$record->user_information->userType->name}}</label>
         </div>
     </div>
     <div  style="display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); width: 100%; border-width: 0.0625rem; border-style: solid; border-color: #d1d5db; background-color: #fff;">
         <div  style="grid-column: span 1; border-right-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
-            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Region : {{$record->user->user_information->philippineRegion->region_description}}</label>
+            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Region : {{$record->user_information->philippineRegion->region_description}}</label>
         </div>
         <div  style="grid-column: span 1; border-right-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
-            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Province : {{$record->user->user_information->philippineProvince->province_description}}</label>
+            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Province : {{$record->user_information->philippineProvince->province_description}}</label>
         </div>
         <div  style="grid-column: span 1; border-right-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
-            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">City/Municipality : {{$record->user->user_information->philippineCity->city_municipality_description}}</label>
+            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">City/Municipality : {{$record->user_information->philippineCity->city_municipality_description}}</label>
         </div>
     </div>
     <div  style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; border-width: 0.0625rem; border-style: solid; border-color: #d1d5db; background-color: #fff;">
         <div style="grid-column: span 1; border-left-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
-            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Other Details : {{$record->user->user_information->other_address_details}}</label>
+            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Other Details : {{$record->user_information->other_address_details}}</label>
         </div>
         <div  style="grid-column: span 1; border-right-width: 0.125rem; border-left-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
-            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Postal Code : {{$record->user->user_information->postal_code}}</label>
+            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Postal Code : {{$record->user_information->postal_code}}</label>
         </div>
     </div>
     <div style="width: 100%; border-width: 0.0625rem; border-style: solid; border-color: #d1d5db; background-color: #065f46; color: #fff;">
