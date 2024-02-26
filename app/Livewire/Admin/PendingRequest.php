@@ -111,7 +111,7 @@ class PendingRequest extends Component implements HasForms, HasTable
                 // ]),
             ])
             ->emptyStateHeading('No request yet')
-            ->emptyStateDescription('You can make your first request');;
+            ->emptyStateDescription('All pending requests will be displayed here');;
     }
 
     public function render()
