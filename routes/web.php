@@ -4,7 +4,7 @@ use App\Models\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\GoogleAuthController;
-use Barryvdh\DomPDF\Facade\Pdf;
+use function Spatie\LaravelPdf\Support\pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,8 +88,9 @@ Route::get('/requestor/view-request/{request}', function ($request) {
 
 Route::get('/requestor/generate-pdf/{record}', function ($record) {
     $data = Request::findOrFail($record);
-    $pdf = Pdf::loadView('requestor.request-details-pdf', ['record' => $data]);
-    return $pdf->download('request-form.pdf');
+    return pdf('requestor.request-details-pdf', ['record' => $data]);
+    // $pdf = Pdf::loadView('requestor.request-details-pdf', ['record' => $data]);
+    // return $pdf->download('request-form.pdf');
 
 })->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.generate-pdf');
 
