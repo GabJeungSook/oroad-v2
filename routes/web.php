@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    if(auth()->user()->role_id == 1)
+    if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3)
     {
         return redirect()->route('admin.dashboard');
     }elseif(auth()->user()->role_id == 2)
@@ -34,7 +34,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
-})->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.dashboard');
+})->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.dashboard');
 
 Route::get('/admin/campuses', function () {
     return view('admin.campus');
@@ -52,18 +52,22 @@ Route::get('/admin/documents', function () {
     return view('admin.document');
 })->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.document');
 
+Route::get('/admin/users', function () {
+    return view('admin.user');
+})->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.user');
+
 Route::get('/admin/pending-requests', function () {
     return view('admin.pending-request');
-})->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.pending-request');
+})->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.pending-request');
 
 Route::get('/admin/approved-requests', function () {
     return view('admin.approve-request');
-})->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.approved-request');
+})->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.approved-request');
 
 Route::get('/admin/review-pending-request/{record}', function ($request) {
     $request = Request::findOrFail($request);
     return view('admin.review-pending-request', ['record' => $request]);
-})->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.review-pending-request');
+})->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.review-pending-request');
 
 
 //routes for requestor
