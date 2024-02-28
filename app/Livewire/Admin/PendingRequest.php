@@ -5,20 +5,21 @@ namespace App\Livewire\Admin;
 use Filament\Tables;
 use Livewire\Component;
 use Filament\Tables\Table;
+use Filament\Actions\StaticAction;
 use Filament\Tables\Actions\Action;
+use Illuminate\Contracts\View\View;
 use Filament\Forms\Contracts\HasForms;
 use App\Models\Request as RequestModel;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\CreateAction;
-use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Actions\DeleteAction;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Contracts\View\View;
 
 class PendingRequest extends Component implements HasForms, HasTable
 {
@@ -78,14 +79,17 @@ class PendingRequest extends Component implements HasForms, HasTable
                     ->color('warning')
                     ->icon('heroicon-o-eye')
                     ->url(fn ($record) => route('admin.review-pending-request', $record)),
-                    ViewAction::make('view_request_form')
+                    Action::make('view_request_form')
                     ->label('Request Form')
                     ->color('secondary')
                     ->icon('heroicon-o-document-text')
                     ->modalContent(fn (RequestModel $record): View => view(
                         'requestor.request-details',
                         ['record' => $record],
-                    )),
+                    ))->modalSubmitActionLabel('Save PDF')
+                     ->modalSubmitAction(function (StaticAction $action, $record) {
+                        return $action->url('/requestor/generate-pdf/'.$record->id, false);
+                     }),
                     ViewAction::make('view_timeline')
                     ->label('Track Progress')
                     ->color('secondary')

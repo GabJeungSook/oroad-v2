@@ -96,7 +96,7 @@ Route::get('/requestor/generate-pdf/{record}', function ($record) {
     // $pdf = Pdf::loadView('requestor.request-details-pdf', ['record' => $data]);
     // return $pdf->download('request-form.pdf');
 
-})->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.generate-pdf');
+})->middleware(['auth', 'verified', 'role:REQUESTOR,ADMIN'])->name('requestor.generate-pdf');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
