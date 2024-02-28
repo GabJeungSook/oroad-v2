@@ -90,29 +90,15 @@ class PendingRequest extends Component implements HasForms, HasTable
                      ->modalSubmitAction(function (StaticAction $action, $record) {
                         return $action->url('/requestor/generate-pdf/'.$record->id, false);
                      }),
-                    ViewAction::make('view_timeline')
-                    ->label('Track Progress')
-                    ->color('secondary')
-                    ->icon('heroicon-o-queue-list')
-                    ->modalContent(fn (RequestModel $record): View => view(
-                        'requestor.request-details',
-                        ['record' => $record],
-                    ))
+                    // ViewAction::make('view_timeline')
+                    // ->label('Track Progress')
+                    // ->color('secondary')
+                    // ->icon('heroicon-o-queue-list')
+                    // ->modalContent(fn (RequestModel $record): View => view(
+                    //     'requestor.request-details',
+                    //     ['record' => $record],
+                    // ))
                 ])->icon('heroicon-s-bolt')
-
-                // ActionGroup::make([
-                // Action::make('edit_request')
-                // ->label('Edit')
-                // ->color('warning')
-                // ->icon('heroicon-o-pencil')
-                // ->visible(fn ($record) => $record->status === 'Pending')
-                // ->url(fn ($record) => route('requestor.edit-request', $record)),
-                // Action::make('view_request')
-                // ->label('View Request Details')
-                // ->color('success')
-                // ->icon('heroicon-o-eye')
-                // ->url(fn ($record) => route('requestor.view-request', $record)),
-                // ]),
             ])
             ->emptyStateHeading('No request yet')
             ->emptyStateDescription('All pending requests will be displayed here');;
