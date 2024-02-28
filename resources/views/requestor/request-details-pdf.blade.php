@@ -120,7 +120,7 @@
             <label style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">{{$document->pivot->quantity}}</label>
         </div>
         <div  style="grid-column: span 1; border-left-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
-            <input type="checkbox"  disabled {{$document->pivot->is_authenticated ? 'checked' : ''}}>
+            <input type="checkbox" {{$document->pivot->is_authenticated ? 'checked' : ''}}>
         </div>
         <div  style="grid-column: span 1; border-right-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem; text-align: right;">
             <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">₱ {{number_format($document->pivot->amount, 2)}}</label>
