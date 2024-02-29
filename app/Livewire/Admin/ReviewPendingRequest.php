@@ -92,7 +92,7 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
     public function viewDetailsAction(): Action
     {
         return Action::make('viewDetails')
-            ->size(ActionSize::ExtraSmall)
+            ->size(ActionSize::Small)
             ->color('secondary')
             ->icon('heroicon-o-eye')
             ->modalHeading('Requestor Details')
