@@ -7,6 +7,7 @@ use Filament\Actions\Action;
 use Illuminate\Contracts\View\View;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Pages\Actions\ViewAction;
+use Filament\Support\Enums\ActionSize;
 use Filament\Forms\Components\Textarea;
 use Illuminate\Support\Facades\Storage;
 use Filament\Notifications\Notification;
@@ -91,6 +92,7 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
     public function viewDetailsAction(): Action
     {
         return Action::make('viewDetails')
+            ->size(ActionSize::ExtraSmall)
             ->color('secondary')
             ->icon('heroicon-o-eye')
             ->modalHeading('Requestor Details')
