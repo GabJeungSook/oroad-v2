@@ -1,6 +1,7 @@
 <div>
     <div class="flex justify-between">
         <div>
+            @if($record->status == 'Pending')
             <a wire:navigate href="{{route('admin.pending-request')}}">
                 <button type="button" class="flex text-sm bg-gray-50 hover:bg-gray-200 p-2 font-semibold rounded-md border-2 border-gray-400 leading-6 rubik-500">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -8,6 +9,15 @@
                   </svg>
                   <span class="px-2">Return</span></button>
             </a>
+            @else
+            <a wire:navigate href="{{route('admin.approved-request')}}">
+                <button type="button" class="flex text-sm bg-gray-50 hover:bg-gray-200 p-2 font-semibold rounded-md border-2 border-gray-400 leading-6 rubik-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                  </svg>
+                  <span class="px-2">Return</span></button>
+            </a>
+            @endif
         </div>
     </div>
     <div class="bg-white w-full mt-5 rounded-md shadow-md p-3">
@@ -21,16 +31,14 @@
                         </span>
                     </p>
                 </div>
+                @if ($record->status == 'Pending')
                 <div class="flex items-center justify-end gap-x-1">
                     {{ $this->approveAction }}
                     {{ $this->denyAction }}
-                    <x-filament-actions::modals />
-                    {{-- <button type="submit" class="rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline
-                    focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:green-indigo-600">Approve</button> --}}
-                    {{-- <button type="submit" class="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline
-                    focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Deny</button> --}}
-                </div>
 
+                </div>
+                @endif
+                <x-filament-actions::modals />
             </div>
 
         </div>
@@ -47,6 +55,17 @@
                   <dt class="text-sm font-medium text-gray-900">Date Requested</dt>
                   <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{Carbon\Carbon::parse($record->created_at)->format('F d, Y h:i A')}}</dd>
                 </div>
+                </div>
+                @if ($record->status == 'Approved')
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Date Approved</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{Carbon\Carbon::parse($record->approved_at)->format('F d, Y h:i A')}}</dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Approved By</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ucwords($record->approvedBy->name)}}</dd>
+                </div>
+                @endif
                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt class="text-sm font-medium text-gray-900">Purpose</dt>
                   <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ucwords($record->purpose)}}</dd>
