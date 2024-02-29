@@ -10,7 +10,6 @@
                       </svg>
                       <span class="px-2">Return</span></button>
                 </a>
-
             </div>
         </div>
         <div class="my-3 border-b-2 border-gray-300 w-full" ></div>

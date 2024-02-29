@@ -29,4 +29,9 @@ class Request extends Model
     {
         return $this->belongsToMany(Document::class)->withPivot(['request_code', 'quantity', 'is_authenticated', 'amount'])->withTimestamps();
     }
+
+    public function payments()
+    {
+        return $this->hasOne(RequestPayment::class, 'request_number', 'request_number');
+    }
 }

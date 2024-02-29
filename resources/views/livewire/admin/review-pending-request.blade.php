@@ -26,21 +26,21 @@
             <div class="flex justify-between">
                 <div>
                     <p class="text-sm">Status:
-                        <span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+                        <span class="items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
                             {{$record->status}}
                         </span>
                     </p>
                 </div>
-                @if ($record->status == 'Pending')
-                <div class="flex items-center justify-end gap-x-1">
+
+                <div class="flex justify-end gap-x-1">
+                    @if ($record->status == 'Pending')
                     {{ $this->approveAction }}
                     {{ $this->denyAction }}
-
+                    @endif
                 </div>
-                @endif
-                <x-filament-actions::modals />
-            </div>
 
+            </div>
+            <x-filament-actions::modals />
         </div>
         <div class="overflow-hidden bg-white shadow sm:rounded-lg mt-5">
             <div class="border-t border-gray-100">

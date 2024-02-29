@@ -2,10 +2,10 @@
 
 namespace App\Livewire\Admin;
 
-use Carbon\Carbon;
 use Filament\Tables;
 use Livewire\Component;
 use Filament\Tables\Table;
+use Filament\Actions\StaticAction;
 use Filament\Tables\Actions\Action;
 use Illuminate\Contracts\View\View;
 use Filament\Forms\Contracts\HasForms;
@@ -21,7 +21,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-class ApproveRequest extends Component implements HasForms, HasTable
+class PaymentRequest extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -29,7 +29,7 @@ class ApproveRequest extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(RequestModel::query()->where('status', 'Approved')->orderBy('created_at', 'desc'))
+            ->query(RequestModel::query()->where('status', 'Payment Validation')->orderBy('created_at', 'desc'))
             ->columns([
                 TextColumn::make('request_number')
                 ->label('Request Code')
@@ -44,18 +44,36 @@ class ApproveRequest extends Component implements HasForms, HasTable
                          ->orWhere('last_name', 'like', "%{$search}%");
                     });
                 }),
+                // TextColumn::make('documents')
+                // ->label('Requested Documents')
+                // ->formatStateUsing(function ($state){
+                //     if($state->pivot->is_authenticated)
+                //     {
+                //         return $state->pivot->quantity . ' ' . $state->title . ' (w/ authentication)'.' - ₱' . number_format($state->pivot->amount, 2);
+                //     }else{
+                //         return $state->pivot->quantity . ' ' . $state->title . ' - ₱' . number_format($state->pivot->amount, 2);
+                //     }
+                // })
+                // ->listWithLineBreaks()
+                // ->bulleted(),
+
+                // TextColumn::make('total_amount')
+                // ->label('Total Amount')
+                // ->formatStateUsing(fn ($state) => '₱' . number_format($state, 2))
+                // ->searchable(),
                 TextColumn::make('created_at')
                 ->label('Date Requested')
                 ->formatStateUsing(fn ($state) => $state->format('F d, Y h:i A'))
                 ->searchable(),
-                TextColumn::make('approved_at')
-                ->label('Date Approved')
-                ->formatStateUsing(fn ($state) => Carbon::parse($state)->format('F d, Y h:i A'))
+                TextColumn::make('payments.created_at')
+                ->label('Paid At')
+                ->formatStateUsing(fn ($state) => $state->format('F d, Y h:i A'))
                 ->searchable(),
                 TextColumn::make('purpose')
                 ->formatStateUsing(fn ($state) => ucwords($state))
                 ->wrap()
                 ->searchable(),
+
             ])
             ->headerActions([
                 //
@@ -66,14 +84,17 @@ class ApproveRequest extends Component implements HasForms, HasTable
                     ->color('warning')
                     ->icon('heroicon-o-eye')
                     ->url(fn ($record) => route('admin.review-pending-request', $record)),
-                    ViewAction::make('view_request_form')
-                    ->label('Request Form')
-                    ->color('secondary')
-                    ->icon('heroicon-o-document-text')
-                    ->modalContent(fn (RequestModel $record): View => view(
-                        'requestor.request-details',
-                        ['record' => $record],
-                    )),
+                    // Action::make('view_request_form')
+                    // ->label('Request Form')
+                    // ->color('secondary')
+                    // ->icon('heroicon-o-document-text')
+                    // ->modalContent(fn (RequestModel $record): View => view(
+                    //     'requestor.request-details',
+                    //     ['record' => $record],
+                    // ))->modalSubmitActionLabel('Save PDF')
+                    //  ->modalSubmitAction(function (StaticAction $action, $record) {
+                    //     return $action->url('/requestor/generate-pdf/'.$record->id, false);
+                    //  }),
                     // ViewAction::make('view_timeline')
                     // ->label('Track Progress')
                     // ->color('secondary')
@@ -83,27 +104,13 @@ class ApproveRequest extends Component implements HasForms, HasTable
                     //     ['record' => $record],
                     // ))
                 ])->icon('heroicon-s-bolt')
-
-                // ActionGroup::make([
-                // Action::make('edit_request')
-                // ->label('Edit')
-                // ->color('warning')
-                // ->icon('heroicon-o-pencil')
-                // ->visible(fn ($record) => $record->status === 'Pending')
-                // ->url(fn ($record) => route('requestor.edit-request', $record)),
-                // Action::make('view_request')
-                // ->label('View Request Details')
-                // ->color('success')
-                // ->icon('heroicon-o-eye')
-                // ->url(fn ($record) => route('requestor.view-request', $record)),
-                // ]),
             ])
             ->emptyStateHeading('No request yet')
-            ->emptyStateDescription('All approved requests will be displayed here');;
+            ->emptyStateDescription('All payment requests will be displayed here');;
     }
 
     public function render()
     {
-        return view('livewire.admin.approve-request');
+        return view('livewire.admin.payment-request');
     }
 }

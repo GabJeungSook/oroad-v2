@@ -83,6 +83,12 @@ class Request extends Component implements HasForms, HasTable
                 ->icon('heroicon-o-document-text')
                 ->url(fn ($record) => route('requestor.view-request', $record))
                 ->visible(fn ($record) => $record->status === 'Approved'),
+                Action::make('add_payment')
+                ->label('Add Payment Details')
+                ->color('warning')
+                ->icon('heroicon-o-credit-card')
+                ->url(fn ($record) => route('add-payment-details', $record))
+                ->visible(fn ($record) => $record->status === 'Approved'),
                 ]),
             ])
             ->emptyStateHeading('No request yet')

@@ -111,10 +111,13 @@ class AddUserInformation extends Component implements HasForms
                     ->required()
                 ])->columns(3),
                     FileUpload::make('valid_id_path')
+                    ->uploadingMessage('Uploading receipt image...')
+                    ->image()
                     ->preserveFileNames()
                     ->disk('public')
                     ->directory('valid-ids')
                     ->label('Upload a valid ID')
+                    ->required(),
                 // ...
             ])
             ->statePath('data');

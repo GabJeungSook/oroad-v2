@@ -64,6 +64,10 @@ Route::get('/admin/approved-requests', function () {
     return view('admin.approve-request');
 })->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.approved-request');
 
+Route::get('/admin/payment-requests', function () {
+    return view('admin.payment-request');
+})->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.payment-request');
+
 Route::get('/admin/review-pending-request/{record}', function ($request) {
     $request = Request::findOrFail($request);
     return view('admin.review-pending-request', ['record' => $request]);
@@ -94,6 +98,12 @@ Route::get('/requestor/request-details/{request}', function ($request) {
     $request = Request::findOrFail($request);
     return view('requestor.request-view-details', ['record' => $request]);
 })->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('request-view-detail');
+
+
+Route::get('/requestor/add-payment-details/{request}', function ($request) {
+    $request = Request::findOrFail($request);
+    return view('requestor.forms.add-payment-details', ['record' => $request]);
+})->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('add-payment-details');
 
 
 Route::get('/requestor/generate-pdf/{record}', function ($record) {
