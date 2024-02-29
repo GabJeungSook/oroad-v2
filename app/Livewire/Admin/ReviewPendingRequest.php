@@ -3,13 +3,16 @@
 namespace App\Livewire\Admin;
 
 use Livewire\Component;
+use Filament\Actions\Action;
+use Illuminate\Contracts\View\View;
+use Filament\Forms\Contracts\HasForms;
+use Filament\Pages\Actions\ViewAction;
+use Filament\Forms\Components\Textarea;
+use Illuminate\Support\Facades\Storage;
 use Filament\Notifications\Notification;
-use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Components\Textarea;
-use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
 
 class ReviewPendingRequest extends Component implements  HasForms, HasActions
 {
@@ -83,6 +86,19 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                 ->send();
                 return redirect()->route('admin.pending-request');
             });
+    }
+
+    public function viewDetailsAction(): Action
+    {
+        return Action::make('viewDetails')
+            ->color('secondary')
+            ->icon('heroicon-o-eye')
+            ->modalHeading('Requestor Details')
+            ->modalContent(fn (): View => view(
+                'admin.requestor-details',
+                ['record' => $this->record->user_information],
+            ))->modalSubmitAction(false)->modalCancelActionLabel('Close')
+            ->slideOver();
     }
 
     public function render()
