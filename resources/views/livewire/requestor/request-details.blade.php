@@ -2,7 +2,7 @@
     <div class="rubik-300 text-3xl text-gray-600">
         <div class="flex justify-between">
             <h1>Request Details</h1>
-            <div>
+            <div class="flex space-x-3">
                 <a wire:navigate href="{{route('dashboard')}}">
                     <button type="button" class="flex text-sm bg-gray-50 hover:bg-gray-200 p-2 font-semibold rounded-md border-2 border-gray-400 leading-6 rubik-500">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -10,7 +10,6 @@
                       </svg>
                       <span class="px-2">Return</span></button>
                 </a>
-
 
             </div>
         </div>
@@ -24,6 +23,11 @@
                             {{$record->status}}
                         </span>
                     </p>
+
+                </div>
+                <div>
+                    {{$this->viewTimelineAction}}
+                    <x-filament-actions::modals />
                 </div>
             </div>
 
