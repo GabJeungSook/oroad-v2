@@ -90,6 +90,12 @@ Route::get('/requestor/view-request/{request}', function ($request) {
     return view('requestor.view-request', ['record' => $request]);
 })->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.view-request');
 
+Route::get('/requestor/request-details/{request}', function ($request) {
+    $request = Request::findOrFail($request);
+    return view('requestor.request-view-details', ['record' => $request]);
+})->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('request-view-detail');
+
+
 Route::get('/requestor/generate-pdf/{record}', function ($record) {
     $data = Request::findOrFail($record);
     return pdf('requestor.request-details-pdf', ['record' => $data])->download('sksu_oroad_request-form.pdf');
