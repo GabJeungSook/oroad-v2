@@ -105,7 +105,7 @@ class RequestedDocument extends Component implements HasForms, HasActions
                 ->success()
                 ->send();
 
-                return redirect()->route('requestor.request-document');
+                return redirect()->route('dashboard');
             });
     }
 

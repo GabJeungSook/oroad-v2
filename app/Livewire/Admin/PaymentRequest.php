@@ -80,21 +80,21 @@ class PaymentRequest extends Component implements HasForms, HasTable
             ])->actions([
                 ActionGroup::make([
                     Action::make('review_request')
-                    ->label('Review Request')
+                    ->label('Review Payment Request')
                     ->color('warning')
-                    ->icon('heroicon-o-eye')
+                    ->icon('heroicon-o-banknotes')
                     ->url(fn ($record) => route('admin.review-pending-request', $record)),
-                    // Action::make('view_request_form')
-                    // ->label('Request Form')
-                    // ->color('secondary')
-                    // ->icon('heroicon-o-document-text')
-                    // ->modalContent(fn (RequestModel $record): View => view(
-                    //     'requestor.request-details',
-                    //     ['record' => $record],
-                    // ))->modalSubmitActionLabel('Save PDF')
-                    //  ->modalSubmitAction(function (StaticAction $action, $record) {
-                    //     return $action->url('/requestor/generate-pdf/'.$record->id, false);
-                    //  }),
+                    Action::make('view_request_form')
+                    ->label('Request Form')
+                    ->color('secondary')
+                    ->icon('heroicon-o-document-text')
+                    ->modalContent(fn (RequestModel $record): View => view(
+                        'requestor.request-details',
+                        ['record' => $record],
+                    ))->modalSubmitActionLabel('Save PDF')
+                     ->modalSubmitAction(function (StaticAction $action, $record) {
+                        return $action->url('/requestor/generate-pdf/'.$record->id, false);
+                     }),
                     // ViewAction::make('view_timeline')
                     // ->label('Track Progress')
                     // ->color('secondary')

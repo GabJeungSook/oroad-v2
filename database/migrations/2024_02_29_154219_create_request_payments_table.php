@@ -13,9 +13,14 @@ return new class extends Migration
     {
         Schema::create('request_payments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('approved_by')->nullable()->index();
             $table->string('request_number');
             $table->string('receipt_number');
             $table->string('receipt_path');
+            $table->string('remarks')->nullable();
+            $table->timestamp('approved_at')->nullable();
+            $table->timestamp('denied_at')->nullable();
+            $table->timestamp('date_to_claim')->nullable();
             $table->timestamps();
         });
     }

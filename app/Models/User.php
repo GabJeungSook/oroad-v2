@@ -64,4 +64,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Request::class, 'approved_by');
     }
+
+    public function payments()
+    {
+        return $this->hasMany(RequestPayment::class, 'approved_by');
+    }
 }

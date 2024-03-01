@@ -31,14 +31,15 @@
                         </span>
                     </p>
                 </div>
-
                 <div class="flex justify-end gap-x-1">
                     @if ($record->status == 'Pending')
                     {{ $this->approveAction }}
                     {{ $this->denyAction }}
+                    @elseif($record->status == 'Payment Validation')
+                    {{ $this->approvePaymentAction }}
+                    {{ $this->denyPaymentAction }}
                     @endif
                 </div>
-
             </div>
             <x-filament-actions::modals />
         </div>
@@ -70,6 +71,20 @@
                   <dt class="text-sm font-medium text-gray-900">Purpose</dt>
                   <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{ucwords($record->purpose)}}</dd>
                 </div>
+                @if ($record->status == 'Payment Validation')
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Receipt Number</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{$record->payments->receipt_number}}</dd>
+                </div>
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Receipt Image</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                        <a href="{{ Storage::disk('public')->url($record->payments->receipt_path) }}" target="_blank">
+                            <img src="{{asset('storage/'.$record->payments->receipt_path)}}" alt="Receipt Image" class="w-48 h-48">
+                        </a>
+                    </dd>
+                </div>
+                @endif
                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt class="text-sm font-medium leading-6 text-gray-900">Requested Documents</dt>
                   <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">

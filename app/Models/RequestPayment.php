@@ -14,4 +14,9 @@ class RequestPayment extends Model
     {
         return $this->belongsTo(Request::class, 'request_number', 'request_number');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'approved_by', 'id');
+    }
 }
