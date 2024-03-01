@@ -109,6 +109,12 @@
                     <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{Carbon\Carbon::parse($record->payments->date_to_claim)->format('F d, Y')}}</dd>
                 </div>
                 @endif
+                @if ($record->status == 'Claimed')
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Date Claimed</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{Carbon\Carbon::parse($record->claimed_at)->format('F d, Y')}}</dd>
+                </div>
+                @endif
                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                   <dt class="text-sm font-medium leading-6 text-gray-900">Requested Documents</dt>
                   <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">

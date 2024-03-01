@@ -72,6 +72,10 @@ Route::get('/admin/request-to-claim', function () {
     return view('admin.request-to-claim');
 })->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.request-to-claim');
 
+Route::get('/admin/claimed-requests', function () {
+    return view('admin.claimed-requests');
+})->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.claimed-requests');
+
 Route::get('/admin/review-pending-request/{record}', function ($request) {
     $request = Request::findOrFail($request);
     return view('admin.review-pending-request', ['record' => $request]);
