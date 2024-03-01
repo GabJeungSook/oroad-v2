@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use Filament\Actions\Action;
 use Illuminate\Support\Facades\DB;
@@ -132,7 +133,7 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                 ]);
                 $this->record->activityTimeline()->create([
                     'activity' => 'Payment Request Approved',
-                    'description' => 'Payment Request Approved by '. auth()->user()->name . ' with claim date: ' . Carbon\Carbon::parse($data['date_to_claim'])->format('F d, Y'),
+                    'description' => 'Payment Request Approved by '. auth()->user()->name . ' with claim date: ' .Carbon::parse($data['date_to_claim'])->format('F d, Y'),
                 ]);
                DB::commit();
 
@@ -182,6 +183,33 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                ->send();
                return redirect()->route('admin.payment-request');
             });
+    }
+
+    public function markAsClaimedAction(): Action
+    {
+        return Action::make('markAsClaimed')
+        ->label('Mark as Claimed')
+        ->icon('heroicon-o-check-circle')
+        ->requiresConfirmation()
+        ->action(function ($record) {
+            DB::beginTransaction();
+            $this->record->update([
+                'status' => 'Claimed',
+                'claimed_at' => now(),
+            ]);
+            $this->record->activityTimeline()->create([
+                'activity' => 'Claimed',
+                'description' => 'Requested Documents Claimed by '. $this->full_name,
+            ]);
+            DB::commit();
+            Notification::make()
+            ->title('Requested Documents Claimed')
+            ->body('An email has been sent to ' . $this->full_name . ' regarding this request.')
+            ->success()
+            ->send();
+            return redirect()->route('admin.request-to-claim');
+
+        });
     }
 
     public function viewDetailsAction(): Action

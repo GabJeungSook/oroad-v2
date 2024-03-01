@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('remarks')->nullable();
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('denied_at')->nullable();
+            $table->timestamp('claimed_at')->nullable();
             $table->timestamps();
         });
     }

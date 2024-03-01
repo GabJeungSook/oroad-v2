@@ -9,8 +9,24 @@
                   </svg>
                   <span class="px-2">Return</span></button>
             </a>
-            @else
+            @elseif($record->status == 'Approved')
             <a wire:navigate href="{{route('admin.approved-request')}}">
+                <button type="button" class="flex text-sm bg-gray-50 hover:bg-gray-200 p-2 font-semibold rounded-md border-2 border-gray-400 leading-6 rubik-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                  </svg>
+                  <span class="px-2">Return</span></button>
+            </a>
+            @elseif($record->status == 'Payment Validation')
+            <a wire:navigate href="{{route('admin.payment-request')}}">
+                <button type="button" class="flex text-sm bg-gray-50 hover:bg-gray-200 p-2 font-semibold rounded-md border-2 border-gray-400 leading-6 rubik-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                  </svg>
+                  <span class="px-2">Return</span></button>
+            </a>
+            @elseif($record->status == 'To Claim')
+            <a wire:navigate href="{{route('admin.request-to-claim')}}">
                 <button type="button" class="flex text-sm bg-gray-50 hover:bg-gray-200 p-2 font-semibold rounded-md border-2 border-gray-400 leading-6 rubik-500">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
@@ -38,6 +54,8 @@
                     @elseif($record->status == 'Payment Validation')
                     {{ $this->approvePaymentAction }}
                     {{ $this->denyPaymentAction }}
+                    @elseif($record->status == 'To Claim')
+                    {{ $this->markAsClaimedAction }}
                     @endif
                 </div>
             </div>
@@ -83,6 +101,12 @@
                             <img src="{{asset('storage/'.$record->payments->receipt_path)}}" alt="Receipt Image" class="w-48 h-48">
                         </a>
                     </dd>
+                </div>
+                @endif
+                @if ($record->status == 'To Claim')
+                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-900">Claim Date</dt>
+                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{Carbon\Carbon::parse($record->payments->date_to_claim)->format('F d, Y')}}</dd>
                 </div>
                 @endif
                 <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
