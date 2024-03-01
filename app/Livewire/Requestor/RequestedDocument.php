@@ -97,6 +97,11 @@ class RequestedDocument extends Component implements HasForms, HasActions
                         'amount' => $document['amount'] * $document['quantity'],
                     ]);
                 }
+                    $new_request->activityTimeline()->create([
+                        'request_number' => $this->request_number,
+                        'activity' => 'Submitted',
+                        'description' => 'Request has been submitted by ' . auth()->user()->name. ' with code ' . $this->request_number,
+                    ]);
                 DB::commit();
 
                 Notification::make()

@@ -73,6 +73,11 @@ class AddPaymentDetails extends Component implements HasForms, HasActions
                     $this->record->update([
                         'status' => 'Payment Validation',
                     ]);
+                    $this->record->activityTimeline()->create([
+                        'request_number' => $this->record->request_number,
+                        'activity' => 'Payment Validation',
+                        'description' => 'Payment details has been added with receipt number: ' . $this->form->getState()['receipt_number'],
+                    ]);
                     DB::commit();
                     Notification::make()
                     ->title('Saved Successfully')

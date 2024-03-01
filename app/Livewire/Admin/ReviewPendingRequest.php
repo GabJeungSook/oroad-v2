@@ -46,12 +46,18 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
             ->modalSubmitActionLabel('Yes, Approve')
             ->modalIcon('heroicon-o-check-circle')
             ->action(function (array $data) {
+               DB::beginTransaction();
                $this->record->update([
                    'approved_by' => auth()->user()->id,
                    'status' => 'Approved',
                    'remarks' => $data['remarks'],
                    'approved_at' => now(),
                ]);
+               $this->record->activityTimeline()->create([
+                   'activity' => 'Request Approved',
+                   'description' => $data['remarks'] === null ? 'Request Approved by '. auth()->user()->name : 'Request Approved by '. auth()->user()->name . ' with remarks: ' . $data['remarks'],
+               ]);
+               DB::commit();
                Notification::make()
                ->title('Request Approved')
                ->body('An email has been sent to ' . $this->full_name . ' regarding the approval of the request.')
@@ -76,12 +82,18 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
             ->modalDescription('Are you sure you want to deny this request? Leave your remarks. This action cannot be undone.')
             ->modalSubmitActionLabel('Yes, Deny')
             ->action(function (array $data) {
+                DB::beginTransaction();
                 $this->record->update([
                     'approved_by' => auth()->user()->id,
                     'status' => 'Denied',
                     'remarks' => $data['remarks'],
                     'denied_at' => now(),
                 ]);
+                $this->record->activityTimeline()->create([
+                    'activity' => 'Request Denied',
+                    'description' => 'Request Denied by '. auth()->user()->name . ' with remarks: ' . $data['remarks'],
+                ]);
+                DB::commit();
                 Notification::make()
                 ->title('Request Denied')
                 ->body('An email has been sent to ' . $this->full_name . ' regarding the denial of the request.')
@@ -118,6 +130,10 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                      'approved_at' => now(),
                      'date_to_claim' => $data['date_to_claim'],
                 ]);
+                $this->record->activityTimeline()->create([
+                    'activity' => 'Payment Request Approved',
+                    'description' => 'Payment Request Approved by '. auth()->user()->name . ' with claim date: ' . Carbon\Carbon::parse($data['date_to_claim'])->format('F d, Y'),
+                ]);
                DB::commit();
 
                Notification::make()
@@ -125,7 +141,7 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                ->body('An email has been sent to ' . $this->full_name . ' regarding the approval of the payment request.')
                ->success()
                ->send();
-               return redirect()->route('admin.pending-request');
+               return redirect()->route('admin.payment-request');
             });
     }
 
@@ -153,6 +169,10 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                      'denied_at' => auth()->user()->id,
                      'remarks' => $data['remarks'],
                 ]);
+                $this->record->activityTimeline()->create([
+                    'activity' => 'Payment Request Denied',
+                    'description' => 'Payment Request Denied by '. auth()->user()->name . ' with remarks: ' . $data['remarks'],
+                ]);
                DB::commit();
 
                Notification::make()
@@ -160,7 +180,7 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                ->body('An email has been sent to ' . $this->full_name . ' regarding the denial of the request.')
                ->success()
                ->send();
-               return redirect()->route('admin.pending-request');
+               return redirect()->route('admin.payment-request');
             });
     }
 

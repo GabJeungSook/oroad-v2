@@ -91,14 +91,14 @@ class PendingRequest extends Component implements HasForms, HasTable
                     //  ->modalSubmitAction(function (StaticAction $action, $record) {
                     //     return $action->url('/requestor/generate-pdf/'.$record->id, false);
                     //  }),
-                    // ViewAction::make('view_timeline')
-                    // ->label('Track Progress')
-                    // ->color('secondary')
-                    // ->icon('heroicon-o-queue-list')
-                    // ->modalContent(fn (RequestModel $record): View => view(
-                    //     'requestor.request-details',
-                    //     ['record' => $record],
-                    // ))
+                    ViewAction::make('view_timeline')
+                    ->label('Track Progress')
+                    ->color('secondary')
+                    ->icon('heroicon-o-queue-list')
+                    ->modalContent(fn (RequestModel $record): View => view(
+                        'requestor.request-timeline',
+                        ['record' => $record],
+                    ))
                 ])->icon('heroicon-s-bolt')
             ])
             ->emptyStateHeading('No request yet')

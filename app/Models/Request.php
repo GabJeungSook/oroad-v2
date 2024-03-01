@@ -34,4 +34,9 @@ class Request extends Model
     {
         return $this->hasOne(RequestPayment::class, 'request_number', 'request_number');
     }
+
+    public function activityTimeline()
+    {
+        return $this->hasMany(ActivityTimeline::class, 'request_number', 'request_number');
+    }
 }
