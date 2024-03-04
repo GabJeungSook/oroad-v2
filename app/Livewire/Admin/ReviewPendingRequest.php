@@ -167,7 +167,7 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                    'status' => 'Payment Request Denied',
                ]);
                 $this->record->payments->update([
-                     'denied_at' => auth()->user()->id,
+                     'denied_at' => now(),
                      'remarks' => $data['remarks'],
                 ]);
                 $this->record->activityTimeline()->create([
