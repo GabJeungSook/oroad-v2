@@ -100,7 +100,7 @@ class RequestDenied extends Component implements HasForms, HasTable
                 // ]),
             ])
             ->emptyStateHeading('No request yet')
-            ->emptyStateDescription('All denied requests will be displayed here');;
+            ->emptyStateDescription('All denied requests will be displayed here');
     }
 
     public function render()
