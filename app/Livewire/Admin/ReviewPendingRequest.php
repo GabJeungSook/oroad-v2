@@ -86,7 +86,7 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                 DB::beginTransaction();
                 $this->record->update([
                     'approved_by' => auth()->user()->id,
-                    'status' => 'Denied',
+                    'status' => 'Request Denied',
                     'remarks' => $data['remarks'],
                     'denied_at' => now(),
                 ]);
@@ -164,7 +164,7 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
             ->action(function (array $data) {
                DB::beginTransaction();
                $this->record->update([
-                   'status' => 'Denied',
+                   'status' => 'Payment Request Denied',
                ]);
                 $this->record->payments->update([
                      'denied_at' => auth()->user()->id,
