@@ -35,7 +35,8 @@ class User extends Component implements HasForms, HasTable
                 TextColumn::make('email')->searchable(),
             ])->headerActions([
                 CreateAction::make()
-                ->label('New Staff')
+                ->label('Add Staff')
+                ->modalHeading('Add Staff')
                 ->model(UserModel::class)
                 ->form([
                     Hidden::make('role_id')

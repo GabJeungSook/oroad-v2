@@ -36,6 +36,8 @@ class Document extends Component implements HasForms, HasTable
                 ->formatStateUsing(fn ($state) => '₱ '.number_format($state, 2)),
             ])->headerActions([
                 CreateAction::make()
+                ->label('Add Document')
+                ->modalHeading('Add Document')
                 ->model(DocumentModel::class)
                 ->form([
                     TextInput::make('title')

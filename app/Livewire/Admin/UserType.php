@@ -30,6 +30,8 @@ class UserType extends Component implements HasForms, HasTable
                 TextColumn::make('name')->searchable(),
             ])->headerActions([
                 CreateAction::make()
+                ->label('Add Type')
+                ->modalHeading('Add User Type')
                 ->model(UserTypeModel::class)
                 ->form([
                     TextInput::make('name')

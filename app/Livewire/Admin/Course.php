@@ -33,9 +33,12 @@ class Course extends Component implements HasForms, HasTable
                 TextColumn::make('name')->searchable(),
             ])->headerActions([
                 CreateAction::make()
+                ->label('Add Course')
+                ->modalHeading('Add Course')
                 ->model(CourseModel::class)
                 ->form([
                     Select::make('campus_id')
+                        ->label('Campus')
                         ->options(CampusModel::all()->pluck('name', 'id'))
                         ->required(),
                     TextInput::make('name')

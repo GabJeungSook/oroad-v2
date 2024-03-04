@@ -32,6 +32,8 @@ class Campus extends Component implements HasForms, HasTable
             ])->headerActions([
                 CreateAction::make()
                 ->model(CampusModel::class)
+                ->label('Add Campus')
+                ->modalHeading('Add Campus')
                 ->form([
                     TextInput::make('name')
                         ->required()
