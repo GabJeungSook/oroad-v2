@@ -3,8 +3,8 @@
       <div class="flex h-16 justify-between">
         <div class="flex">
           <div class="flex flex-shrink-0 items-center space-x-2">
-            <img class="h-12 w-auto " src="{{asset('images/sksu_logo.png')}}" alt="Your Company">
-            <img class="h-12 w-auto " src="{{asset('images/oroad_logo.png')}}" alt="Your Company">
+            <img class="h-10 w-auto " src="{{asset('images/sksu_logo.png')}}" alt="Your Company">
+            <img class="h-10 w-auto " src="{{asset('images/oroad_logo.png')}}" alt="Your Company">
           </div>
           @php
               $user = App\Models\User::where('id', auth()->user()->id)->first();
@@ -12,10 +12,10 @@
           @if ($user->user_information)
           <div class="hidden lg:ml-28 lg:flex lg:space-x-8">
             <!-- Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" -->
-            <a href="{{route('dashboard')}}" wire:navigate class="{{ request()->routeIs('dashboard') ? 'inline-flex items-center border-b-4 rounded-sm border-green-600 px-1 pt-1 text-md font-semibold text-gray-900 rubik-400' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400'}} ">Request History</a>
-            <a href="{{route('requestor.request-document')}}" wire:navigate class="{{ request()->routeIs('requestor.request-document') ? 'inline-flex items-center border-b-4 rounded-sm border-green-600 px-1 pt-1 text-md font-semibold text-gray-900 rubik-400' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400'}}">Request Documents</a>
-            <a href="{{route('requestor.update-user-information')}}" wire:navigate class="{{ request()->routeIs('requestor.update-user-information') ? 'inline-flex items-center border-b-4 rounded-sm border-green-600 px-1 pt-1 text-md font-semibold text-gray-900 rubik-400' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400'}}">Update Information</a>
-            <a href="#" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400">Helpdesk</a>
+            <a href="{{route('dashboard')}}" wire:navigate class="{{ request()->routeIs('dashboard') ? 'inline-flex items-center border-b-4 rounded-sm border-green-600 px-1 pt-1 text-sm font-semibold text-gray-900 rubik-400' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400'}} ">Request History</a>
+            <a href="{{route('requestor.request-document')}}" wire:navigate class="{{ request()->routeIs('requestor.request-document') ? 'inline-flex items-center border-b-4 rounded-sm border-green-600 px-1 pt-1 text-sm font-semibold text-gray-900 rubik-400' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400'}}">Request Documents</a>
+            <a href="{{route('requestor.update-user-information')}}" wire:navigate class="{{ request()->routeIs('requestor.update-user-information') ? 'inline-flex items-center border-b-4 rounded-sm border-green-600 px-1 pt-1 text-sm font-semibold text-gray-900 rubik-400' : 'inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400'}}">Update Information</a>
+            {{-- <a href="#" class="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-md font-semibold text-gray-500 hover:border-green-600 hover:text-gray-700 rubik-400">Helpdesk</a> --}}
           </div>
           @endif
 
@@ -35,7 +35,7 @@
               <button @click="isOpen = !isOpen" type="button" class="relative flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">Open user menu</span>
-                <img class="h-10 w-10 rounded-full" src="{{auth()->user()->profile_photo_path}}" alt="">
+                <img class="h-8 w-8 rounded-full" src="{{auth()->user()->profile_photo_path}}" alt="">
               </button>
             </div>
 
