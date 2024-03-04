@@ -61,7 +61,7 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                DB::commit();
                Notification::make()
                ->title('Request Approved')
-               ->body('An email has been sent to ' . $this->full_name . ' regarding the approval of the request.')
+            //    ->body('An email has been sent to ' . $this->full_name . ' regarding the approval of the request.')
                ->success()
                ->send();
                return redirect()->route('admin.pending-request');
@@ -97,7 +97,7 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                 DB::commit();
                 Notification::make()
                 ->title('Request Denied')
-                ->body('An email has been sent to ' . $this->full_name . ' regarding the denial of the request.')
+                // ->body('An email has been sent to ' . $this->full_name . ' regarding the denial of the request.')
                 ->success()
                 ->send();
                 return redirect()->route('admin.pending-request');
@@ -139,7 +139,7 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
 
                Notification::make()
                ->title('Payment Request Approved')
-               ->body('An email has been sent to ' . $this->full_name . ' regarding the approval of the payment request.')
+            //    ->body('An email has been sent to ' . $this->full_name . ' regarding the approval of the payment request.')
                ->success()
                ->send();
                return redirect()->route('admin.payment-request');
@@ -178,7 +178,7 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
 
                Notification::make()
                ->title('Payment Request Approved')
-               ->body('An email has been sent to ' . $this->full_name . ' regarding the denial of the request.')
+            //    ->body('An email has been sent to ' . $this->full_name . ' regarding the denial of the request.')
                ->success()
                ->send();
                return redirect()->route('admin.payment-request');
@@ -204,7 +204,7 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
             DB::commit();
             Notification::make()
             ->title('Requested Documents Claimed')
-            ->body('An email has been sent to ' . $this->full_name . ' regarding this request.')
+            // ->body('An email has been sent to ' . $this->full_name . ' regarding this request.')
             ->success()
             ->send();
             return redirect()->route('admin.request-to-claim');
