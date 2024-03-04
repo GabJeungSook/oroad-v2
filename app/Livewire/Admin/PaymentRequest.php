@@ -91,10 +91,12 @@ class PaymentRequest extends Component implements HasForms, HasTable
                     ->modalContent(fn (RequestModel $record): View => view(
                         'requestor.request-details',
                         ['record' => $record],
-                    ))->modalSubmitActionLabel('Save PDF')
-                     ->modalSubmitAction(function (StaticAction $action, $record) {
-                        return $action->url('/requestor/generate-pdf/'.$record->id, false);
-                     }),
+
+                    ))->modalSubmitAction(false),
+                    // ->modalSubmitActionLabel('Save PDF')
+                    //  ->modalSubmitAction(function (StaticAction $action, $record) {
+                    //     return $action->url('/requestor/generate-pdf/'.$record->id, false);
+                    //  }),
                      ViewAction::make('view_timeline')
                      ->label('Track Progress')
                      ->color('secondary')
