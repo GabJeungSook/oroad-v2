@@ -372,7 +372,7 @@
       <div class="sticky top-0 z-40 lg:mx-auto lg:max-w-7xl lg:px-8">
       </div>
 
-        <div class="px-16 mt-12 text-5xl font-semibold text-gray-700 rubik-100">
+        <div class="px-16 mt-12 text-4xl font-semibold text-gray-700 rubik-400">
             @yield('title')
         </div>
         <div class="p-16">
