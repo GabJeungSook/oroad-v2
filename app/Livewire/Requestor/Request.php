@@ -26,6 +26,7 @@ class Request extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
+            ->poll('5s')
             ->query(RequestModel::query()->where('user_information_id', auth()->user()->user_information->id)->orderBy('created_at', 'desc'))
             ->columns([
                 TextColumn::make('request_number')
