@@ -7,12 +7,14 @@ use Livewire\Component;
 use App\Models\Document;
 use Illuminate\Support\Str;
 use Filament\Actions\Action;
+use App\Mail\SubmittedRequestMail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Actions\Concerns\InteractsWithActions;
-use Filament\Notifications\Notification;
 
 class RequestedDocument extends Component implements HasForms, HasActions
 {
@@ -103,6 +105,9 @@ class RequestedDocument extends Component implements HasForms, HasActions
                         'description' => 'Request has been submitted by ' . auth()->user()->name. ' with code ' . $this->request_number,
                     ]);
                 DB::commit();
+
+                //for email sending - to be updated upon approval
+                // Mail::to(auth()->user()->email)->send(new SubmittedRequestMail($new_request));
 
                 Notification::make()
                 ->title('Request Submitted Successfully')
