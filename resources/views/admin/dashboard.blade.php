@@ -1,4 +1,4 @@
 @section('title', 'Dashboard')
 <x-layouts.admin-layout>
-     <livewire:test-livewire />
+     <livewire:admin.dashboard />
 </x-layouts.admin-layout>
