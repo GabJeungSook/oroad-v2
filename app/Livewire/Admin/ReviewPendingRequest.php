@@ -48,16 +48,27 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
             ->modalIcon('heroicon-o-check-circle')
             ->action(function (array $data) {
                DB::beginTransaction();
-               $this->record->update([
-                   'approved_by' => auth()->user()->id,
-                   'status' => 'Approved',
-                   'remarks' => $data['remarks'],
-                   'approved_at' => now(),
-               ]);
-               $this->record->activityTimeline()->create([
-                   'activity' => 'Request Approved',
-                   'description' => $data['remarks'] === null ? 'Request Approved by '. auth()->user()->name : 'Request Approved by '. auth()->user()->name . ' with remarks: ' . $data['remarks'],
-               ]);
+               if($this->record->status === 'Approved')
+               {
+                Notification::make()
+                ->title('Oops!')
+                ->body('This request was already approved.')
+                ->danger()
+                ->send();
+
+                return redirect()->route('admin.pending-request');
+               }else{
+                $this->record->update([
+                    'approved_by' => auth()->user()->id,
+                    'status' => 'Approved',
+                    'remarks' => $data['remarks'],
+                    'approved_at' => now(),
+                ]);
+                $this->record->activityTimeline()->create([
+                    'activity' => 'Request Approved',
+                    'description' => $data['remarks'] === null ? 'Request Approved by '. auth()->user()->name : 'Request Approved by '. auth()->user()->name . ' with remarks: ' . $data['remarks'],
+                ]);
+               }
                DB::commit();
                Notification::make()
                ->title('Request Approved')
@@ -84,16 +95,27 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
             ->modalSubmitActionLabel('Yes, Deny')
             ->action(function (array $data) {
                 DB::beginTransaction();
-                $this->record->update([
-                    'approved_by' => auth()->user()->id,
-                    'status' => 'Request Denied',
-                    'remarks' => $data['remarks'],
-                    'denied_at' => now(),
-                ]);
-                $this->record->activityTimeline()->create([
-                    'activity' => 'Request Denied',
-                    'description' => 'Request Denied by '. auth()->user()->name . ' with remarks: ' . $data['remarks'],
-                ]);
+                if($this->record->status === 'Request Denied')
+                {
+                    Notification::make()
+                    ->title('Oops!')
+                    ->body('This request was already denied.')
+                    ->danger()
+                    ->send();
+                    return redirect()->route('admin.pending-request');
+                }else{
+                    $this->record->update([
+                        'approved_by' => auth()->user()->id,
+                        'status' => 'Request Denied',
+                        'remarks' => $data['remarks'],
+                        'denied_at' => now(),
+                    ]);
+                    $this->record->activityTimeline()->create([
+                        'activity' => 'Request Denied',
+                        'description' => 'Request Denied by '. auth()->user()->name . ' with remarks: ' . $data['remarks'],
+                    ]);
+                }
+
                 DB::commit();
                 Notification::make()
                 ->title('Request Denied')
@@ -123,20 +145,29 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
             ->modalIcon('heroicon-o-check-circle')
             ->action(function (array $data) {
                DB::beginTransaction();
-               $this->record->update([
-                   'status' => 'To Claim',
-               ]);
-                $this->record->payments->update([
-                     'approved_by' => auth()->user()->id,
-                     'approved_at' => now(),
-                     'date_to_claim' => $data['date_to_claim'],
-                ]);
-                $this->record->activityTimeline()->create([
-                    'activity' => 'Payment Request Approved',
-                    'description' => 'Payment Request Approved by '. auth()->user()->name . ' with claim date: ' .Carbon::parse($data['date_to_claim'])->format('F d, Y'),
-                ]);
+               if($this->record->status === 'To Claim')
+                {
+                    Notification::make()
+                    ->title('Oops!')
+                    ->body('This payment request was already approved.')
+                    ->danger()
+                    ->send();
+                    return redirect()->route('admin.payment-request');
+                }else{
+                    $this->record->update([
+                        'status' => 'To Claim',
+                    ]);
+                     $this->record->payments->update([
+                          'approved_by' => auth()->user()->id,
+                          'approved_at' => now(),
+                          'date_to_claim' => $data['date_to_claim'],
+                     ]);
+                     $this->record->activityTimeline()->create([
+                         'activity' => 'Payment Request Approved',
+                         'description' => 'Payment Request Approved by '. auth()->user()->name . ' with claim date: ' .Carbon::parse($data['date_to_claim'])->format('F d, Y'),
+                     ]);
+                }
                DB::commit();
-
                Notification::make()
                ->title('Payment Request Approved')
             //    ->body('An email has been sent to ' . $this->full_name . ' regarding the approval of the payment request.')
@@ -163,19 +194,28 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
             ->modalSubmitActionLabel('Yes, Deny')
             ->action(function (array $data) {
                DB::beginTransaction();
-               $this->record->update([
-                   'status' => 'Payment Request Denied',
-               ]);
-                $this->record->payments->update([
-                     'denied_at' => now(),
-                     'remarks' => $data['remarks'],
+               if($this->record->status === 'Payment Request Denied')
+               {
+                     Notification::make()
+                     ->title('Oops!')
+                     ->body('This payment request was already denied.')
+                     ->danger()
+                     ->send();
+                     return redirect()->route('admin.payment-request');
+               }else{
+                $this->record->update([
+                    'status' => 'Payment Request Denied',
                 ]);
-                $this->record->activityTimeline()->create([
-                    'activity' => 'Payment Request Denied',
-                    'description' => 'Payment Request Denied by '. auth()->user()->name . ' with remarks: ' . $data['remarks'],
-                ]);
+                 $this->record->payments->update([
+                      'denied_at' => now(),
+                      'remarks' => $data['remarks'],
+                 ]);
+                 $this->record->activityTimeline()->create([
+                     'activity' => 'Payment Request Denied',
+                     'description' => 'Payment Request Denied by '. auth()->user()->name . ' with remarks: ' . $data['remarks'],
+                 ]);
+               }
                DB::commit();
-
                Notification::make()
                ->title('Payment Request Approved')
             //    ->body('An email has been sent to ' . $this->full_name . ' regarding the denial of the request.')
