@@ -29,7 +29,6 @@ class ApproveRequest extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->extremePaginationLinks()
             ->query(RequestModel::query()->where('status', 'Approved')->orderBy('created_at', 'desc'))
             ->columns([
                 TextColumn::make('request_number')
