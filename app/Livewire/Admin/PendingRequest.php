@@ -30,6 +30,7 @@ class PendingRequest extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
+
             ->query(RequestModel::query()->where('status', 'Pending')->orderBy('created_at', 'desc'))
             ->columns([
                 TextColumn::make('request_number')
