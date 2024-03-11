@@ -6,7 +6,11 @@
                     @if(App\Models\UserInformation::where('user_id', Auth::user()->id)->exists())
                     <livewire:requestor.forms.add-payment-details :record="$record"/>
                     @else
-                    <livewire:requestor.forms.add-user-information />
+                        @if (!auth()->user()->is_verified)
+                        <livewire:requestor.forms.verify-requestor-email />
+                        @else
+                        <livewire:requestor.forms.add-user-information />
+                        @endif
                     @endif
                 </div>
             </div>
