@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('gender');
             $table->date('birthday');
             $table->text('valid_id_path');
+            $table->boolean('has_representative')->default(false);
             $table->timestamps();
         });
     }

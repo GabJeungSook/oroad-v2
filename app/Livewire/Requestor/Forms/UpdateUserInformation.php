@@ -145,6 +145,7 @@ class UpdateUserInformation extends Component implements HasForms
 
         $this->record->update($this->form->getState());
 
+
         Notification::make()
         ->title('Updated Successfully')
         ->body('Your information has been updated successfully.')

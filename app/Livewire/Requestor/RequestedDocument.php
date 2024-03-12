@@ -8,10 +8,15 @@ use App\Models\Document;
 use Illuminate\Support\Str;
 use Filament\Actions\Action;
 use App\Mail\SubmittedRequestMail;
+use App\Models\UserRepresentative;
+use Filament\Actions\CreateAction;
 use Illuminate\Support\Facades\DB;
+use Filament\Forms\Components\Grid;
 use Illuminate\Support\Facades\Mail;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Forms\Components\FileUpload;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Actions\Concerns\InteractsWithActions;
@@ -24,9 +29,54 @@ class RequestedDocument extends Component implements HasForms, HasActions
     public $documents;
     public $selectedDocuments = [];
     public $filteredDocuments;
+    public $selectedReceiver = '';
+    public $receiver_name;
     public $request_number;
     public $total_amount;
     public $purpose;
+
+    public function updatedSelectedReceiver()
+    {
+        // This method is called whenever the `selectedRadio` property is updated
+        // You can perform actions based on the selected value (e.g., show/hide additional fields)
+        if ($this->selectedReceiver === 'me') {
+            $this->receiver_name = auth()->user()->user_information->fullName();
+        } else if ($this->selectedReceiver === 'representative') {
+            $this->receiver_name = auth()->user()->user_information->representative?->fullName();
+        }
+    }
+
+    public function addRepresentativeAction(): Action
+    {
+        return CreateAction::make('addRepresentative')
+            ->mutateFormDataUsing(function (array $data): array {
+                $data['user_information_id'] = auth()->user()->user_information->id;
+                return $data;
+            })
+            ->label('Add Representative')
+            ->form([
+                Grid::make(3)
+                ->schema([
+                    TextInput::make('representative_first_name')
+                    ->label('First Name')->required(),
+                    TextInput::make('representative_middle_name')
+                    ->label('Middle Name'),
+                    TextInput::make('representative_last_name')
+                    ->label('Last Name')->required(),
+                ]),
+                Grid::make(1)
+                ->schema([
+                    FileUpload::make('representative_valid_id_path')
+                    ->uploadingMessage('Uploading valid id...')
+                    ->image()
+                    ->preserveFileNames()
+                    ->disk('public')
+                    ->directory('valid-ids')
+                    ->label('Upload a valid ID for your representative')
+                    ->required(),
+                ])
+            ])->model(UserRepresentative::class);
+    }
 
 
     public function document_selected($id, $amount)
@@ -128,6 +178,8 @@ class RequestedDocument extends Component implements HasForms, HasActions
     {
         $this->documents = Document::all();
         $this->request_number = 'SKSU-' . now()->format('u') . '-' . Str::random(8);
+        $this->selectedReceiver = 'me';
+        $this->receiver_name = auth()->user()->user_information->fullName();
     }
 
     public function render()

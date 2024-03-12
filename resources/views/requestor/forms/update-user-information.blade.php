@@ -4,7 +4,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     @if(App\Models\UserInformation::where('user_id', Auth::user()->id)->exists())
-                    <livewire:requestor.forms.update-user-information />
+                    <livewire:requestor.forms.edit-user-information />
                     @else
                         @if (!auth()->user()->is_verified)
                         <livewire:requestor.forms.verify-requestor-email />

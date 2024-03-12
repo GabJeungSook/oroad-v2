@@ -13,10 +13,39 @@
             </div>
         </div>
         <div class="my-3 border-b-2 border-gray-300 w-full" ></div>
-        <h1 class="text-xl">Select Documents</h1>
-    </div>
+        <div class="">
+            <h1 class="text-xl">Select Receiver</h1>
+            <p class="text-sm">Choose the receiver of the requested documents.</p>
+        </div>
+        <div class="p-4 space-y-4">
+            <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                <input wire:model.live="selectedReceiver" id="bordered-radio-1" type="radio" value="me" name="bordered-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm rubik-500 text-gray-900 dark:text-gray-300">Me
+                    <span id="helper-radio-text" class="ml-2 text-xs font-normal text-gray-500 dark:text-gray-300"> - You will receive the requested document(s).</span></label>
+            </div>
+            <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                <input wire:model.live="selectedReceiver" id="bordered-radio-2" type="radio" value="representative" name="bordered-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                    <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm rubik-500 text-gray-900 dark:text-gray-300">My Representative
+                    <span id="helper-radio-text" class="ml-2 text-xs font-normal text-gray-500 dark:text-gray-300"> - Your representative will receive the requested document(s).</span></label>
+            </div>
+        </div>
+        <div>
+            @if ($receiver_name == '')
+            <div class="flex space-x-4">
+                <span class="text-xl">You don't have a representative added. Do you want to add now? </span>
+                {{ $this->addRepresentativeAction }}
+                <x-filament-actions::modals />
+            </div>
+            @else
+            <span class="text-xl">Receiver: {{$receiver_name}}</span>
+            @endif
+
+        </div>
+        </div>
     <div class="mt-5">
         <div>
+            <div class="my-3 border-b-2 border-gray-300 w-full" ></div>
+            <h1 class="rubik-300 text-xl text-gray-600">Select Documents</h1>
             @if ($documents)
             <ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-1 sm:gap-6 lg:grid-cols-2">
                 @foreach ($documents as $item)

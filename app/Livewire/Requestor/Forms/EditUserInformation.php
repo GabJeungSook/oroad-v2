@@ -2,41 +2,43 @@
 
 namespace App\Livewire\Requestor\Forms;
 
+use Filament\Forms;
 use App\Models\Campus;
 use App\Models\Course;
-use Filament\Forms\Get;
 use Livewire\Component;
 use App\Models\UserType;
 use Filament\Forms\Form;
-use Filament\Support\RawJs;
 use App\Models\PhilippineCity;
 use App\Models\UserInformation;
 use App\Models\PhilippineRegion;
 use App\Models\PhilippineProvince;
-use Illuminate\Support\Facades\DB;
 use Filament\Forms\Components\Grid;
+use Illuminate\Contracts\View\View;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Contracts\HasForms;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
-use Filament\Notifications\Notification;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Get;
+use Filament\Notifications\Notification;
 
-class AddUserInformation extends Component implements HasForms
+class EditUserInformation extends Component implements HasForms
 {
     use InteractsWithForms;
 
     public ?array $data = [];
 
+    public UserInformation $record;
+
     public function mount(): void
     {
-        $this->form->fill();
+        $this->record = UserInformation::where('user_id', auth()->user()->id)->first();
+        $this->form->fill($this->record->attributesToArray());
     }
 
     public function form(Form $form): Form
@@ -160,28 +162,26 @@ class AddUserInformation extends Component implements HasForms
                 // ...
             ])
             ->statePath('data')
-            ->model(UserInformation::class);
+            ->model($this->record);
     }
 
-    public function create()
+    public function save(): void
     {
-        $this->data['user_id'] = auth()->user()->id;
+        $data = $this->form->getState();
 
-         $info = UserInformation::create($this->form->getState());
-         $this->form->model($info)->saveRelationships();
-
+        $this->record->update($data);
 
         Notification::make()
         ->title('Saved Successfully')
-        ->body('You can now request a document.')
+        ->body('Your information was updated successfully.')
         ->success()
         ->send();
 
-        return redirect()->route('dashboard');
+        redirect()->route('dashboard');
     }
 
-    public function render()
+    public function render(): View
     {
-        return view('livewire.requestor.forms.add-user-information');
+        return view('livewire.requestor.forms.edit-user-information');
     }
 }
