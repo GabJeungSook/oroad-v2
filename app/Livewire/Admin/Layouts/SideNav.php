@@ -12,6 +12,7 @@ class SideNav extends Component
     public $user_type_link;
     public $document_link;
     public $staff_link;
+    public $purpose_link;
     public $pending_link;
     public $approved_link;
     public $payment_link;
@@ -27,6 +28,7 @@ class SideNav extends Component
         $this->user_type_link = request()->routeIs('admin.user-type') ? 'text-green-600 bg-gray-100 rubik-400 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold' : 'text-gray-700 rubik-400 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold';
         $this->document_link = request()->routeIs('admin.document') ? 'text-green-600 bg-gray-100 rubik-400 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold' : 'text-gray-700 rubik-400 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold';
         $this->staff_link = request()->routeIs('admin.user') ? 'text-green-600 bg-gray-100 rubik-400 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold' : 'text-gray-700 rubik-400 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold';
+        $this->purpose_link = request()->routeIs('admin.purpose') ? 'text-green-600 bg-gray-100 rubik-400 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold' : 'text-gray-700 rubik-400 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold';
         $this->pending_link = request()->routeIs('admin.pending-request') ? 'text-green-600 bg-gray-100 rubik-400 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold' : 'text-gray-700 rubik-400 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold';
         $this->approved_link = request()->routeIs('admin.approved-request') ? 'text-green-600 bg-gray-100 rubik-400 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold' : 'text-gray-700 rubik-400 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold';
         $this->payment_link = request()->routeIs('admin.payment-request') ? 'text-green-600 bg-gray-100 rubik-400 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold' : 'text-gray-700 rubik-400 hover:text-green-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold';

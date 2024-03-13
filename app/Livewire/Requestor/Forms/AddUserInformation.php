@@ -125,37 +125,37 @@ class AddUserInformation extends Component implements HasForms
                         ->required(),
                     ])
                 ])->columns(3),
-                Toggle::make('has_representative')
-                ->live()
-                ->label('Do you want to add a representative?'),
-                Group::make()
-                ->relationship('representative')
-                ->schema([
-                    Section::make('Representative')
-                    ->visible(fn (Get $get) => $get('../has_representative'))
-                    ->description('Your representative can claim your requested documents.')
-                    ->schema([
-                        TextInput::make('representative_first_name')
-                        ->label('First Name')
-                        ->required(),
-                        TextInput::make('representative_middle_name')
-                        ->label('Middle Name'),
-                        TextInput::make('representative_last_name')
-                        ->label('Last Name')
-                        ->required(),
-                        Grid::make(1)
-                        ->schema([
-                            FileUpload::make('representative_valid_id_path')
-                            ->uploadingMessage('Uploading valid id...')
-                            ->image()
-                            ->preserveFileNames()
-                            ->disk('public')
-                            ->directory('valid-ids')
-                            ->label('Upload a valid ID for your representative')
-                            ->required(),
-                        ])
-                    ])->columns(3),
-                ]),
+                // Toggle::make('has_representative')
+                // ->live()
+                // ->label('Do you want to add a representative?'),
+                // Group::make()
+                // ->relationship('representative')
+                // ->schema([
+                //     Section::make('Representative')
+                //     ->visible(fn (Get $get) => $get('../has_representative'))
+                //     ->description('Your representative can claim your requested documents.')
+                //     ->schema([
+                //         TextInput::make('representative_first_name')
+                //         ->label('First Name')
+                //         ->required(fn (Get $get) => $get('../has_representative')),
+                //         TextInput::make('representative_middle_name')
+                //         ->label('Middle Name'),
+                //         TextInput::make('representative_last_name')
+                //         ->label('Last Name')
+                //         ->required(fn (Get $get) => $get('../has_representative')),
+                //         Grid::make(1)
+                //         ->schema([
+                //             FileUpload::make('representative_valid_id_path')
+                //             ->uploadingMessage('Uploading valid id...')
+                //             ->image()
+                //             ->preserveFileNames()
+                //             ->disk('public')
+                //             ->directory('valid-ids')
+                //             ->label('Upload a valid ID for your representative')
+                //             ->required(fn (Get $get) => $get('../has_representative')),
+                //         ])
+                //     ])->columns(3),
+                // ]),
 
                 // ...
             ])
@@ -168,7 +168,12 @@ class AddUserInformation extends Component implements HasForms
         $this->data['user_id'] = auth()->user()->id;
 
          $info = UserInformation::create($this->form->getState());
-         $this->form->model($info)->saveRelationships();
+
+        //  if($this->data['has_representative'] == 1)
+        //  {
+        //     $this->form->model($info)->saveRelationships();
+        //  }
+
 
 
         Notification::make()

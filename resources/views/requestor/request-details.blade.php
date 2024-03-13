@@ -85,7 +85,7 @@
             <label class="rubik-400 text-sm">Request Date : {{Carbon\Carbon::parse($record->created_at)->format('F d, Y - h:i:s A')}}</label>
         </div>
         <div class="col-span-1 border-x-2 border-b-2 px-3 py-1">
-            <label class="rubik-400 text-sm">Purpose : {{$record->purpose}}</label>
+            <label class="rubik-400 text-sm">Purpose : {{$record->purpose->name}}</label>
         </div>
     </div>
     <div class="w-full border-x-1 border-gray-300 bg-green-950 text-white">

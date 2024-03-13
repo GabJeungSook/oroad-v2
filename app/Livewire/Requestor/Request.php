@@ -49,7 +49,7 @@ class Request extends Component implements HasForms, HasTable
                 })
                 ->listWithLineBreaks()
                 ->bulleted(),
-                TextColumn::make('purpose')
+                TextColumn::make('purpose.name')
                 ->formatStateUsing(fn ($state) => ucwords($state))
                 ->wrap()
                 ->searchable(),

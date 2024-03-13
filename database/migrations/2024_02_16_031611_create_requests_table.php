@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->string('request_number');
+            $table->foreignId('purpose_id')->index();
             $table->foreignId('user_information_id')->index();
             $table->foreignId('approved_by')->nullable()->index();
-            $table->text('purpose');
+            $table->text('other_purpose')->nullable();
             $table->text('total_amount');
             $table->string('status');
             $table->text('remarks')->nullable();
+            $table->boolean('has_representative')->default(false);
             $table->timestamp('approved_at')->nullable();
             $table->timestamp('denied_at')->nullable();
             $table->timestamp('claimed_at')->nullable();

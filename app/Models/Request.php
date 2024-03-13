@@ -39,4 +39,9 @@ class Request extends Model
     {
         return $this->hasMany(ActivityTimeline::class, 'request_number', 'request_number');
     }
+
+    public function purpose()
+    {
+        return $this->belongsTo(Purpose::class);
+    }
 }

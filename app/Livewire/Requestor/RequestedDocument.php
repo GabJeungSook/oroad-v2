@@ -2,11 +2,13 @@
 
 namespace App\Livewire\Requestor;
 
+use App\Models\Purpose;
 use App\Models\Request;
 use Livewire\Component;
 use App\Models\Document;
 use Illuminate\Support\Str;
 use Filament\Actions\Action;
+use Filament\Actions\EditAction;
 use App\Mail\SubmittedRequestMail;
 use App\Models\UserRepresentative;
 use Filament\Actions\CreateAction;
@@ -14,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Filament\Forms\Components\Grid;
 use Illuminate\Support\Facades\Mail;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Support\Enums\ActionSize;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\FileUpload;
@@ -33,7 +36,9 @@ class RequestedDocument extends Component implements HasForms, HasActions
     public $receiver_name;
     public $request_number;
     public $total_amount;
-    public $purpose;
+    public $purposes;
+    public $selected_purpose;
+    public $other_purpose;
 
     public function updatedSelectedReceiver()
     {
@@ -54,6 +59,7 @@ class RequestedDocument extends Component implements HasForms, HasActions
                 return $data;
             })
             ->label('Add Representative')
+            ->modalHeading('Add Representative')
             ->form([
                 Grid::make(3)
                 ->schema([
@@ -75,7 +81,59 @@ class RequestedDocument extends Component implements HasForms, HasActions
                     ->label('Upload a valid ID for your representative')
                     ->required(),
                 ])
-            ])->model(UserRepresentative::class);
+            ])
+            ->after(function () {
+                Notification::make()
+                ->title('Representative Added Successfully')
+                ->body('Your representative has been added successfully. You can now select your representative as the receiver.')
+                ->success()
+                ->send();
+                $this->selectedReceiver === 'representative';
+                $this->receiver_name = auth()->user()->user_information->representative?->fullName();
+
+            })
+            ->successNotification(null)
+            ->createAnother(false)
+            ->model(UserRepresentative::class);
+    }
+
+    public function updateRepresentativeAction(): Action
+    {
+        return EditAction::make('updateRepresentative')
+        ->size(ActionSize::Small)
+        ->label('Update Representative')
+        ->record(UserRepresentative::where('user_information_id', auth()->user()->user_information->id)->first())
+        ->modalHeading('Update Representative')
+        ->form([
+            Grid::make(3)
+            ->schema([
+                TextInput::make('representative_first_name')
+                ->label('First Name')->required(),
+                TextInput::make('representative_middle_name')
+                ->label('Middle Name'),
+                TextInput::make('representative_last_name')
+                ->label('Last Name')->required(),
+            ]),
+            Grid::make(1)
+            ->schema([
+                FileUpload::make('representative_valid_id_path')
+                ->uploadingMessage('Uploading valid id...')
+                ->image()
+                ->preserveFileNames()
+                ->disk('public')
+                ->directory('valid-ids')
+                ->label('Upload a valid ID for your representative')
+                ->required(),
+            ])
+            ])->after(function () {
+                Notification::make()
+                ->title('Representative Added Updated')
+                ->success()
+                ->send();
+                $this->selectedReceiver === 'representative';
+                $this->receiver_name = auth()->user()->user_information->representative?->fullName();
+
+            })->successNotification(null);
     }
 
 
@@ -124,17 +182,19 @@ class RequestedDocument extends Component implements HasForms, HasActions
                 }
 
                 $this->validate([
-                    'purpose' => 'required',
+                    'selected_purpose' => 'required',
                 ],
                 [
-                    'purpose.required' => 'Fill up your purpose of request.',
+                    'selected_purpose.required' => 'Select a purpose for your request.',
 
                 ]);
                 DB::beginTransaction();
                 $new_request = Request::create([
                     'request_number' => $this->request_number,
                     'user_information_id' => auth()->user()->user_information->id,
-                    'purpose' => $this->purpose,
+                    'purpose_id' => $this->selected_purpose,
+                    'other_purpose' => $this->other_purpose === null ? null : $this->other_purpose,
+                    'has_representative' => $this->selectedReceiver === 'representative' ? 1 : 0,
                     'total_amount' => $total,
                     'status' => 'Pending',
                 ]);
@@ -180,6 +240,7 @@ class RequestedDocument extends Component implements HasForms, HasActions
         $this->request_number = 'SKSU-' . now()->format('u') . '-' . Str::random(8);
         $this->selectedReceiver = 'me';
         $this->receiver_name = auth()->user()->user_information->fullName();
+        $this->purposes = Purpose::all();
     }
 
     public function render()

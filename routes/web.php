@@ -56,6 +56,10 @@ Route::get('/admin/users', function () {
     return view('admin.user');
 })->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.user');
 
+Route::get('/admin/purposes', function () {
+    return view('admin.purpose');
+})->middleware(['auth', 'verified', 'role:ADMIN'])->name('admin.purpose');
+
 Route::get('/admin/pending-requests', function () {
     return view('admin.pending-request');
 })->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.pending-request');

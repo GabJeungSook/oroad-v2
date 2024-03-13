@@ -15,7 +15,7 @@ class UserTypeSeeder extends Seeder
     {
         DB::table('user_types')->insert([
             [
-                'name' => 'Student',
+                'name' => 'On-Going',
             ],
             [
                 'name' => 'Alumni',

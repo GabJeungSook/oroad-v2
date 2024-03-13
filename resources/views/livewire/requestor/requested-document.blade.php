@@ -19,12 +19,12 @@
         </div>
         <div class="p-4 space-y-4">
             <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-                <input wire:model.live="selectedReceiver" id="bordered-radio-1" type="radio" value="me" name="bordered-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <input wire:model.live="selectedReceiver" id="bordered-radio-1" type="radio" value="me" name="bordered-radio" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-white  focus:ring-0">
                     <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm rubik-500 text-gray-900 dark:text-gray-300">Me
                     <span id="helper-radio-text" class="ml-2 text-xs font-normal text-gray-500 dark:text-gray-300"> - You will receive the requested document(s).</span></label>
             </div>
             <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-                <input wire:model.live="selectedReceiver" id="bordered-radio-2" type="radio" value="representative" name="bordered-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <input wire:model.live="selectedReceiver" id="bordered-radio-2" type="radio" value="representative" name="bordered-radio" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-white  focus:ring-0">
                     <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm rubik-500 text-gray-900 dark:text-gray-300">My Representative
                     <span id="helper-radio-text" class="ml-2 text-xs font-normal text-gray-500 dark:text-gray-300"> - Your representative will receive the requested document(s).</span></label>
             </div>
@@ -32,12 +32,17 @@
         <div>
             @if ($receiver_name == '')
             <div class="flex space-x-4">
-                <span class="text-xl">You don't have a representative added. Do you want to add now? </span>
+                <span class="ml-4 text-xl">You don't have a representative added. Do you want to add now? </span>
                 {{ $this->addRepresentativeAction }}
                 <x-filament-actions::modals />
             </div>
             @else
-            <span class="text-xl">Receiver: {{$receiver_name}}</span>
+            <span class="ml-4 text-xl font-mono">Receiver: {{$receiver_name}}</span>
+            @if ($selectedReceiver === 'representative')
+                {{ $this->updateRepresentativeAction }}
+                <x-filament-actions::modals />
+            @endif
+
             @endif
 
         </div>
@@ -152,12 +157,26 @@
                 </div>
               </div>
             {{-- content end --}}
-            <div class="col-span-full ">
-                <label for="about" class="block text-md font-medium leading-6 text-gray-900">Purpose of Request <span class="text-red-500 text-lg">*</span></label>
-                <div class="mt-2 mb-4">
-                  <textarea wire:model="purpose" id="about" name="about" rows="3" class="rubik-300 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 lg:text-md lg:leading-6 sm:text-sm"></textarea>
-                  @error('purpose') <span class="text-red-600">{{ $message }}</span> @enderror
+            <div class="col-span-full mb-4">
+                <label for="purpose_select" class="block text-md font-medium leading-6 text-gray-900">Purpose of Request <span class="text-red-500 text-lg">*</span></label>
+                <select wire:model.live="selected_purpose" id="purpose_select" name="purpose_type" class="block w-full rounded-md border-gray-300 py-2 px-3 text-gray-700 shadow-sm focus:outline-none focus:ring-1 focus:ring-green-600 focus:border-green-600 sm:text-sm">
+                  @if ($selected_purpose === '' || $selected_purpose === null)
+                  <option value="">-- Select Purpose --</option>
+                  @endif
+                  @foreach ($purposes as $item)
+                  <option value="{{$item->id}}">{{$item->name}}</option>
+                  @endforeach
+
+                </select>
+                @if ($selected_purpose === "7")
+                <div class="mt-3">
+                  <label for="purpose" class="block text-md font-medium leading-6 text-gray-900">Other Purpose <span class="text-red-500 text-lg">*</span></label>
+                  <div class=" mb-4">
+                    <input wire:model="other_purpose" id="about" name="about" type="text" class="rubik-300 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 lg:text-md lg:leading-6 sm:text-sm">
+                    @error('purpose') <span class="text-red-600">{{ $message }}</span> @enderror
+                  </div>
                 </div>
+                @endif
               </div>
           </div>
           <div class="flex mt-3 justify-end">

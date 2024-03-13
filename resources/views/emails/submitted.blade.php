@@ -31,7 +31,7 @@
          Please wait for the approval.</p>
         <p>Date: <span style="font-weight: bold;">{{Carbon\Carbon::parse($record->created_at)->format('F d, Y')}}</span></p>
         <p>Time: <span style="font-weight: bold;">{{Carbon\Carbon::parse($record->created_at)->format('h:i A')}}</span></p>
-        <p>Purpose: <span style="font-weight: bold;">{{ucwords($record->purpose)}}</span></p>
+        <p>Purpose: <span style="font-weight: bold;">{{ucwords($record->purpose->name)}}</span></p>
         <p>Total: <span style="font-weight: bold;">₱{{number_format($record->total_amount, 2)}}</span></p>
     </div>
 

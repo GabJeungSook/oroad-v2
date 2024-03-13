@@ -89,7 +89,7 @@
             <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Request Date : {{Carbon\Carbon::parse($record->created_at)->format('F d, Y - h:i:s A')}}</label>
         </div>
         <div  style="grid-column: span 1; border-right-width: 0.125rem; border-bottom-width: 0.125rem; padding-left: 0.75rem; padding-right: 0.75rem; padding-top: 0.25rem; padding-bottom: 0.25rem;">
-            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Purpose : {{$record->purpose}}</label>
+            <label  style="font-family: 'Rubik', sans-serif; font-weight: 400; font-size: 0.875rem;">Purpose : {{$record->purpose->name}}</label>
         </div>
     </div>
     <div class="w-full border-x-1 border-gray-300 bg-green-950 text-white" style="width: 100%; border-width: 0.0625rem; border-style: solid; border-color: #d1d5db; background-color: #065f46; color: #fff;">
