@@ -221,8 +221,9 @@ class RequestedDocument extends Component implements HasForms, HasActions
 
                 Notification::make()
                 ->title('Request Submitted Successfully')
-                ->body('Your request has been submitted successfully. Please wait for the approval.')
+                ->body('Your request shall undergo validation and you will be notified through your email.')
                 ->success()
+                ->persistent()
                 ->send();
 
                 return redirect()->route('dashboard');
