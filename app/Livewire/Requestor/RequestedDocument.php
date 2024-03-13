@@ -217,7 +217,7 @@ class RequestedDocument extends Component implements HasForms, HasActions
                 DB::commit();
 
                 //for email sending - to be updated upon approval
-                // Mail::to(auth()->user()->email)->send(new SubmittedRequestMail($new_request));
+                Mail::to(auth()->user()->email)->send(new SubmittedRequestMail($new_request));
 
                 Notification::make()
                 ->title('Request Submitted Successfully')
