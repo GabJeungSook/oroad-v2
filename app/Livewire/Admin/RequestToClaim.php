@@ -53,7 +53,7 @@ class RequestToClaim extends Component implements HasForms, HasTable
                 ->label('Date To Claim')
                 ->formatStateUsing(fn ($state) => Carbon::parse($state)->format('F d, Y h:i A'))
                 ->searchable(),
-                TextColumn::make('purpose')
+                TextColumn::make('purpose.name')
                 ->formatStateUsing(fn ($state) => ucwords($state))
                 ->wrap()
                 ->searchable(),
