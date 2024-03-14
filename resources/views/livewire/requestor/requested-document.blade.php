@@ -12,6 +12,39 @@
                 </a>
             </div>
         </div>
+        @if (auth()->user()->user_information->campus_clearance_path === null)
+        <div class="mt-5 bg-red-100 border-t-4 border-red-500 rounded-b text-red-900 px-4 py-3 shadow-md" role="alert">
+            <div class="flex">
+              <div class="py-1">
+                  <svg class="h-6 w-6 text-red-500 mr-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                  </svg>
+
+            </div>
+              <div>
+                <p class="font-bold">No Campus Clearance Uploaded</p>
+                <p class="text-sm">Before you can make your first request. You must upload your campus clearance first.
+                    <a href="{{route('requestor.view-user-profile')}}" class="font-semibold hover:underline">
+                        Upload Here</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        @elseif(auth()->user()->user_information->year_graduated <= 2005)
+        <div class="mt-5 bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
+            <div class="flex">
+              <div class="py-1">
+                  <svg class="h-6 w-6 text-teal-500 mr-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+                  </svg>
+            </div>
+              <div>
+                <p class="font-bold">You graduated last {{auth()->user()->user_information->year_graduated}}</p>
+                <p class="text-sm">Please proceed to your campus registrar to handle your request personally.</p>
+              </div>
+            </div>
+          </div>
+        @else
         <div class="my-3 border-b-2 border-gray-300 w-full" ></div>
         <div class="">
             <h1 class="text-xl">Select Receiver</h1>
@@ -188,4 +221,6 @@
           @endif
           {{-- <button wire:click="test">test</button> --}}
     </div>
+        @endif
+
 </div>

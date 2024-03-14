@@ -34,10 +34,12 @@ class AddUserInformation extends Component implements HasForms
 
     public ?array $data = [];
 
+
     public function mount(): void
     {
         $this->form->fill();
     }
+
 
     public function form(Form $form): Form
     {
@@ -61,8 +63,8 @@ class AddUserInformation extends Component implements HasForms
                     ->required(),
                     TextInput::make('contact_number')
                     ->prefix('09')
-                    ->length(14)
-                    ->mask('99 999 999 999')
+                    ->length(11)
+                    ->mask('99 999 9999')
                     ->required(),
                 ])->columns(3),
                 Section::make('Address')
@@ -110,8 +112,24 @@ class AddUserInformation extends Component implements HasForms
                     ->required(),
                     Select::make('user_type_id')
                     ->label('Requestor Type')
+                    ->live()
                     ->options(UserType::all()->pluck('name', 'id'))
                     ->required(),
+                    Select::make('year_graduated')
+                    ->label('Year Graduated')
+                    // ->searchable()
+                    ->preload()
+                    ->options(function () {
+                        $currentYear = date('Y'); // Get current year
+                        $yearArray = [];
+                        for ($year = 1990; $year <= $currentYear; $year++) {
+                          $yearArray[$year] = $year;
+                        }
+
+                        return $yearArray;
+                    })
+                    ->visible(fn (Get $get) => $get('user_type_id') == 2)
+                    ->required(fn (Get $get) => $get('user_type_id') == 2),
                     Grid::make(1)
                     ->schema([
                         FileUpload::make('valid_id_path')
@@ -124,7 +142,7 @@ class AddUserInformation extends Component implements HasForms
                         ->label('Upload a valid ID')
                         ->required(),
                     ])
-                ])->columns(3),
+                ])->columns(4),
                 // Toggle::make('has_representative')
                 // ->live()
                 // ->label('Do you want to add a representative?'),
@@ -166,6 +184,11 @@ class AddUserInformation extends Component implements HasForms
     public function create()
     {
         $this->data['user_id'] = auth()->user()->id;
+        $this->data['contact_number'] = '09' . $this->data['contact_number'];
+        if($this->data['user_type_id'] == 1)
+        {
+            $this->data['year_graduated'] = null;
+        }
 
          $info = UserInformation::create($this->form->getState());
 

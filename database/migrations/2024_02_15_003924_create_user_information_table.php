@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreignId('campus_id')->constrained();
             $table->foreignId('course_id')->constrained();
             $table->foreignId('user_type_id')->constrained();
-            $table->foreignId('region_code');
-            $table->foreignId('province_code');
-            $table->foreignId('city_code');
+            $table->string('region_code');
+            $table->string('province_code');
+            $table->string('city_code');
             $table->string('postal_code');
             $table->text('other_address_details');
             $table->string('year_graduated')->nullable();

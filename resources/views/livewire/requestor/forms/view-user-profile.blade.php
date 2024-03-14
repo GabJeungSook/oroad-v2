@@ -61,6 +61,10 @@
                 <dt class="text-sm font-medium leading-6 text-gray-900">Course</dt>
                 <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{$record->course->name}}</dd>
               </div>
+              <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
+                <dt class="text-sm font-medium leading-6 text-gray-900">Year Graduated</dt>
+                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:mt-2">{{$record->year_graduated}}</dd>
+              </div>
             <div class="border-t border-gray-100 px-4 py-6 sm:col-span-2 sm:px-0">
               <dt class="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
               <dd class="mt-2 text-sm text-gray-900">

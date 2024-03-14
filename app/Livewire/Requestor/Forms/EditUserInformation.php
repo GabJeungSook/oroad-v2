@@ -40,6 +40,7 @@ class EditUserInformation extends Component implements HasForms
     {
         $this->record = UserInformation::where('user_id', auth()->user()->id)->first();
         $this->form->fill($this->record->attributesToArray());
+        // $this->form->fill(['region' => $this->record->region_code]);
     }
 
     public function form(Form $form): Form
@@ -112,8 +113,24 @@ class EditUserInformation extends Component implements HasForms
                     ->required(),
                     Select::make('user_type_id')
                     ->label('Requestor Type')
+                    ->live()
                     ->options(UserType::all()->pluck('name', 'id'))
                     ->required(),
+                    Select::make('year_graduated')
+                    ->label('Year Graduated')
+                    // ->searchable()
+                    ->preload()
+                    ->options(function () {
+                        $currentYear = date('Y'); // Get current year
+                        $yearArray = [];
+                        for ($year = 1990; $year <= $currentYear; $year++) {
+                          $yearArray[$year] = $year;
+                        }
+
+                        return $yearArray;
+                    })
+                    ->visible(fn (Get $get) => $get('user_type_id') == 2)
+                    ->required(fn (Get $get) => $get('user_type_id') == 2),
                     Grid::make(1)
                     ->schema([
                         FileUpload::make('valid_id_path')
@@ -126,7 +143,7 @@ class EditUserInformation extends Component implements HasForms
                         ->label('Upload a valid ID')
                         ->required(),
                     ])
-                ])->columns(3),
+                ])->columns(4),
                 // Toggle::make('has_representative')
                 // ->live()
                 // ->label('Do you want to add a representative?'),
@@ -167,9 +184,16 @@ class EditUserInformation extends Component implements HasForms
 
     public function save(): void
     {
+
+
         $data = $this->form->getState();
 
         $this->record->update($data);
+
+        if($this->data['user_type_id'] == 1)
+        {
+            $this->record->update(['year_graduated' => null]);
+        }
 
         Notification::make()
         ->title('Saved Successfully')
