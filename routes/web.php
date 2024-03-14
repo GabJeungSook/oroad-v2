@@ -96,6 +96,10 @@ Route::get('/requestor/request-document', function () {
     return view('requestor.request-document');
 })->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.request-document');
 
+Route::get('/requestor/view-user-profile', function () {
+    return view('requestor.forms.view-user-profile');
+})->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.view-user-profile');
+
 Route::get('/requestor/update-user-information', function () {
     return view('requestor.forms.update-user-information');
 })->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('requestor.update-user-information');

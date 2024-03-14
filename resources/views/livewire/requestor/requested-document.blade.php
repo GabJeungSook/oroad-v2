@@ -20,7 +20,7 @@
         <div class="p-4 space-y-4">
             <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
                 <input wire:model.live="selectedReceiver" id="bordered-radio-1" type="radio" value="me" name="bordered-radio" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-white  focus:ring-0">
-                    <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm rubik-500 text-gray-900 dark:text-gray-300">Me
+                    <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm rubik-500 text-gray-900 dark:text-gray-300">Owner
                     <span id="helper-radio-text" class="ml-2 text-xs font-normal text-gray-500 dark:text-gray-300"> - You will receive the requested document(s).</span></label>
             </div>
             <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">

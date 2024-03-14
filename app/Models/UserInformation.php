@@ -15,6 +15,12 @@ class UserInformation extends Model
         return $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name;
     }
 
+    public function fullAddress()
+    {
+        return $this->other_address_details != null ? $this->other_address_details . ' ' . $this->philippineCity->city_municipality_description . ', ' . $this->philippineProvince->province_description . ', ' . $this->philippineRegion->region_description
+        : $this->philippineCity->city_municipality_description . ', ' . $this->philippineProvince->province_description . ', ' . $this->philippineRegion->region_description;
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
