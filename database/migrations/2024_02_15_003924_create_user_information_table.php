@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('city_code');
             $table->string('postal_code');
             $table->text('other_address_details');
+            $table->string('year_graduated')->nullable();
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');

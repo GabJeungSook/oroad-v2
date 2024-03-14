@@ -22,6 +22,7 @@ class RoleMiddleware
         }
 
 
-        return abort(403, 'Unauthorized Access.');
+        // return abort(403, 'Unauthorized Access.');
+        return response()->view('error-pages.403', [], 403);
     }
 }
