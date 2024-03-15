@@ -52,6 +52,10 @@ class ApproveRequest extends Component implements HasForms, HasTable
                 ->label('Date Approved')
                 ->formatStateUsing(fn ($state) => Carbon::parse($state)->format('F d, Y h:i A'))
                 ->searchable(),
+                ViewColumn::make('days_created')
+                ->label('No. of days requested')
+                ->view('tables.columns.days-requested')
+                ->sortable(),
                 TextColumn::make('purpose.name')
                 ->formatStateUsing(fn ($state) => ucwords($state))
                 ->wrap()

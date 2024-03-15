@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use Carbon\Carbon;
 use Filament\Tables;
 use Livewire\Component;
 use Filament\Tables\Table;
@@ -18,6 +19,7 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
 
@@ -30,7 +32,6 @@ class PendingRequest extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-
             ->query(RequestModel::query()->where('status', 'Pending')->orderBy('created_at', 'desc'))
             ->columns([
                 TextColumn::make('request_number')
@@ -67,6 +68,10 @@ class PendingRequest extends Component implements HasForms, HasTable
                 ->label('Date Requested')
                 ->formatStateUsing(fn ($state) => $state->format('F d, Y h:i A'))
                 ->searchable(),
+                ViewColumn::make('days_created')
+                ->label('No. of days requested')
+                ->view('tables.columns.days-requested')
+                ->sortable(),
                 TextColumn::make('purpose.name')
                 ->formatStateUsing(fn ($state) => ucwords($state))
                 ->wrap()
