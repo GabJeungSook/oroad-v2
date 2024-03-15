@@ -69,10 +69,6 @@ class PaymentRequest extends Component implements HasForms, HasTable
                 ->label('Paid At')
                 ->formatStateUsing(fn ($state) => $state->format('F d, Y h:i A'))
                 ->searchable(),
-                ViewColumn::make('days_created')
-                ->label('No. of days requested')
-                ->view('tables.columns.days-requested')
-                ->sortable(),
                 TextColumn::make('purpose.name')
                 ->formatStateUsing(fn ($state) => ucwords($state))
                 ->wrap()

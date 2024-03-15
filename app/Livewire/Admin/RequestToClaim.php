@@ -49,10 +49,6 @@ class RequestToClaim extends Component implements HasForms, HasTable
                 ->label('Date Requested')
                 ->formatStateUsing(fn ($state) => $state->format('F d, Y h:i A'))
                 ->searchable(),
-                ViewColumn::make('days_created')
-                ->label('No. of days requested')
-                ->view('tables.columns.days-requested')
-                ->sortable(),
                 TextColumn::make('payments.date_to_claim')
                 ->label('Date To Claim')
                 ->formatStateUsing(fn ($state) => Carbon::parse($state)->format('F d, Y h:i A'))
