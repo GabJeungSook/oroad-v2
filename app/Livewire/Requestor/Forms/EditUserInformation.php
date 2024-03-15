@@ -64,8 +64,6 @@ class EditUserInformation extends Component implements HasForms
                     ->native(false)
                     ->required(),
                     TextInput::make('contact_number')
-                    ->length(14)
-                    ->mask('99 999 999 999')
                     ->required(),
                 ])->columns(3),
                 Section::make('Address')

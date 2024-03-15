@@ -62,9 +62,6 @@ class AddUserInformation extends Component implements HasForms
                     ->native(false)
                     ->required(),
                     TextInput::make('contact_number')
-                    ->prefix('09')
-                    ->length(11)
-                    ->mask('99 999 9999')
                     ->required(),
                 ])->columns(3),
                 Section::make('Address')

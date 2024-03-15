@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3)
+    if(auth()->user()->role_id == 1 || auth()->user()->role_id == 3 || auth()->user()->role_id == 4)
     {
         return redirect()->route('admin.dashboard');
     }elseif(auth()->user()->role_id == 2)
@@ -34,7 +34,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboard');
-})->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.dashboard');
+})->middleware(['auth', 'verified', 'role:ADMIN,REGISTRAR,CASHIER'])->name('admin.dashboard');
 
 Route::get('/admin/campuses', function () {
     return view('admin.campus');
@@ -62,32 +62,32 @@ Route::get('/admin/purposes', function () {
 
 Route::get('/admin/pending-requests', function () {
     return view('admin.pending-request');
-})->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.pending-request');
+})->middleware(['auth', 'verified', 'role:ADMIN,REGISTRAR'])->name('admin.pending-request');
 
 Route::get('/admin/approved-requests', function () {
     return view('admin.approve-request');
-})->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.approved-request');
+})->middleware(['auth', 'verified', 'role:ADMIN,REGISTRAR'])->name('admin.approved-request');
 
 Route::get('/admin/payment-requests', function () {
     return view('admin.payment-request');
-})->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.payment-request');
+})->middleware(['auth', 'verified', 'role:ADMIN,CASHIER'])->name('admin.payment-request');
 
 Route::get('/admin/request-to-claim', function () {
     return view('admin.request-to-claim');
-})->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.request-to-claim');
+})->middleware(['auth', 'verified', 'role:ADMIN,CASHIER'])->name('admin.request-to-claim');
 
 Route::get('/admin/claimed-requests', function () {
     return view('admin.claimed-requests');
-})->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.claimed-requests');
+})->middleware(['auth', 'verified', 'role:ADMIN,REGISTRAR,CASHIER'])->name('admin.claimed-requests');
 
 Route::get('/admin/denied-requests', function () {
     return view('admin.request-denied');
-})->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.request-denied');
+})->middleware(['auth', 'verified', 'role:ADMIN,REGISTRAR,CASHIER'])->name('admin.request-denied');
 
 Route::get('/admin/review-pending-request/{record}', function ($request) {
     $request = Request::findOrFail($request);
     return view('admin.review-pending-request', ['record' => $request]);
-})->middleware(['auth', 'verified', 'role:ADMIN,STAFF'])->name('admin.review-pending-request');
+})->middleware(['auth', 'verified', 'role:ADMIN,REGISTRAR'])->name('admin.review-pending-request');
 
 
 //routes for requestor

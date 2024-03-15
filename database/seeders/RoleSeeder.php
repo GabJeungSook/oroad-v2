@@ -21,7 +21,10 @@ class RoleSeeder extends Seeder
                 'name' => 'REQUESTOR',
             ],
             [
-                'name' => 'STAFF',
+                'name' => 'REGISTRAR',
+            ],
+            [
+                'name' => 'CASHIER',
             ],
         ]);
     }

@@ -30,7 +30,7 @@
               </div>
             </div>
           </div>
-        @elseif(auth()->user()->user_information->year_graduated <= 2005)
+        @elseif(auth()->user()->user_information->user_type_id === 2 && auth()->user()->user_information->year_graduated <= 2005)
         <div class="mt-5 bg-teal-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md" role="alert">
             <div class="flex">
               <div class="py-1">

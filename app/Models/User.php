@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'role_id',
+        'campus_id',
         'email',
         'profile_photo_path',
         'password',
@@ -68,5 +69,10 @@ class User extends Authenticatable
     public function payments()
     {
         return $this->hasMany(RequestPayment::class, 'approved_by');
+    }
+
+    public function campus()
+    {
+        return $this->belongsTo(Campus::class);
     }
 }

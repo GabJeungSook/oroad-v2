@@ -100,7 +100,7 @@ class RequestToClaim extends Component implements HasForms, HasTable
                 // ]),
             ])
             ->emptyStateHeading('No request yet')
-            ->emptyStateDescription('All requests to claim will be displayed here');;
+            ->emptyStateDescription('All requests for release will be displayed here');;
     }
 
     public function render()
