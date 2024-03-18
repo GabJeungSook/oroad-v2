@@ -30,16 +30,16 @@ class Purpose extends Component implements HasForms, HasTable
             ->columns([
                 TextColumn::make('name')->label('Description')->searchable(),
             ])->headerActions([
-                CreateAction::make()
-                ->model(PurposeModel::class)
-                ->label('Add Purpose')
-                ->modalHeading('Add Purpose')
-                ->form([
-                    TextInput::make('name')
-                        ->label('Description')
-                        ->required()
-                        ->maxLength(255),
-                ])
+                // CreateAction::make()
+                // ->model(PurposeModel::class)
+                // ->label('Add Purpose')
+                // ->modalHeading('Add Purpose')
+                // ->form([
+                //     TextInput::make('name')
+                //         ->label('Description')
+                //         ->required()
+                //         ->maxLength(255),
+                // ])
             ])->actions([
                 EditAction::make('edit')
                 ->model(PurposeModel::class)
@@ -48,7 +48,7 @@ class Purpose extends Component implements HasForms, HasTable
                         ->label('Description')
                         ->required()
                         ->maxLength(255),
-                ])
+                ])->visible(fn ($record) => $record->id !== 7),
             ]);
     }
 
