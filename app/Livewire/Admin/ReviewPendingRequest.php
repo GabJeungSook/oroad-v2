@@ -5,8 +5,10 @@ namespace App\Livewire\Admin;
 use Carbon\Carbon;
 use Livewire\Component;
 use Filament\Actions\Action;
+use App\Mail\ApproveRequestMail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Mail;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Pages\Actions\ViewAction;
 use Filament\Support\Enums\ActionSize;
@@ -72,9 +74,12 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                DB::commit();
                Notification::make()
                ->title('Request Approved')
-            //    ->body('An email has been sent to ' . $this->full_name . ' regarding the approval of the request.')
+                ->body('An email has been sent to ' . $this->full_name . ' regarding the approval of the request.')
                ->success()
                ->send();
+                //for email sending - to be updated upon approval
+                Mail::to($this->record->user_information->user->email)->send(new ApproveRequestMail($this->record));
+
                return redirect()->route('admin.pending-request');
             });
     }
