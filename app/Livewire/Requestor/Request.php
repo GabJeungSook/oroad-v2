@@ -90,7 +90,14 @@ class Request extends Component implements HasForms, HasTable
                 ->icon('heroicon-o-credit-card')
                 ->url(fn ($record) => route('add-payment-details', $record))
                 ->visible(fn ($record) => $record->status === 'Approved'),
+                Action::make('qr_coupon')
+                ->label('Generate QR Coupon')
+                ->color('primary')
+                ->icon('heroicon-o-qr-code')
+                ->url(fn ($record) => route('qr-coupon', $record))
+                ->visible(fn ($record) => $record->status === 'To Claim'),
                 ]),
+
             ])
             ->emptyStateHeading('No request yet')
             ->emptyStateDescription('You can make your first request');;

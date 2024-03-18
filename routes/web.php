@@ -125,6 +125,11 @@ Route::get('/requestor/add-payment-details/{request}', function ($request) {
     return view('requestor.forms.add-payment-details', ['record' => $request]);
 })->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('add-payment-details');
 
+Route::get('/requestor/qr-code/{request}', function ($request) {
+    $request = Request::findOrFail($request);
+    return view('requestor.forms.qr-coupon', ['record' => $request]);
+})->middleware(['auth', 'verified', 'role:REQUESTOR'])->name('qr-coupon');
+
 
 Route::get('/requestor/generate-pdf/{record}', function ($record) {
     $data = Request::findOrFail($record);
