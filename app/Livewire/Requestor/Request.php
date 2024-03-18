@@ -100,7 +100,7 @@ class Request extends Component implements HasForms, HasTable
 
             ])
             ->emptyStateHeading('No request yet')
-            ->emptyStateDescription('You can make your first request');;
+            ->emptyStateDescription('You can make your first request');
     }
 
     public function render()
