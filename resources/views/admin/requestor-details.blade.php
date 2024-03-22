@@ -56,6 +56,14 @@
             </a>
           </dd>
         </div>
+        <div class="bg-gray-50 px-4 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+            <dt class="text-sm font-medium leading-6 text-gray-900">Campus Clearance</dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+              <a href="{{ Storage::disk('public')->url($record->campus_clearance_path) }}" target="_blank">
+                  <img src="{{ Storage::disk('public')->url($record->campus_clearance_path) }}" alt="Valid ID">
+              </a>
+            </dd>
+          </div>
       </dl>
     </div>
   </div>
