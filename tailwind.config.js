@@ -7,7 +7,7 @@ import preset from './vendor/filament/support/tailwind.config.preset'
 export default {
     presets: [
         preset,
-        require('./vendor/wireui/wireui/tailwind.config.js')
+        // require('./vendor/wireui/wireui/tailwind.config.js')
     ],
     content: [
         './vendor/wireui/wireui/resources/**/*.blade.php',
