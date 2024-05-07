@@ -9,9 +9,11 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\DatePicker;
 use Filament\Notifications\Notification;
 use Filament\Forms\Concerns\InteractsWithForms;
+use WireUi\Traits\Actions;
 
 class VerifyRequestorEmail extends Component implements HasForms
 {
+    use Actions;
     use InteractsWithForms;
 
     public ?array $data = [];
@@ -37,11 +39,15 @@ class VerifyRequestorEmail extends Component implements HasForms
     {
         if ($this->verification_code === $this->data['verify_code']) {
             session()->forget('verification_code');
-            Notification::make()
-            ->title('Verification Successful')
-            ->body('Your email has been verified successfully. You can now add your information to make a request.')
-            ->success()
-            ->send();
+            $this->dialog()->success(
+                $title = 'Verification Successful',
+                $description = 'Your email has been verified successfully. You can now add your information to make a request.'
+            );
+            // Notification::make()
+            // ->title('Verification Successful')
+            // ->body('Your email has been verified successfully. You can now add your information to make a request.')
+            // ->success()
+            // ->send();
 
             // Verification successful
             $user = auth()->user();
@@ -50,11 +56,15 @@ class VerifyRequestorEmail extends Component implements HasForms
 
             return redirect()->route('dashboard');
         } else {
-            Notification::make()
-            ->title('Verification Failed')
-            ->body('The verification code you entered is incorrect. Please try again.')
-            ->danger()
-            ->send();
+            $this->dialog()->error(
+                $title = 'Verification Failed',
+                $description = 'The verification code you entered is incorrect. Please try again.'
+            );
+            // Notification::make()
+            // ->title('Verification Failed')
+            // ->body('The verification code you entered is incorrect. Please try again.')
+            // ->danger()
+            // ->send();
         }
     }
 

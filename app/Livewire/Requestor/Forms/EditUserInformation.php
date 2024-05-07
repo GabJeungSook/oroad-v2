@@ -26,9 +26,11 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Get;
 use Filament\Notifications\Notification;
+use WireUi\Traits\Actions;
 
 class EditUserInformation extends Component implements HasForms
 {
+    use Actions;
     use InteractsWithForms;
 
     public ?array $data = [];
@@ -192,12 +194,15 @@ class EditUserInformation extends Component implements HasForms
         {
             $this->record->update(['year_graduated' => null]);
         }
-
-        Notification::make()
-        ->title('Saved Successfully')
-        ->body('Your information was updated successfully.')
-        ->success()
-        ->send();
+        $this->dialog()->success(
+            $title = 'Saved Successfully',
+            $description = 'Your information was updated successfully.'
+        );
+        // Notification::make()
+        // ->title('Saved Successfully')
+        // ->body('Your information was updated successfully.')
+        // ->success()
+        // ->send();
 
         redirect()->route('dashboard');
     }

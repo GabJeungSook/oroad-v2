@@ -30,7 +30,10 @@ class RequestToClaim extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(RequestModel::query()->where('status', 'To Claim')->orderBy('created_at', 'desc'))
+            ->query(auth()->user()->role_id === 1 ? RequestModel::query()->where('status', 'To Claim')->orderBy('created_at', 'desc') :
+            RequestModel::query()->where('status', 'To Claim')->whereHas('user_information', function($query) {
+                $query->where('campus_id', auth()->user()->campus_id);
+            })->orderBy('created_at', 'desc'))
             ->columns([
                 TextColumn::make('request_number')
                 ->label('Request Code')

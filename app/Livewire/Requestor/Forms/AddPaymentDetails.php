@@ -15,9 +15,11 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Actions\Concerns\InteractsWithActions;
+use WireUi\Traits\Actions;
 
 class AddPaymentDetails extends Component implements HasForms, HasActions
 {
+    use Actions;
     use InteractsWithForms;
     use InteractsWithActions;
 
@@ -79,11 +81,15 @@ class AddPaymentDetails extends Component implements HasForms, HasActions
                         'description' => 'Payment details has been added with receipt number: ' . $this->form->getState()['receipt_number'],
                     ]);
                     DB::commit();
-                    Notification::make()
-                    ->title('Saved Successfully')
-                    ->body('Payment details has been added successfully.')
-                    ->success()
-                    ->send();
+                    $this->dialog()->success(
+                        $title = 'Saved Successfully',
+                        $description = 'Payment details has been added successfully.'
+                    );
+                    // Notification::make()
+                    // ->title('Saved Successfully')
+                    // ->body('Payment details has been added successfully.')
+                    // ->success()
+                    // ->send();
                 }
                 return redirect()->route('dashboard');
             });

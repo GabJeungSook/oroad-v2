@@ -27,9 +27,11 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Components\Group;
+use WireUi\Traits\Actions;
 
 class AddUserInformation extends Component implements HasForms
 {
+    use Actions;
     use InteractsWithForms;
 
     public ?array $data = [];
@@ -195,12 +197,15 @@ class AddUserInformation extends Component implements HasForms
         //  }
 
 
-
-        Notification::make()
-        ->title('Saved Successfully')
-        ->body('You can now request a document.')
-        ->success()
-        ->send();
+        $this->dialog()->success(
+            $title = 'Saved Successfully',
+            $description = 'Information saved. You can now request a document.'
+        );
+        // Notification::make()
+        // ->title('Saved Successfully')
+        // ->body('You can now request a document.')
+        // ->success()
+        // ->send();
 
         return redirect()->route('dashboard');
     }

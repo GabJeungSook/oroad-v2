@@ -23,9 +23,11 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Actions\Concerns\InteractsWithActions;
+use WireUi\Traits\Actions;
 
 class RequestedDocument extends Component implements HasForms, HasActions
 {
+    use Actions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -83,11 +85,16 @@ class RequestedDocument extends Component implements HasForms, HasActions
                 ])
             ])
             ->after(function () {
-                Notification::make()
-                ->title('Representative Added Successfully')
-                ->body('Your representative has been added successfully. You can now select your representative as the receiver.')
-                ->success()
-                ->send();
+                $this->dialog()->success(
+                    $title = 'Representative Added Successfully',
+                    $description = 'Your representative has been added successfully. You can now select your representative as the receiver.'
+                );
+
+                // Notification::make()
+                // ->title('Representative Added Successfully')
+                // ->body('Your representative has been added successfully. You can now select your representative as the receiver.')
+                // ->success()
+                // ->send();
                 $this->selectedReceiver === 'representative';
                 $this->receiver_name = auth()->user()->user_information->representative?->fullName();
 
@@ -126,10 +133,14 @@ class RequestedDocument extends Component implements HasForms, HasActions
                 ->required(),
             ])
             ])->after(function () {
-                Notification::make()
-                ->title('Representative Added Updated')
-                ->success()
-                ->send();
+                $this->dialog()->success(
+                    $title = 'Representative Updated Successfully',
+                    $description = 'Your representative has been updated successfully.'
+                );
+                // Notification::make()
+                // ->title('Representative Added Updated')
+                // ->success()
+                // ->send();
                 $this->selectedReceiver === 'representative';
                 $this->receiver_name = auth()->user()->user_information->representative?->fullName();
 
@@ -218,13 +229,16 @@ class RequestedDocument extends Component implements HasForms, HasActions
 
                 //for email sending - to be updated upon approval
                 Mail::to(auth()->user()->email)->send(new SubmittedRequestMail($new_request));
-
-                Notification::make()
-                ->title('Request Submitted Successfully')
-                ->body('Your request shall undergo validation and you will be notified through your email.')
-                ->success()
-                ->persistent()
-                ->send();
+                $this->dialog()->success(
+                    $title = 'Request Submitted Successfully',
+                    $description = 'Your request shall undergo validation and you will be notified through your email.'
+                );
+                // Notification::make()
+                // ->title('Request Submitted Successfully')
+                // ->body('Your request shall undergo validation and you will be notified through your email.')
+                // ->success()
+                // ->persistent()
+                // ->send();
 
                 return redirect()->route('dashboard');
             });

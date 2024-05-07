@@ -17,9 +17,12 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Actions\Concerns\InteractsWithActions;
+use WireUi\Traits\Actions;
 
 class ViewUserProfile extends Component implements  HasForms, HasActions
 {
+    use Actions;
+
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -67,11 +70,16 @@ class ViewUserProfile extends Component implements  HasForms, HasActions
                 ])
             ])
             ->after(function () {
-                Notification::make()
-                ->title('Representative Added Successfully')
-                ->body('Your representative has been added successfully. You can now select your representative as the receiver.')
-                ->success()
-                ->send();
+                $this->dialog()->success(
+                    $title = 'Representative Added Successfully',
+                    $description = 'Your representative has been added successfully. You can now select your representative as the receiver.'
+                );
+
+                // Notification::make()
+                // ->title('Representative Added Successfully')
+                // ->body('Your representative has been added successfully. You can now select your representative as the receiver.')
+                // ->success()
+                // ->send();
 
                 return redirect()->route('requestor.view-user-profile');
 
@@ -111,10 +119,14 @@ class ViewUserProfile extends Component implements  HasForms, HasActions
                 ->required(),
             ])
             ])->after(function () {
-                Notification::make()
-                ->title('Representative Added Updated')
-                ->success()
-                ->send();
+                $this->dialog()->success(
+                    $title = 'Representative Updated',
+                    $description = ''
+                );
+                // Notification::make()
+                // ->title('Representative Added Updated')
+                // ->success()
+                // ->send();
 
                 return redirect()->route('requestor.view-user-profile');
 
@@ -141,7 +153,13 @@ class ViewUserProfile extends Component implements  HasForms, HasActions
                     ->label('Campus Clearance')
                     ->required(),
                 ])
-                ]);
+                ])->successNotification(null)
+                ->after(function () {
+                    $this->dialog()->success(
+                        $title = 'Campus Clearance Uploaded',
+                        $description = ''
+                    );
+                });
     }
 
     public function updateClearanceAction(): Action
@@ -165,7 +183,13 @@ class ViewUserProfile extends Component implements  HasForms, HasActions
                     ->label('Campus Clearance')
                     ->required(),
                 ])
-                ]);
+                ])->successNotification(null)
+                ->after(function () {
+                    $this->dialog()->success(
+                        $title = 'Campus Clearance Updated',
+                        $description = ''
+                    );
+                });
     }
 
     public function mount()

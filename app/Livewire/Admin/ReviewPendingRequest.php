@@ -140,11 +140,11 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                     $title = 'Request Denied',
                     $description = 'This request was denied.'
                 );
-                Notification::make()
-                ->title('Request Denied')
-                // ->body('An email has been sent to ' . $this->full_name . ' regarding the denial of the request.')
-                ->success()
-                ->send();
+                // Notification::make()
+                // ->title('Request Denied')
+                // // ->body('An email has been sent to ' . $this->full_name . ' regarding the denial of the request.')
+                // ->success()
+                // ->send();
                 return redirect()->route('admin.pending-request');
             });
     }
@@ -170,11 +170,15 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                DB::beginTransaction();
                if($this->record->status === 'To Claim')
                 {
-                    Notification::make()
-                    ->title('Oops!')
-                    ->body('This payment request was already approved.')
-                    ->danger()
-                    ->send();
+                    $this->dialog()->error(
+                        $title = 'Oops!',
+                        $description = 'This payment request was already approved.'
+                    );
+                    // Notification::make()
+                    // ->title('Oops!')
+                    // ->body('This payment request was already approved.')
+                    // ->danger()
+                    // ->send();
                     return redirect()->route('admin.payment-request');
                 }else{
                     $this->record->update([
@@ -191,11 +195,15 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                      ]);
                 }
                DB::commit();
-               Notification::make()
-               ->title('Payment Request Approved')
-            //    ->body('An email has been sent to ' . $this->full_name . ' regarding the approval of the payment request.')
-               ->success()
-               ->send();
+               $this->dialog()->success(
+                $title = 'Payment Request Approved',
+                $description = ''
+            );
+            //    Notification::make()
+            //    ->title('Payment Request Approved')
+            //     ->body('An email has been sent to ' . $this->full_name . ' regarding the approval of the payment request.')
+            //    ->success()
+            //    ->send();
                return redirect()->route('admin.payment-request');
             });
     }
@@ -219,11 +227,15 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                DB::beginTransaction();
                if($this->record->status === 'Payment Request Denied')
                {
-                     Notification::make()
-                     ->title('Oops!')
-                     ->body('This payment request was already denied.')
-                     ->danger()
-                     ->send();
+                $this->dialog()->error(
+                    $title = 'Oops!',
+                    $description = 'This payment request was already denied.'
+                );
+                    //  Notification::make()
+                    //  ->title('Oops!')
+                    //  ->body('This payment request was already denied.')
+                    //  ->danger()
+                    //  ->send();
                      return redirect()->route('admin.payment-request');
                }else{
                 $this->record->update([
@@ -239,11 +251,15 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                  ]);
                }
                DB::commit();
-               Notification::make()
-               ->title('Payment Request Approved')
-            //    ->body('An email has been sent to ' . $this->full_name . ' regarding the denial of the request.')
-               ->success()
-               ->send();
+               $this->dialog()->error(
+                $title = 'Payment Request Approved',
+                $description = ''
+            );
+            //    Notification::make()
+            //    ->title('Payment Request Approved')
+            // //    ->body('An email has been sent to ' . $this->full_name . ' regarding the denial of the request.')
+            //    ->success()
+            //    ->send();
                return redirect()->route('admin.payment-request');
             });
     }
@@ -265,11 +281,15 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                 'description' => 'Requested Documents Claimed by '. $this->full_name,
             ]);
             DB::commit();
-            Notification::make()
-            ->title('Requested Documents Claimed')
-            // ->body('An email has been sent to ' . $this->full_name . ' regarding this request.')
-            ->success()
-            ->send();
+            $this->dialog()->error(
+                $title = 'Requested Documents Claimed',
+                $description = ''
+            );
+            // Notification::make()
+            // ->title('Requested Documents Claimed')
+            // // ->body('An email has been sent to ' . $this->full_name . ' regarding this request.')
+            // ->success()
+            // ->send();
             return redirect()->route('admin.request-to-claim');
 
         });

@@ -96,7 +96,14 @@
                                 <span class="truncate">Pending</span>
                                 <div>
                                   @php
-                                  $pending = App\Models\Request::where('status', 'Pending')->count();
+                                  if(auth()->user()->role_id === 1)
+                                  {
+                                      $pending = App\Models\Request::where('status', 'Pending')->count();
+                                  }else{
+                                    $pending = App\Models\Request::where('status', 'Pending')->whereHas('user_information', function($query) {
+                                                $query->where('campus_id', auth()->user()->campus_id);
+                                            })->count();
+                                  }
                                   @endphp
                                   @if ($pending > 0)
                                   <span class="inline-flex items-center justify-center px-1.5 py-1 text-xs rubik-500 leading-none text-green-100 bg-green-600 rounded-full">
@@ -115,7 +122,14 @@
                             <span class="truncate">Approved</span>
                             <div>
                               @php
-                              $approved = App\Models\Request::where('status', 'Approved')->count();
+                               if(auth()->user()->role_id === 1)
+                                  {
+                                      $approved = App\Models\Request::where('status', 'Approved')->count();
+                                  }else{
+                                    $approved = App\Models\Request::where('status', 'Approved')->whereHas('user_information', function($query) {
+                                                $query->where('campus_id', auth()->user()->campus_id);
+                                            })->count();
+                                }
                               @endphp
                               @if ($approved > 0)
                               <span class="inline-flex items-center justify-center px-1.5 py-1 text-xs rubik-500 leading-none text-green-100 bg-green-600 rounded-full">
@@ -135,7 +149,14 @@
                             <span class="truncate">Payment Review</span>
                             <div>
                                   @php
-                                  $payment = App\Models\Request::where('status', 'Payment Validation')->count();
+                                    if(auth()->user()->role_id === 1)
+                                    {
+                                        $payment = App\Models\Request::where('status', 'Payment Validation')->count();
+                                    }else{
+                                        $payment = App\Models\Request::where('status', 'Payment Validation')->whereHas('user_information', function($query) {
+                                                    $query->where('campus_id', auth()->user()->campus_id);
+                                                })->count();
+                                    }
                                   @endphp
                                   @if ($payment > 0)
                                   <span class="inline-flex items-center justify-center px-1.5 py-1 text-xs rubik-500 leading-none text-green-100 bg-green-600 rounded-full">
@@ -154,7 +175,14 @@
                             <span class="truncate">For Release</span>
                             <div>
                               @php
-                              $to_claim = App\Models\Request::where('status', 'To Claim')->count();
+                               if(auth()->user()->role_id === 1)
+                                {
+                                        $to_claim = App\Models\Request::where('status', 'To Claim')->count();
+                                    }else{
+                                        $to_claim = App\Models\Request::where('status', 'To Claim')->whereHas('user_information', function($query) {
+                                                    $query->where('campus_id', auth()->user()->campus_id);
+                                                })->count();
+                                }
                               @endphp
                               @if ($to_claim > 0)
                               <span class="inline-flex items-center justify-center px-1.5 py-1 text-xs rubik-500 leading-none text-green-100 bg-green-600 rounded-full">
@@ -175,7 +203,14 @@
                             <span class="truncate">Claimed</span>
                             <div>
                               @php
-                              $claimed = App\Models\Request::where('status', 'Claimed')->count();
+                              if(auth()->user()->role_id === 1)
+                                {
+                                        $claimed = App\Models\Request::where('status', 'Claimed')->count();
+                                    }else{
+                                        $claimed = App\Models\Request::where('status', 'Claimed')->whereHas('user_information', function($query) {
+                                                    $query->where('campus_id', auth()->user()->campus_id);
+                                                })->count();
+                                }
                               @endphp
                               @if ($claimed > 0)
                               <span class="inline-flex items-center justify-center px-1.5 py-1 text-xs rubik-500 leading-none text-green-100 bg-green-600 rounded-full">
@@ -194,7 +229,14 @@
                             <span class="truncate">Denied</span>
                             <div>
                               @php
-                              $denied = App\Models\Request::where('status', 'Request Denied')->orWhere('status', 'Payment Request Denied')->count();
+                               if(auth()->user()->role_id === 1)
+                                {
+                                    $denied = App\Models\Request::where('status', 'Request Denied')->orWhere('status', 'Payment Request Denied')->count();
+                                    }else{
+                                        $denied = App\Models\Request::where('status', 'Request Denied')->orWhere('status', 'Payment Request Denied')->whereHas('user_information', function($query) {
+                                                    $query->where('campus_id', auth()->user()->campus_id);
+                                                })->count();
+                                }
                               @endphp
                               @if ($denied > 0)
                               <span class="inline-flex items-center justify-center px-1.5 py-1 text-xs rubik-500 leading-none text-green-100 bg-green-600 rounded-full">
