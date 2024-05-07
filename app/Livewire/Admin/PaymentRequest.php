@@ -109,7 +109,7 @@ class PaymentRequest extends Component implements HasForms, HasTable
                          'requestor.request-timeline',
                          ['record' => $record],
                      ))
-                ])->icon('heroicon-s-bolt')
+                ])->dropdown(false)->icon('heroicon-s-bolt')
             ])
             ->emptyStateHeading('No request yet')
             ->emptyStateDescription('All payment requests will be displayed here');;
