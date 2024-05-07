@@ -207,9 +207,10 @@
       </main>
     </div>
   </div>
-
+  <x-dialog z-index="z-50" blur="md" align="center" />
 
         @filamentScripts
         @livewireScripts
+        @wireUiScripts
     </body>
 </html>

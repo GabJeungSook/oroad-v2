@@ -17,9 +17,11 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use WireUi\Traits\Actions;
 
 class Purpose extends Component implements HasForms, HasTable
 {
+    use Actions;
     use InteractsWithTable;
     use InteractsWithForms;
 
@@ -48,7 +50,13 @@ class Purpose extends Component implements HasForms, HasTable
                         ->label('Description')
                         ->required()
                         ->maxLength(255),
-                ])->visible(fn ($record) => $record->id !== 7),
+                ])->successNotification(null)
+                ->after(function ($record) {
+                    $this->dialog()->success(
+                        $title = 'Pupose updated',
+                        $description = 'The purpose was successfully updated'
+                    );
+                })->visible(fn ($record) => $record->id !== 7),
             ]);
     }
 

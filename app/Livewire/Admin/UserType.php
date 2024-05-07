@@ -16,9 +16,11 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
+use WireUi\Traits\Actions;
 
 class UserType extends Component implements HasForms, HasTable
 {
+    use Actions;
     use InteractsWithTable;
     use InteractsWithForms;
 
@@ -37,7 +39,13 @@ class UserType extends Component implements HasForms, HasTable
                     TextInput::make('name')
                         ->required()
                         ->maxLength(255),
-                ])
+                ])->successNotification(null)
+                ->after(function ($record) {
+                    $this->dialog()->success(
+                        $title = 'User type added',
+                        $description = 'The user type was successfully added'
+                    );
+                })
             ])->actions([
                 EditAction::make('edit')
                 ->model(UserTypeModel::class)
@@ -45,7 +53,13 @@ class UserType extends Component implements HasForms, HasTable
                     TextInput::make('name')
                         ->required()
                         ->maxLength(255),
-                ])
+                ])->successNotification(null)
+                ->after(function ($record) {
+                    $this->dialog()->success(
+                        $title = 'User type updated',
+                        $description = 'The user type was successfully updated'
+                    );
+                })
             ]);
     }
 

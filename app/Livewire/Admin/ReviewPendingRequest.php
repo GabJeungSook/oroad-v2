@@ -19,9 +19,11 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Actions\Concerns\InteractsWithActions;
+use WireUi\Traits\Actions;
 
 class ReviewPendingRequest extends Component implements  HasForms, HasActions
 {
+    use Actions;
     use InteractsWithActions;
     use InteractsWithForms;
 
@@ -52,11 +54,15 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                DB::beginTransaction();
                if($this->record->status === 'Approved')
                {
-                Notification::make()
-                ->title('Oops!')
-                ->body('This request was already approved.')
-                ->danger()
-                ->send();
+                $this->dialog()->error(
+                    $title = 'Oops!',
+                    $description = 'This request was already approved.'
+                );
+                // Notification::make()
+                // ->title('Oops!')
+                // ->body('This request was already approved.')
+                // ->danger()
+                // ->send();
 
                 return redirect()->route('admin.pending-request');
                }else{
@@ -72,11 +78,15 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                 ]);
                }
                DB::commit();
-               Notification::make()
-               ->title('Request Approved')
-                ->body('An email has been sent to ' . $this->full_name . ' regarding the approval of the request.')
-               ->success()
-               ->send();
+               $this->dialog()->success(
+                $title = 'Request Approved',
+                $description = 'An email has been sent to ' . $this->full_name . ' regarding the approval of the request.'
+            );
+            //    Notification::make()
+            //    ->title('Request Approved')
+            //     ->body('An email has been sent to ' . $this->full_name . ' regarding the approval of the request.')
+            //    ->success()
+            //    ->send();
                 //for email sending - to be updated upon approval
                 Mail::to($this->record->user_information->user->email)->send(new ApproveRequestMail($this->record));
 
@@ -102,11 +112,15 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                 DB::beginTransaction();
                 if($this->record->status === 'Request Denied')
                 {
-                    Notification::make()
-                    ->title('Oops!')
-                    ->body('This request was already denied.')
-                    ->danger()
-                    ->send();
+                    $this->dialog()->error(
+                        $title = 'Oops!',
+                        $description = 'This request was already denied.'
+                    );
+                    // Notification::make()
+                    // ->title('Oops!')
+                    // ->body('This request was already denied.')
+                    // ->danger()
+                    // ->send();
                     return redirect()->route('admin.pending-request');
                 }else{
                     $this->record->update([
@@ -122,6 +136,10 @@ class ReviewPendingRequest extends Component implements  HasForms, HasActions
                 }
 
                 DB::commit();
+                $this->dialog()->error(
+                    $title = 'Request Denied',
+                    $description = 'This request was denied.'
+                );
                 Notification::make()
                 ->title('Request Denied')
                 // ->body('An email has been sent to ' . $this->full_name . ' regarding the denial of the request.')

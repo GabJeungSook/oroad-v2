@@ -17,9 +17,11 @@ use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
+use WireUi\Traits\Actions;
 
 class Document extends Component implements HasForms, HasTable
 {
+    use Actions;
     use InteractsWithTable;
     use InteractsWithForms;
 
@@ -49,7 +51,13 @@ class Document extends Component implements HasForms, HasTable
                        ->stripCharacters(',')
                        ->required()
                        ->numeric(),
-                ])
+                ])->successNotification(null)
+                ->after(function ($record) {
+                    $this->dialog()->success(
+                        $title = 'Document added',
+                        $description = 'The document was successfully added'
+                    );
+                })
             ])->actions([
                 EditAction::make('edit')
                 ->model(DocumentModel::class)
@@ -64,7 +72,13 @@ class Document extends Component implements HasForms, HasTable
                        ->stripCharacters(',')
                        ->required()
                        ->numeric(),
-                ])
+                ])->successNotification(null)
+                ->after(function ($record) {
+                    $this->dialog()->success(
+                        $title = 'Document updated',
+                        $description = 'The document was successfully updated'
+                    );
+                })
             ]);
     }
 

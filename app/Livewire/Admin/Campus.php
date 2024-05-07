@@ -16,9 +16,11 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use WireUi\Traits\Actions;
 
 class Campus extends Component implements HasForms, HasTable
 {
+    use Actions;
     use InteractsWithTable;
     use InteractsWithForms;
 
@@ -41,7 +43,13 @@ class Campus extends Component implements HasForms, HasTable
                     TextArea::make('address')
                         ->required()
                         ->maxLength(255),
-                ])
+                ])->successNotification(null)
+                ->after(function ($record) {
+                    $this->dialog()->success(
+                        $title = 'Campus added',
+                        $description = 'The campus was successfully added'
+                    );
+                })
             ])->actions([
                 EditAction::make('edit')
                 ->model(CampusModel::class)
@@ -52,7 +60,13 @@ class Campus extends Component implements HasForms, HasTable
                     TextArea::make('address')
                         ->required()
                         ->maxLength(255),
-                ])
+                ])->successNotification(null)
+                ->after(function ($record) {
+                    $this->dialog()->success(
+                        $title = 'Campus updated',
+                        $description = 'The campus was successfully updated'
+                    );
+                })
             ]);
     }
 

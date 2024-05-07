@@ -21,9 +21,10 @@ use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Tables\Concerns\InteractsWithTable;
-
+use WireUi\Traits\Actions;
 class User extends Component implements HasForms, HasTable
 {
+    use Actions;
     use InteractsWithTable;
     use InteractsWithForms;
 
@@ -81,7 +82,13 @@ class User extends Component implements HasForms, HasTable
                             $query->where('role_id', $role);
                            })->pluck('name', 'id');
                         })->required(),
-                ])
+                ])->successNotification(null)
+                ->after(function ($record) {
+                    $this->dialog()->success(
+                        $title = 'Staff added',
+                        $description = 'The staff was successfully added'
+                    );
+                })
             ])->actions([
                 EditAction::make('edit')
                 ->model(UserModel::class)
@@ -104,7 +111,13 @@ class User extends Component implements HasForms, HasTable
                             $query->where('role_id', $role);
                            })->pluck('name', 'id');
                         })->required(),
-                ])
+                ])->successNotification(null)
+                ->after(function ($record) {
+                    $this->dialog()->success(
+                        $title = 'Staff updated',
+                        $description = 'The staff was successfully updated'
+                    );
+                })
             ]);
     }
 
