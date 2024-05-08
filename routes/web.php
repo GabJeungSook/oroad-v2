@@ -87,7 +87,7 @@ Route::get('/admin/denied-requests', function () {
 Route::get('/admin/review-pending-request/{record}', function ($request) {
     $request = Request::findOrFail($request);
     return view('admin.review-pending-request', ['record' => $request]);
-})->middleware(['auth', 'verified', 'role:ADMIN,REGISTRAR'])->name('admin.review-pending-request');
+})->middleware(['auth', 'verified', 'role:ADMIN,REGISTRAR,CASHIER'])->name('admin.review-pending-request');
 
 
 //routes for requestor
