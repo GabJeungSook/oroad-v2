@@ -192,47 +192,60 @@ class RequestedDocument extends Component implements HasForms, HasActions
                     $total += $document['amount'] * $document['quantity'];
                 }
 
-                $this->validate([
-                    'selected_purpose' => 'required',
-                ],
-                [
-                    'selected_purpose.required' => 'Select a purpose for your request.',
 
-                ]);
-                DB::beginTransaction();
-                $new_request = Request::create([
-                    'request_number' => $this->request_number,
-                    'user_information_id' => auth()->user()->user_information->id,
-                    'purpose_id' => $this->selected_purpose,
-                    'other_purpose' => $this->other_purpose === null ? null : $this->other_purpose,
-                    'has_representative' => $this->selectedReceiver === 'representative' ? 1 : 0,
-                    'total_amount' => $total,
-                    'status' => 'Pending',
-                ]);
-
-                foreach($this->selectedDocuments as $document)
+                if($this->selected_purpose === null || $this->selected_purpose === '')
                 {
-                    $new_request->documents()->attach($document['id'], [
-                        'request_id' => $new_request->id,
-                        'request_code' => $this->request_number,
-                        'quantity' => $document['quantity'],
-                        'is_authenticated' => $document['authentication'],
-                        'amount' => $document['amount'] * $document['quantity'],
-                    ]);
-                }
-                    $new_request->activityTimeline()->create([
-                        'request_number' => $this->request_number,
-                        'activity' => 'Submitted',
-                        'description' => 'Request has been submitted by ' . auth()->user()->name. ' with code ' . $this->request_number,
-                    ]);
-                DB::commit();
+                    $this->dialog()->error(
+                        $title = 'Oops!',
+                        $description = 'Select a purpose for your request first.'
+                    );
+                }else{
+                    $this->validate([
+                        'selected_purpose' => 'required',
+                    ],
+                    [
+                        'selected_purpose.required' => 'Select a purpose for your request.',
 
-                //for email sending - to be updated upon approval
-                Mail::to(auth()->user()->email)->send(new SubmittedRequestMail($new_request));
-                $this->dialog()->success(
-                    $title = 'Request Submitted Successfully',
-                    $description = 'Your request shall undergo validation and you will be notified through your email.'
-                );
+                    ]);
+
+                    DB::beginTransaction();
+                    $new_request = Request::create([
+                        'request_number' => $this->request_number,
+                        'user_information_id' => auth()->user()->user_information->id,
+                        'purpose_id' => $this->selected_purpose,
+                        'other_purpose' => $this->other_purpose === null ? null : $this->other_purpose,
+                        'has_representative' => $this->selectedReceiver === 'representative' ? 1 : 0,
+                        'total_amount' => $total,
+                        'status' => 'Pending',
+                    ]);
+
+                    foreach($this->selectedDocuments as $document)
+                    {
+                        $new_request->documents()->attach($document['id'], [
+                            'request_id' => $new_request->id,
+                            'request_code' => $this->request_number,
+                            'quantity' => $document['quantity'],
+                            'is_authenticated' => $document['authentication'],
+                            'amount' => $document['amount'] * $document['quantity'],
+                        ]);
+                    }
+                        $new_request->activityTimeline()->create([
+                            'request_number' => $this->request_number,
+                            'activity' => 'Submitted',
+                            'description' => 'Request has been submitted by ' . auth()->user()->name. ' with code ' . $this->request_number,
+                        ]);
+                    DB::commit();
+
+                    //for email sending - to be updated upon approval
+                    Mail::to(auth()->user()->email)->send(new SubmittedRequestMail($new_request));
+                    $this->dialog()->success(
+                        $title = 'Request Submitted Successfully',
+                        $description = 'Your request shall undergo validation and you will be notified through your email.'
+                    );
+
+                    return redirect()->route('dashboard');
+                }
+
                 // Notification::make()
                 // ->title('Request Submitted Successfully')
                 // ->body('Your request shall undergo validation and you will be notified through your email.')
@@ -240,7 +253,7 @@ class RequestedDocument extends Component implements HasForms, HasActions
                 // ->persistent()
                 // ->send();
 
-                return redirect()->route('dashboard');
+
             });
     }
 
