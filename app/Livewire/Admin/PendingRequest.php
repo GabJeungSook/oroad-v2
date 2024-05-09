@@ -108,7 +108,7 @@ class PendingRequest extends Component implements HasForms, HasTable
                         'requestor.request-timeline',
                         ['record' => $record],
                     ))
-                ])->dropdown(false)->icon('heroicon-s-bolt')
+                ])->dropdown(true)->icon('heroicon-s-bolt')
             ])
             ->emptyStateHeading('No request yet')
             ->emptyStateDescription('All pending requests will be displayed here');;
