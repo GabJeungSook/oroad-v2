@@ -86,7 +86,7 @@ class RequestClaimed extends Component implements HasForms, HasTable
                         'requestor.request-timeline',
                         ['record' => $record],
                     ))
-                ])->dropdown(false)->icon('heroicon-s-bolt')
+                ])->dropdown(true)->icon('heroicon-s-bolt')
 
                 // ActionGroup::make([
                 // Action::make('edit_request')
